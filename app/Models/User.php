@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Rackbeat\UIAvatars\HasAvatar;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasAvatar;
 
     /**
      * The attributes that are mass assignable.
@@ -52,7 +53,11 @@ class User extends Authenticatable
         return 'https://www.gravatar.com/avatar/'. md5(strtolower(trim( $this->email)));
     }
 
-    public function getAvatar( $size = 64 ): string
+    /**
+     * @param int $size
+     * @return string
+     */
+    public function getAvatar(int $size = 64 ): string
     {
         return $this->getGravatar( $this->email, $size );
     }
