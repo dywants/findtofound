@@ -17,9 +17,9 @@ return new class extends Migration
     {
         Schema::create('thefinds', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name');
-            $table->string('find_city');
-            $table->string('quartier')->nullable();
+            $table->string('fullName');
+            $table->string('findCity');
+            $table->string('ward')->nullable();
             $table->text('details')->nullable();
             $table->string('photos');
             $table->boolean('approval_status')->default(0);

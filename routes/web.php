@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TheFindController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,6 +27,7 @@ use Inertia\Inertia;
 //});
 
 Route::get('/', HomeController::class)->name('home');
+Route::get('/pièce/enregister', [TheFindController::class, 'index'])->name('find.register');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

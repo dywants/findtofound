@@ -1,5 +1,5 @@
 <template>
-   <header class="shadow-sm">
+   <section class="shadow-sm">
        <div class="max-w-screen-xl p-4 mx-auto">
            <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
                <div class="container flex flex-wrap justify-between items-center mx-auto">
@@ -81,7 +81,7 @@
                                <NavLink href="/" aria-current="page" :active="route().current('home')">Accueil</NavLink>
                            </li>
                            <li>
-                               <NavLink>Enregister pièce</NavLink>
+                               <NavLink :href="route('find.register')" :active="route().current('find.register')">Enregister pièce</NavLink>
                            </li>
                            <li>
                                <NavLink>Rechercher pièce</NavLink>
@@ -97,7 +97,8 @@
                </div>
            </nav>
        </div>
-   </header>
+      <header v-if="$page.url === '/'"><TheHeaderHome/></header>
+   </section>
 </template>
 
 <script >
@@ -105,10 +106,11 @@ import BreezeResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 import TheLogo from "@/Components/TheLogo";
 import NavLink from "@/Components/NavLink";
+import TheHeaderHome from "@/Components/TheHeaderHome";
 
 export default {
     name: "TheNavbar",
-    components: {NavLink, TheLogo, Link, BreezeResponsiveNavLink},
+    components: {TheHeaderHome, NavLink, TheLogo, Link, BreezeResponsiveNavLink},
 
     computed: {
         name() {
