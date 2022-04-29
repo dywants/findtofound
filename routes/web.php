@@ -27,7 +27,8 @@ use Inertia\Inertia;
 //});
 
 Route::get('/', HomeController::class)->name('home');
-Route::get('/pièce/enregister', [TheFindController::class, 'index'])->name('find.register');
+Route::get('/piece-enregistrer', [TheFindController::class, 'index'])->name('find.register');
+Route::post('/piece-enregistrer', [TheFindController::class, 'store'])->name('find.store');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

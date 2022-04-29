@@ -6,15 +6,12 @@
             <Field type="text" id="fullName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                    placeholder="John DOE" name="fullName" />
             <ErrorMessage name="fullName" class="mt-2 text-sm text-red-600" />
+            <div v-if="$page.props.errors.fullName" class="mt-2 text-sm text-red-600" >$page.props.errors.fullName</div>
         </div>
         <div class="mb-6">
             <label for="piece_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Nature de l'objet</label>
-            <Field id="piece_id" name="piece_id" as="select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                <option value="1">CNI</option>
-                <option value="1">Password</option>
-                <option value="1">Permis de conduire</option>
-                <option value="1">Acte de naissance</option>
-                <option value="1">Diplôme</option>
+            <Field @change="onChange($event)" id="piece_id" name="piece_id" as="select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option v-for="piece in pieces" :key="piece.id" :value="piece.id" >{{ piece.name}}</option>
             </Field>
             <ErrorMessage name="piece_id" class="mt-2 text-sm text-red-600" />
         </div>
@@ -35,24 +32,34 @@
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="photos">Upload image pièce perdué</label>
             <Field
                 class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent"
-                aria-describedby="user_avatar_help" name="photos" id="photos" type="file" />
+                aria-describedby="user_avatar_help" name="photos" id="photos" type="file" enctype="multipart/form-data" />
             <ErrorMessage name="photos" class="mt-2 text-sm text-red-600" />
         </div>
         <div class="mb-6">
-            <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Details supplementaire</label>
-            <textarea id="message" rows="4"
+            <label for="details" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Details supplementaire</label>
+            <Field id="details" as="textarea" rows="4" name="details"
                       class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 "
-                      placeholder="Pièce retrouvée dans ..."></textarea>
+                      placeholder="Pièce retrouvée dans ...">
+            </Field>
         </div>
     </article>
 </template>
 
 <script>
 import { Field, ErrorMessage } from "vee-validate";
-import * as yup from "yup";
 export default {
     name: "InforObject",
     components: {Field, ErrorMessage},
+    props: ['pieces', 'amount'],
+     methods: {
+         onChange(){
+             let pieceId = event.target.value;
+
+             const pieceSelect = this.pieces.find(piece => piece.id == pieceId)
+
+             this.$emit("amount", pieceSelect.amount)
+         },
+     }
 }
 </script>
 

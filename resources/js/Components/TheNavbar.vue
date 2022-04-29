@@ -22,9 +22,7 @@
                                style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(923px, 1106px);">
                                <div class="py-3 px-4">
                                    <span class="block text-sm text-gray-900 dark:text-white">{{ name }}</span>
-                                   <span class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">{{
-                                           email
-                                       }}</span>
+                                   <span class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">{{ email }}</span>
                                </div>
                                <ul class="py-1" aria-labelledby="dropdown">
                                    <li>

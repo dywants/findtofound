@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->foreignIdFor(Reward::class)->constrained();
+            $table->integer('amount');
             $table->timestamps();
         });
     }

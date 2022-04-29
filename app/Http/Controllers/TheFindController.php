@@ -2,9 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FindRequest;
+use App\Models\Piece;
+use App\Models\Profile;
 use App\Models\Thefind;
+use App\Models\User;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
+use stdClass;
 
 class TheFindController extends Controller
 {
@@ -15,13 +28,17 @@ class TheFindController extends Controller
      */
     public function index()
     {
-        return inertia::render('Pieces/TheRegister');
+        $pieces = Piece::all();
+
+        return inertia::render('Pieces/TheRegister', [
+            'pieces' => $pieces,
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -31,19 +48,73 @@ class TheFindController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param FindRequest $request
+     * @return Application|RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(FindRequest $request): Application|RedirectResponse|Redirector
     {
-        //
+        if (!Auth::check()) {
+
+            $generatedPassword = Str::random(10);
+
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($generatedPassword),
+                'role_id' => '2',
+            ]);
+
+            Auth::guard()->login($user);
+        }else{
+            $user = \auth()->user();
+            $generatedPassword = $user->password;
+        }
+
+        if ($request->hasFile('photos')){
+            $arrayImage = $request->photos;
+
+            function arrat_to_object($arrayImage)
+            {
+                $photoObj = "";
+                foreach($arrayImage as $image){
+                    $photoObj = $image;
+                }
+
+                return $photoObj;
+            }
+
+            $imageObject = arrat_to_object($arrayImage);
+            $imageName = time().'.'. $imageObject->extension();
+            $imageObject->storeAs('findImages', $imageName);
+        }
+
+        Thefind::create([
+            'fullName' => $request->fullName,
+            'findCity' => $request->findCity,
+            'ward' => $request->ward,
+            'details' => $request->details,
+            'amount_check' => $request->amount_check,
+            'photos' => $imageName,
+            'user_id' => $user->id,
+            'piece_id' => $request->piece_id,
+        ]);
+
+        Profile::create([
+            'user_id' => $user->id,
+            'phone_number' => $request->phone_number,
+            'city' => $request->city,
+        ]);
+
+       return redirect(RouteServiceProvider::HOME)->with([
+            'password' => $generatedPassword
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Thefind  $thefind
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Thefind $thefind)
     {
@@ -54,7 +125,7 @@ class TheFindController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Thefind  $thefind
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(Thefind $thefind)
     {
@@ -66,7 +137,7 @@ class TheFindController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Thefind  $thefind
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, Thefind $thefind)
     {
@@ -77,7 +148,7 @@ class TheFindController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Thefind  $thefind
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(Thefind $thefind)
     {

@@ -4,7 +4,7 @@
             <label class="block mb-2 text-sm font-medium text-gray-900 ">Désirez-vous être récompenser</label>
             <div class="flex items-center space-x-3">
                 <div class="flex items-center mb-2">
-                    <Field type="checkbox" id="A3-yes" name="amount_check" value="1000" v-model="checkedNames"
+                    <Field type="checkbox" id="A3-yes" name="amount_check" :value="amount" v-model="checkedNames"
                            class="opacity-0 absolute h-8 w-8"/>
                     <div
                         class="bg-white border-2 rounded-md border-blue-400 w-8 h-8 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-blue-500">
@@ -40,6 +40,7 @@
                 </div>
             </div>
             <ErrorMessage name="amount_uncheck" class="mt-2 text-sm text-red-600" />
+            <ErrorMessage name="amount_check" class="mt-2 text-sm text-red-600" />
             <label for="" v-if="checkedNames" class="text-gray-800 text-[14px] mt-4" >
                 Votre récompense est de:
                 <span class="text-gray-800 text-[18px] font-semibold">{{ checkedNames }}Fcfa</span>
@@ -59,6 +60,7 @@ export default {
            checkedNames: ''
        }
     },
+    props: ['amount'],
 }
 </script>
 

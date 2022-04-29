@@ -11,6 +11,12 @@ import Validation from "@/Components/Steps/Validation";
 import FormWizard from "@/Components/Elements/FormWizard";
 import FormStep from "@/Components/Elements/FormStep";
 import * as yup from "yup";
+import {Inertia} from '@inertiajs/inertia';
+import {useForm} from '@inertiajs/inertia-vue3'
+
+// defineProps({
+//     errors: Object
+// });
 
 export default {
     name: "TheRegister",
@@ -30,8 +36,9 @@ export default {
         },
         stepperProgress() {
             return ( 100 / 3 ) * ( this.currentStepIdx - 1 ) + '%'
-        }
+        },
     },
+    props: ['pieces'],
     data() {
         return {
             isLoadingRegisterPiece: false,
@@ -39,6 +46,7 @@ export default {
             piece: { type: "" },
             informationsPiece: [],
             fullPage: true,
+            amount: '',
             steps: [
                 {
                     number:'1',
@@ -93,34 +101,37 @@ export default {
         };
     },
     methods: {
-        childMessageValidation(validationSchema){
-            this.errors = validationSchema
+        sendAmount(amount) {
+            this.amount = amount;
         }
     },
+
     setup(){
         function onSubmit(formData) {
             console.log(JSON.stringify(formData, null, 2));
+            Inertia.post('/piece-enregistrer', formData);
         }
         const validationSchema = [
             yup.object({
-                fullName: yup.string().required().label("Nom complèt"),
-                findCity: yup.string().required().label("Ville"),
-                piece_id: yup.number().required().label("Nature de l'objet"),
-                photos: yup.string().required().label("photos"),
+                fullName: yup.string().required('Le nom inscrit sur la pièce est une information importante'),
+                findCity: yup.string().required("La ville où la pièces a été retrouvée est une information importante"),
+                piece_id: yup.number().required("Le choix du type de pièce est important"),
+                photos: yup.mixed().required("L'image est requise"),
             }),
             yup.object({
-                name: yup.string().required().label("Votre nom"),
-                email: yup.string().required().label("email"),
-                phone_number: yup.number().required().label("phone_number"),
+                name: yup.string().required('Votre nom est requis'),
+                email: yup.string().required('Votre email est requis'),
+                phone_number: yup.number().required('Votre numero de téléphone nous permettra de vous contacter'),
             }),
             yup.object({
-                amount_check: yup.boolean().required(),
+                amount_check: yup.string().required('La validation de la remuneration est importante'),
             }),
         ];
         return {
             validationSchema,
             onSubmit,
         };
+
     }
 }
 
@@ -169,7 +180,7 @@ export default {
            <FormWizard :validation-schema="validationSchema" @submit="onSubmit">
                <FormStep>
                    <template #header>Entrez les informations de la pièce </template>
-                   <InforObject @errorsValidations="childMessageValidation" />
+                   <InforObject :pieces="pieces" @amount="sendAmount" />
                </FormStep>
 
                <FormStep>
@@ -179,7 +190,7 @@ export default {
 
                <FormStep>
                    <template #header>Validation</template>
-                   <Validation />
+                   <Validation :amount="amount"/>
                </FormStep>
 
            </FormWizard>

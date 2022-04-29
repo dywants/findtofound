@@ -10,6 +10,9 @@ class Profile extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id', 'city', 'phone_number'
+    ];
     /**
      * @return BelongsTo
      */

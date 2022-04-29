@@ -11,6 +11,21 @@ class Thefind extends Model
     use HasFactory;
 
     /**
+     * @var string[]
+     */
+    protected $fillable = [
+        'fullName',
+        'findCity',
+        'user_id',
+        'ward',
+        'details',
+        'amount_check',
+        'piece_id',
+        'approval_status',
+        'photos'
+    ];
+
+    /**
      * @return BelongsTo
      */
     public function user(): BelongsTo

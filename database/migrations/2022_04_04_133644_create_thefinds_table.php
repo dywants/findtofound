@@ -25,7 +25,7 @@ return new class extends Migration
             $table->boolean('approval_status')->default(0);
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(Piece::class)->constrained();
-            $table->decimal('amount_find');
+            $table->decimal('amount_check');
             $table->timestamps();
         });
     }

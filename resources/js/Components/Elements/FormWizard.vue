@@ -91,6 +91,11 @@ export default {
             emit("submit", formData.value);
         });
 
+        function uploadImage() {
+            let formData  = new FormData();
+            formData.append('photos', formData.photos)
+        }
+
         function goToPrev() {
             if (currentStepIdx.value === 0) {
                 return;
@@ -109,6 +114,7 @@ export default {
             hasPrevious,
             isLastStep,
             goToPrev,
+            uploadImage
         };
     },
 };
