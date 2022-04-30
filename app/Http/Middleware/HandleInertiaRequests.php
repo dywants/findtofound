@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Thefind;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
@@ -41,6 +43,21 @@ class HandleInertiaRequests extends Middleware
             'ziggy' => function () {
                 return (new Ziggy)->toArray();
             },
+            'searchItems' => function () {
+//                return Cache::rememberForever('searchItems', function () {
+                    return Thefind::cursor()->map(function ($thefind) {
+                        return [
+                            'fullName' => $thefind->fullName,
+                            'amount_check' => $thefind->amount_check,
+                            'findCity' => $thefind->findCity,
+                            'photos' => asset('storage/findImages/'. $thefind->photos),
+                            'details' => $thefind->details,
+                            'created_at' => $thefind->created_at->diffForHumans(),
+                            'link' => route('find.show', ['thefind' => $thefind->id])
+                        ];
+                    })->toArray();
+//                });
+            }
         ]);
     }
 }

@@ -84,7 +84,7 @@ class TheFindController extends Controller
             }
 
             $imageObject = arrat_to_object($arrayImage);
-            $imageName = time().'.'. $imageObject->extension();
+            $imageName = time(). '.' . $user->id . now()->format('y') . '/' . now()->format('m') . $imageObject->extension();
             $imageObject->storeAs('findImages', $imageName);
         }
 
@@ -114,11 +114,13 @@ class TheFindController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Thefind  $thefind
-     * @return Response
+     * @return \Inertia\Response
      */
-    public function show(Thefind $thefind)
+    public function show(Thefind $thefind): \Inertia\Response
     {
-        //
+        return inertia::render('Pieces/TheShowFind', [
+            'thefind' => $thefind
+        ]);
     }
 
     /**

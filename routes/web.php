@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TheFindController;
+use App\Http\Controllers\TheFoundController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +30,8 @@ use Inertia\Inertia;
 Route::get('/', HomeController::class)->name('home');
 Route::get('/piece-enregistrer', [TheFindController::class, 'index'])->name('find.register');
 Route::post('/piece-enregistrer', [TheFindController::class, 'store'])->name('find.store');
+Route::get('/piece-rechercher/{thefind}', [TheFindController::class, 'show'])->name('find.show');
+Route::get('/piece-rechercher', [TheFoundController::class, 'index'])->name('found.search');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

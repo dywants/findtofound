@@ -82,7 +82,7 @@
                                <NavLink :href="route('find.register')" :active="route().current('find.register')">Enregister pièce</NavLink>
                            </li>
                            <li>
-                               <NavLink>Rechercher pièce</NavLink>
+                               <NavLink :href="route('found.search')" :active="route().current('found.search')">Rechercher pièce</NavLink>
                            </li>
                            <li>
                                <NavLink>Blog</NavLink>
