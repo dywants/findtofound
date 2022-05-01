@@ -15,9 +15,16 @@ class TheFoundController extends Controller
      *
      * @return \Inertia\Response
      */
-    public function index(): \Inertia\Response
+    public function register(Thefind $thefind): \Inertia\Response
     {
-       return inertia::render('Pieces/TheSearch');
+       return inertia::render('Pieces/TheRegisterInfoFounder', [
+           'thefind' => $thefind
+       ]);
+    }
+
+    public function search(): \Inertia\Response
+    {
+        return inertia::render('Pieces/TheSearch');
     }
 
     /**
