@@ -327,7 +327,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     href: _ctx.route('found.info', {
       thefind: $props.thefind.id
     }),
-    "class": "w-full md:w-3/5 text-base rounded-md font-medium leading-none text-white uppercase py-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-green-600 hover:bg-green-700 text-white"
+    "class": "w-full md:w-3/5 text-base text-center rounded-md font-medium leading-none text-white uppercase py-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-green-600 hover:bg-green-700 text-white"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_29];

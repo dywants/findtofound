@@ -74,7 +74,7 @@
                         <div
                             class="flex items-center flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 lg:space-x-8 mt-4 md:mt-16">
                             <Link :href="route('found.info', {thefind: thefind.id})"
-                                class="w-full md:w-3/5 text-base rounded-md font-medium leading-none text-white uppercase py-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-green-600 hover:bg-green-700 text-white ">
+                                class="w-full md:w-3/5 text-base text-center rounded-md font-medium leading-none text-white uppercase py-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-green-600 hover:bg-green-700 text-white ">
                                 Valider votre trouvalle
                             </Link>
                         </div>

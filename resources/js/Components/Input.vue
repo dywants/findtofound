@@ -15,5 +15,5 @@ onMounted(() => {
 </script>
 
 <template>
-    <input class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" ref="input">
+    <input class="px-4 w-full border-2 py-2 rounded-md text-sm outline-none" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" ref="input">
 </template>
