@@ -26,7 +26,7 @@
                 <li aria-current="page">
                     <div class="flex items-center">
                         <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                        <span class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{ thefind.fullName}}</span>
+                        <span class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{ fullName }}</span>
                     </div>
                 </li>
             </ol>
@@ -50,8 +50,8 @@
 <!--                        <div class="slider">-->
 <!--                            <div class="slide-ana lg:relative">-->
                                 <div class="w-full h-full">
-                                    <img :src="showImage() + thefind.photos"
-                                        class="w-full h-full object-cover" :alt=thefind.fullName />
+                                    <img :src="showImage() + photos"
+                                        class="w-full h-full object-cover" :alt=fullName />
                                 </div>
 <!--                            </div>-->
 <!--                        </div>-->
@@ -67,13 +67,13 @@
                         </div>
                     </div>
                     <div class="lg:w-1/2 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0">
-                        <h1 class="text-3xl lg:text-4xl font-semibold text-gray-800 dark:text-white">{{ thefind.fullName }}</h1>
-                        <p class="text-base leading-normal text-gray-600 dark:text-white mt-2">{{ thefind.findCity }}</p>
-                        <p class="text-base leading-normal text-gray-600 dark:text-white mt-2">{{ thefind.details }}</p>
+                        <h1 class="text-3xl lg:text-4xl font-semibold text-gray-800 dark:text-white">{{ fullName }}</h1>
+                        <p class="text-base leading-normal text-gray-600 dark:text-white mt-2">{{ findCity }}</p>
+                        <p class="text-base leading-normal text-gray-600 dark:text-white mt-2">{{ details }}</p>
                         <p class="text-3xl font-medium text-gray-600 dark:text-white mt-8 md:mt-10"></p>
                         <div
                             class="flex items-center flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 lg:space-x-8 mt-4 md:mt-16">
-                            <Link :href="route('found.info', {thefind: thefind.id})"
+                            <Link :href="route('found.info', {thefind: id})"
                                 class="w-full md:w-3/5 text-base text-center rounded-md font-medium leading-none text-white uppercase py-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-green-600 hover:bg-green-700 text-white ">
                                 Valider votre trouvalle
                             </Link>
@@ -81,7 +81,7 @@
                         <div class="mt-6">
                             <span
                                 class="text-xl underline text-gray-800 capitalize hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800">
-                                {{ thefind.amount_check}} Fcfa
+                                {{ amount_check.formatted }}
                             </span>
                         </div>
                     </div>
@@ -134,7 +134,7 @@ function closeView() {
 export default {
     name: "TheShowFind",
     components: {Link, HeaderPage},
-    props: ['thefind'],
+    props: ['fullName', 'findCity','details', 'amount_check', 'id', 'photos'],
     methods: {
         showImage() {
             return "/storage/findImages/";

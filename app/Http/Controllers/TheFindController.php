@@ -119,7 +119,13 @@ class TheFindController extends Controller
     public function show(Thefind $thefind): \Inertia\Response
     {
         return inertia::render('Pieces/TheShowFind', [
-            'thefind' => $thefind
+            'id' => $thefind->id,
+            'fullName' => $thefind->fullName,
+            'findCity' => $thefind->findCity,
+            'ward' => $thefind->ward,
+            'details' => $thefind->details,
+            'photos' => $thefind->photos,
+            'amount_check' => money($thefind->amount_check),
         ]);
     }
 

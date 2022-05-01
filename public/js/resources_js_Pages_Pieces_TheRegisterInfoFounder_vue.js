@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
     HeaderPage: _Layouts_HeaderPage__WEBPACK_IMPORTED_MODULE_0__["default"],
     Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Link
   },
-  props: ['thefind']
+  props: ['fullName', 'amount_check']
 });
 
 /***/ }),
@@ -107,12 +107,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("    <div class=\"max-w-screen-xl p-4 mx-auto mt-8\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <h2 class=\"text-[38px] text-gray-800 font-bold leading-4\">{{ thefind.fullName }}</h2>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <p class=\"mt-4 leading-loose text-[18px]\">Complétez ce formulaire, validez et effectuer le paiement via nos moyens de paiement après quoi nous nous mettrons en contact avec le <em class=\"font-semibold\">finder</em> qui à retrouvée votre pièce</p>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("    </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.thefind.fullName), 1
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("    <div class=\"max-w-screen-xl p-4 mx-auto mt-8\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <h2 class=\"text-[38px] text-gray-800 font-bold leading-4\">{{ thefind.fullName }}</h2>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <p class=\"mt-4 leading-loose text-[18px]\">Complétez ce formulaire, validez et effectuer le paiement via nos moyens de paiement après quoi nous nous mettrons en contact avec le <em class=\"font-semibold\">finder</em> qui à retrouvée votre pièce</p>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("    </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.fullName), 1
   /* TEXT */
   ), _hoisted_6]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     name: "name",
-    value: $props.thefind.fullName,
+    value: $props.fullName,
     "class": "w-full",
     hidden: ""
   }, null, 8
@@ -121,7 +121,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     id: "amount_check",
     name: "amount_check",
-    value: $props.thefind.amount_check,
+    value: $props.amount_check.formatted,
     "class": "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
     required: "",
     disabled: ""

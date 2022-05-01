@@ -18,7 +18,13 @@ class TheFoundController extends Controller
     public function register(Thefind $thefind): \Inertia\Response
     {
        return inertia::render('Pieces/TheRegisterInfoFounder', [
-           'thefind' => $thefind
+           'id' => $thefind->id,
+           'fullName' => $thefind->fullName,
+           'findCity' => $thefind->findCity,
+           'ward' => $thefind->ward,
+           'details' => $thefind->details,
+           'photos' => $thefind->photos,
+           'amount_check' => money($thefind->amount_check),
        ]);
     }
 

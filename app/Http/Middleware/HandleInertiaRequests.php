@@ -48,7 +48,7 @@ class HandleInertiaRequests extends Middleware
                     return Thefind::cursor()->map(function ($thefind) {
                         return [
                             'fullName' => $thefind->fullName,
-                            'amount_check' => $thefind->amount_check,
+                            'amount_check' => money($thefind->amount_check),
                             'findCity' => $thefind->findCity,
                             'photos' => asset('storage/findImages/'. $thefind->photos),
                             'details' => $thefind->details,

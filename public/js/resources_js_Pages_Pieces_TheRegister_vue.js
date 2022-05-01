@@ -256,7 +256,12 @@ __webpack_require__.r(__webpack_exports__);
       checkedNames: ''
     };
   },
-  props: ['amount']
+  props: ['amount'],
+  computed: {
+    deviceAmount: function deviceAmount() {
+      return this.amount.formattedPrice();
+    }
+  }
 });
 
 /***/ }),

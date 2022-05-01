@@ -61,6 +61,11 @@ export default {
        }
     },
     props: ['amount'],
+    computed: {
+        deviceAmount() {
+            return this.amount.formattedPrice()
+        }
+    }
 }
 </script>
 
