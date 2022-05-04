@@ -27,31 +27,6 @@ class Thefind extends Model
     ];
 
     /**
-     * @return Money
-     */
-    public function formattedPrice(): Money
-    {
-        return money($this->amount_check);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFormattedAmountCheckAttribute(): mixed
-    {
-        return $this->amount_check->formattedPrice();
-    }
-
-    /**
-     * @param $value
-     * @return Money
-     */
-    public function setAmountCheckAttribute($value): Money
-    {
-        return money($value);
-    }
-
-    /**
      * @return BelongsTo
      */
     public function user(): BelongsTo

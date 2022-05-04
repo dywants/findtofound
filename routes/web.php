@@ -33,6 +33,8 @@ Route::post('/piece-enregistrer', [TheFindController::class, 'store'])->name('fi
 Route::get('/piece-rechercher/{thefind}', [TheFindController::class, 'show'])->name('find.show');
 Route::get('/piece-rechercher', [TheFoundController::class, 'search'])->name('found.search');
 Route::get('/piece/{thefind}/enregistrer', [TheFoundController::class, 'register'])->name('found.info');
+Route::post('/piece/enregistrer', [TheFoundController::class, 'store'])->name('found.store');
+Route::get('/paiement', [TheFoundController::class, 'paiement'])->name('paiement');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

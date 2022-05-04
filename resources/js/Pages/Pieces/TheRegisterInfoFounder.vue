@@ -20,26 +20,34 @@
                 <p class="mb-8 text-base leading-relaxed text-left text-blueGray-600">Complétez ce formulaire, validez et effectuer le paiement via nos moyens de paiement après quoi nous vous mettrons en contact avec le <em class="font-semibold">finder</em> qui à retrouvée votre pièce </p>
             </div>
             <div class="w-full lg:w-5/6 lg:max-w-lg md:w-1/2">
-                <form>
-                    <input type="text" name="name" :value=fullName class="w-full" hidden>
+                <form @submit="onSubmit" :validation-schema="validationSchema">
+                    <Field type="text" name="name" :value=fullName class="w-full" hidden />
+                    <Field type="number" name="thefind_id" :value=id class="w-full" hidden />
+
                     <div class="mb-6">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Votre email</label>
-                        <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required>
+                        <Field type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+                        focus:border-blue-500 block w-full p-2.5 " placeholder="name@flowbite.com" />
+                        <ErrorMessage class="mt-2 text-sm text-red-600" name="email" />
                     </div>
                     <div class="mb-6">
                         <label for="phone_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Votre numero de téléphone</label>
-                        <input type="number" id="phone_number" name="phone_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <Field type="number" id="phone_number" name="phone_number"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  />
+                        <ErrorMessage class="mt-2 text-sm text-red-600" name="phone_number" />
                     </div>
                     <div class="mb-6">
                         <label for="city" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Votre ville</label>
-                        <input type="text" id="city" name="city" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <Field type="text" id="city" name="city" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  />
+                        <ErrorMessage class="mt-2 text-sm text-red-600" name="city" />
                     </div>
                     <div class="mb-6">
                         <label for="amount_check" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Montant à payer</label>
-                        <input type="text" id="amount_check" name="amount_check" :value=amount_check.formatted class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required disabled>
+                        <Field type="text" id="amount_check" name="amount_check" :value=amount_check.formatted class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  disabled />
                     </div>
 
-                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Valider</button>
+                    <button type="submit" :disabled="isSubmitting"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Valider</button>
                 </form>
             </div>
         </div>
@@ -48,12 +56,45 @@
 </template>
 
 <script>
+import { Field, ErrorMessage, useForm } from "vee-validate";
 import HeaderPage from "@/Layouts/HeaderPage";
 import { Link } from '@inertiajs/inertia-vue3';
+import * as yup from 'yup';
+import {Inertia} from "@inertiajs/inertia";
+
 export default {
     name: "TheRegisterInfoFounder",
-    components: {HeaderPage,Link},
-    props: ['fullName', 'amount_check']
+    components: {HeaderPage, Link, Field, ErrorMessage},
+    props: ['fullName', 'amount_check', 'id' ,'validationSchema'],
+    data() {
+        return {
+            errors: [],
+        }
+    },
+
+    setup() {
+        const { handleSubmit, isSubmitting } = useForm({
+            validationSchema: validationSchema,
+        });
+
+        const onSubmit = handleSubmit(values => {
+            Inertia.post('/piece/enregistrer', values);
+        });
+
+        const validationSchema = [
+            yup.object({
+                email: yup.string().required('Votre email est requis'),
+                phone_number: yup.number().required('Votre numero de téléphone nous permettra de vous contacter'),
+                city: yup.string().required("Votre ville est une information importante"),
+            })
+        ];
+
+        return {
+            validationSchema,
+            onSubmit,
+            isSubmitting
+        };
+    },
 }
 </script>
 

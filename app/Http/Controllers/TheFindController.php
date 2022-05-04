@@ -7,6 +7,7 @@ use App\Models\Piece;
 use App\Models\Profile;
 use App\Models\Thefind;
 use App\Models\User;
+use App\Notifications\WelcomeEmailNotification;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -70,6 +71,8 @@ class TheFindController extends Controller
             $generatedPassword = $user->password;
         }
 
+        $user->notify(new WelcomeEmailNotification($user,$generatedPassword));
+
         if ($request->hasFile('photos')){
             $arrayImage = $request->photos;
 
@@ -105,9 +108,7 @@ class TheFindController extends Controller
             'city' => $request->city,
         ]);
 
-       return redirect(RouteServiceProvider::HOME)->with([
-            'password' => $generatedPassword
-        ]);
+       return redirect(RouteServiceProvider::HOME)->with('message', $generatedPassword);
     }
 
     /**

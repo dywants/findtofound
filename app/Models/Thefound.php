@@ -10,6 +10,8 @@ class Thefound extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['thefind_id', 'user_id'];
+
     /**
      * @return BelongsTo
      */

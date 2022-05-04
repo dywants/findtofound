@@ -13,23 +13,6 @@ class Piece extends Model
     use HasFactory;
 
     /**
-     * @return Money
-     */
-    public function formattedPrice(): Money
-    {
-        return money($this->amount);
-    }
-
-    /**
-     * @param $value
-     * @return Money
-     */
-    public function setAmountAttribute($value): Money
-    {
-        return money($value);
-    }
-
-    /**
      * @return BelongsTo
      */
     public function reward(): BelongsTo

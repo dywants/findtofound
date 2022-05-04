@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Profile;
 use App\Models\Thefind;
-use App\Models\TheFound;
+use App\Models\Thefound;
+use App\Models\User;
+use App\Notifications\WelcomeEmailNotification;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class TheFoundController extends Controller
@@ -34,6 +40,14 @@ class TheFoundController extends Controller
     }
 
     /**
+     * @return \Inertia\Response
+     */
+    public function paiement(): \Inertia\Response
+    {
+        return inertia::render('Pieces/Paiement');
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response
@@ -47,11 +61,50 @@ class TheFoundController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'city' => 'required|string|max:255',
+            'phone_number' => 'bail|required|regex:/^([0-9\s\-\+\(\)]*)$/|max:9',
+        ]);
+
+        if (!Auth::check()) {
+
+            $generatedPassword = Str::random(10);
+
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($generatedPassword),
+                'role_id' => '1',
+            ]);
+
+            Auth::guard()->login($user);
+        }else{
+            $user = \auth()->user();
+            $generatedPassword = $user->password;
+        }
+
+        $user->notify(new WelcomeEmailNotification($user,$generatedPassword));
+
+        Thefound::create([
+            'user_id' => $user->id,
+            'thefind_id' => $request->thefind_id,
+        ]);
+
+        Profile::create([
+            'user_id' => $user->id,
+            'phone_number' => $request->phone_number,
+            'city' => $request->city,
+        ]);
+
+        return redirect()->route('paiement')->with([
+            'amount_check' => $request->amount_check,
+        ]);
     }
 
     /**
