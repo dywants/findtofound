@@ -1,6 +1,6 @@
 <template>
-    <section class="text-blueGray-700 bg-white mt-20">
-        <div class="container flex flex-col items-center px-5 py-16 mx-auto  md:flex-row lg:px-28">
+    <section class="text-blueGray-700 bg-white">
+        <div class="container flex flex-col items-center px-5 py-8 mx-auto  md:flex-row lg:px-28">
             <div class="flex flex-col items-start w-full pt-0 mb-16 text-left  lg:flex-grow md:w-1/2 xl:mr-20 md:pr-24 md:mb-0">
                 <h1 class="mb-8 text-2xl font-black tracking-tighter text-black  md:text-5xl title-font"> Medium length display headline. </h1>
                 <p class="mb-8 text-base leading-relaxed text-left text-blueGray-600"> Deploy your mvp in minutes, not days. WT offers you a a wide selection swapable sections for your landing page. </p>

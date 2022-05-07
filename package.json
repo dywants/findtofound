@@ -30,7 +30,7 @@
     "dependencies": {
         "@vee-validate/i18n": "^4.5.11",
         "element-plus": "^2.1.8",
-        "flowbite": "^1.4.1",
+        "flowbite": "^1.4.5",
         "fuse.js": "^6.5.3",
         "vee-validate": "^4.5.11",
         "vue-loading-overlay": "^5.0.3",

@@ -81,7 +81,7 @@ class User extends Authenticatable
     /**
      * @return HasMany
      */
-    public function thefinds(): HasMany
+    public function finds(): HasMany
     {
         return $this->hasMany(Thefind::class);
     }

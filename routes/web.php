@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TheFindController;
 use App\Http\Controllers\TheFoundController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -36,8 +37,10 @@ Route::get('/piece/{thefind}/enregistrer', [TheFoundController::class, 'register
 Route::post('/piece/enregistrer', [TheFoundController::class, 'store'])->name('found.store');
 Route::get('/paiement', [TheFoundController::class, 'paiement'])->name('paiement');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('dashboard');
+    Route::get('/liste-piece-trouvee', [UserController::class, 'listing'])->name('find.list');
+});
+
 
 require __DIR__.'/auth.php';

@@ -1,29 +1,26 @@
 <script setup>
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { Head } from '@inertiajs/inertia-vue3';
+import HeaderPage from "@/Layouts/HeaderPage";
+// import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+import { Head, Link } from '@inertiajs/inertia-vue3';
+import NavLink from "@/Components/NavLink";
 </script>
 
 <template>
     <Head title="Dashboard" />
 
-    <BreezeAuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
-            </h2>
-        </template>
+     <HeaderPage>
+         <template #headerPage>
+             <nav class="flex space-x-4">
+                 <Link :href="route('dashboard')" class="font-semibold text-xl text-gray-800 leading-tight">
+                     Dashboard
+                 </Link>
+                 <NavLink :href="route('find.list')">Liste de pièce</NavLink>
+             </nav>
+         </template>
+     </HeaderPage>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200 block">
-                       <h1>Bienvenue, <em class="text-[17px] font-semibold text-gray-700">{{ $page.props.auth.user.name }}</em></h1>
-                        <div v-if="$page.props.flash.message" class="text-[14px] text-gray-600 ">
-                            Votre mot de passe est: <em class="font-semibold">{{ $page.props.flash.message }}</em>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </BreezeAuthenticatedLayout>
+    <main>
+        <slot />
+    </main>
+
 </template>
