@@ -146,11 +146,17 @@ class TheFindController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Thefind  $thefind
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, Thefind $thefind)
+    public function update(Request $request, Thefind $thefind): RedirectResponse
     {
-        //
+        $thefind->update([
+            'approval_status' => 1
+        ]);
+
+        $request->session()->flash('success', 'Felicitation, vous avez retrouver votre pièce perdue!');
+
+        return redirect()->route('dashboard');
     }
 
     /**

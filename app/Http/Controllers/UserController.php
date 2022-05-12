@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Thefind;
+use App\Models\Thefound;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -36,6 +37,32 @@ class UserController extends Controller
         ]);
     }
 
+    public function myPiece(): \Inertia\Response
+    {
+        $user = auth()->user();
+        $piece = Thefound::query()
+            ->where('user_id', $user->id)
+            ->with('thefind.user.profile')
+            ->with('user.profile')
+            ->get();
+
+        function arrat_to_object($piece)
+        {
+            $elem = "";
+            foreach($piece as $item){
+                $elem = $item;
+            }
+
+            return $elem;
+        }
+
+        $thefind = arrat_to_object($piece);
+
+        return Inertia::render('Users/MyPiece', [
+            'piece' => $thefind
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -63,9 +90,12 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Inertia\Response
      */
-    public function show(User $user)
+    public function show(User $user): \Inertia\Response
     {
-       //
+       return Inertia::render('Users/myPiece', [
+           'user' => $user,
+           'profile' => $user->profile,
+       ]);
     }
 
     /**

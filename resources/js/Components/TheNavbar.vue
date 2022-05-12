@@ -1,9 +1,9 @@
 <template>
    <section>
        <div class="max-w-screen-xl mx-auto"
-            :class="{'p-0': showingNavigationDropdown, 'p-4 border-b border-gray-200': ! showingNavigationDropdown}">
+            :class="{'p-0': showingNavigationDropdown, 'p-4': ! showingNavigationDropdown, 'border-b border-gray-200' : route().current('home')  }">
            <nav class="bg-white border-gray-200 py-2.5"
-                :class="{'px-0': showingNavigationDropdown, 'px-2': ! showingNavigationDropdown}">
+                :class="{'px-0': showingNavigationDropdown, 'px-2': ! showingNavigationDropdown} ">
                <div class="container flex flex-wrap justify-between items-center mx-auto">
                    <TheLogo/>
                    <div class="flex items-center md:order-2">
@@ -29,8 +29,11 @@
                                        </template>
 
                                        <template #content>
+                                           <BreezeDropdownLink :href="route('dashboard')" as="button">
+                                               Dashboard
+                                           </BreezeDropdownLink>
                                            <BreezeDropdownLink :href="route('logout')" method="post" as="button">
-                                               Log Out
+                                               Déconnexion
                                            </BreezeDropdownLink>
                                        </template>
                                    </BreezeDropdown>

@@ -18,6 +18,11 @@ import {useForm} from '@inertiajs/inertia-vue3'
 //     errors: Object
 // });
 
+const progress = document.getElementById('progress');
+const prev = document.getElementById('preBtn');
+const next = document.getElementById('nextBtn');
+const circles = document.querySelectorAll('.circle');
+
 export default {
     name: "TheRegister",
     components: {
@@ -107,9 +112,52 @@ export default {
     },
 
     setup(){
+        let currentActive= 1;
+
+        function goToNext(){
+            currentActive++;
+            if(currentActive > circles.length){
+                currentActive =circles.length;
+            }
+            update();
+            console.log(currentActive)
+        }
+
+        function goToPrev(){
+            currentActive--;
+            if(currentActive <1){
+                currentActive =1;
+            }
+
+            update();
+        }
+
+        function update(){
+            circles.forEach((circle, idx)=>{
+                if(idx < currentActive){
+                    circle.classList.add('active')
+                }else {
+                    circle.classList.remove('active')
+                }
+            })
+
+            const actives = document.querySelectorAll('.active');
+            progress.style.width=((actives.length -1) / (circles.length-1))*100 + '%';
+
+            if(currentActive ===1){
+                prev.disabled= true;
+            }else if(currentActive === circles.length){
+                next.disabled= true;
+            }else
+            {
+                prev.disabled= false;
+                next.disabled= false;
+            }
+        }
+
         function onSubmit(formData) {
             console.log(JSON.stringify(formData, null, 2));
-            Inertia.post('/piece-enregistrer', formData);
+            // Inertia.post('/piece-enregistrer', formData);
         }
         const validationSchema = [
             yup.object({
@@ -119,9 +167,19 @@ export default {
                 photos: yup.mixed().required("L'image est requise"),
             }),
             yup.object({
-                name: yup.string().required('Votre nom est requis'),
-                email: yup.string().required('Votre email est requis'),
-                phone_number: yup.number().required('Votre numero de téléphone nous permettra de vous contacter'),
+                isAnnomined: yup.bool(),
+                name: yup.string().nullable().when('isAnnomined', {
+                    is: false,
+                    then: yup.string().required('Votre nom est requis')  }),
+                email: yup.string().nullable().when('isAnnomined', {
+                    is: false,
+                    then: yup.string().required('Votre email est requis')  }),
+                phone_number: yup.number().nullable().when('isAnnomined', {
+                    is: false,
+                    then: yup.number().required('Votre numero de téléphone nous permettra de vous contacter').positive()}),
+                localisation: yup.string().nullable().when('isAnnomined', {
+                    is: true,
+                    then: yup.string().required('Votre email est requis')  })
             }),
             yup.object({
                 amount_check: yup.string().required('La validation de la remuneration est importante'),
@@ -225,4 +283,9 @@ export default {
     opacity: 1;
     transform: scale(1);
 }
+
+.progressbar li:first-child:after{
+    content: none;
+}
+
 </style>

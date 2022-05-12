@@ -1,5 +1,8 @@
 <template>
-    <section class="shadow max-w-5xl bg-amber-50 mx-auto mt-8 p-6 rounded-md">
+    <section class="shadow-md max-w-5xl bg-white mx-auto mt-8 p-6 rounded-md">
+        <div class="navStep">
+            <slot name="nav"/>
+        </div>
         <div class="card-body mb-4">
             <slot name="body"/>
         </div>

@@ -1,6 +1,17 @@
 <template>
     <form @submit="onSubmit">
         <TheCard>
+           <template #nav>
+               <div class="container">
+                   <div class="progress-container">
+                       <div class="progress" id="progress"></div>
+                       <div class="circle active">1</div>
+                       <div class="circle">2</div>
+                       <div class="circle">3</div>
+                       <div class="circle">4</div>
+                   </div>
+               </div>
+           </template>
             <template #body>
                 <slot/>
             </template>
@@ -36,6 +47,10 @@ export default {
     setup(props, { emit }) {
         const formData = ref({});
         const currentStepIdx = ref(0);
+        const progress = document.getElementById('progress');
+        const prev = document.getElementById('preBtn');
+        const next = document.getElementById('nextBtn');
+        const circles = document.querySelectorAll('.circle');
 
         // Injects the starting step, child <form-steps> will use this to generate their ids
         const stepCounter = ref(0);
@@ -83,6 +98,7 @@ export default {
 
             if (!isLastStep.value) {
                 currentStepIdx.value++;
+                update();
                 emit("next", formData.value);
 
                 return;
@@ -102,11 +118,28 @@ export default {
             }
 
             currentStepIdx.value--;
+
+            update();
             resetForm({
                 values: {
                     ...formData.value,
                 },
             });
+        }
+
+        function update(){
+            circles.forEach((circle, idx)=>{
+                if(idx < currentStepIdx){
+                    circle.classList.add('active')
+                }else {
+                    circle.classList.remove('active')
+                }
+            })
+
+            const actives = document.querySelectorAll('.active');
+
+            progress.style.width=((actives.length -1) / (circles.length-1))*100 + '%';
+
         }
 
         return {
@@ -119,4 +152,82 @@ export default {
     },
 };
 </script>
+
+
+<style>
+/*.container{*/
+/*    text-align: center;*/
+
+/*}*/
+.progress-container{
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 30px;
+    max-width: 100%;
+    width: 300px;
+
+}
+.progress-container::before{
+    content: '';
+    background-color: #efefef;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 4px;
+    width: 100%;
+    z-index: -1;
+
+}
+.progress{
+    background-color: #3498db;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 4px;
+    width: 00%;
+    z-index: -1;
+    transition: 0.4s ease;
+}
+.circle{
+    background-color: #fff;
+    color: #999;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #efefef;
+
+    transition: 0.4s ease;
+}
+.circle.active{
+    border-color: #3498db;
+}
+.btn{
+    background-color: #3498db;
+    color: white;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 8px 30px;
+    margin: 5px;
+    font-size: 14px;
+}
+.btn:disabled{
+    background-color: #999;
+    cursor: not-allowed;
+
+}
+.btn:focus{
+    outline: 0 ;
+}
+.btn.active{
+    transform: scale(0.98);
+}
+
+</style>
 

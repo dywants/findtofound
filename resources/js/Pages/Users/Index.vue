@@ -8,6 +8,10 @@
                         <div v-if="$page.props.flash.message" class="text-[14px] text-gray-600 ">
                             Votre mot de passe est: <em class="font-semibold">{{ $page.props.flash.message }}</em>
                         </div>
+
+                        <div v-if="$page.props.flash.success" class="mb-4 font-medium text-sm text-green-600">
+                            {{ $page.props.flash.success }}
+                        </div>
                     </div>
                 </div>
             </div>
