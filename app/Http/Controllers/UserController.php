@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Piece;
 use App\Models\Thefind;
 use App\Models\Thefound;
 use App\Models\User;
@@ -17,7 +18,17 @@ class UserController extends Controller
      */
     public function index(): \Inertia\Response
     {
-        return Inertia::render('Users/Index');
+        $user = auth()->user();
+        $amountByUser = User::query()
+            ->where('id', $user->id)
+            ->withSum('finds','amount_check')
+            ->get();
+
+        $thefind = arrat_to_object($amountByUser);
+
+        return Inertia::render('Users/Index', [
+            'total_amount' => money($thefind->finds_sum_amount_check)
+        ]);
     }
 
     public function listing(): \Inertia\Response
@@ -31,6 +42,7 @@ class UserController extends Controller
             ->with('piece')
             ->where('user_id', $user->id)
             ->get();
+
         return Inertia::render('Users/TheListingFind', [
             'listing' => $listing,
             "filters" => (new \Illuminate\Http\Request)->only(['search'])
@@ -45,16 +57,6 @@ class UserController extends Controller
             ->with('thefind.user.profile')
             ->with('user.profile')
             ->get();
-
-        function arrat_to_object($piece)
-        {
-            $elem = "";
-            foreach($piece as $item){
-                $elem = $item;
-            }
-
-            return $elem;
-        }
 
         $thefind = arrat_to_object($piece);
 

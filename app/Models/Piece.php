@@ -15,9 +15,9 @@ class Piece extends Model
     /**
      * @return BelongsTo
      */
-    public function reward(): BelongsTo
+    public function thefind(): BelongsTo
     {
-        return $this->belongsTo(Reward::class);
+        return $this->belongsTo(Thefind::class);
     }
 
     /**
