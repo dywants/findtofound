@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ContactIndexController;
+use App\Http\Controllers\FaqsIndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TheFindController;
 use App\Http\Controllers\TheFoundController;
@@ -37,6 +39,8 @@ Route::get('/piece-rechercher', [TheFoundController::class, 'search'])->name('fo
 Route::get('/piece/{thefind}/enregistrer', [TheFoundController::class, 'register'])->name('found.info');
 Route::post('/piece/enregistrer', [TheFoundController::class, 'store'])->name('found.store');
 Route::get('/paiement', [TheFoundController::class, 'paiement'])->name('paiement');
+Route::get('/contacter-nous', ContactIndexController::class)->name('contact');
+Route::get('/faqs', FaqsIndexController::class)->name('faqs');
 
 Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('dashboard');

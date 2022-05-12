@@ -68,10 +68,10 @@
                                <NavLink :href="route('found.search')" :active="route().current('found.search')">Rechercher pièce</NavLink>
                            </li>
                            <li>
-                               <NavLink>Blog</NavLink>
+                               <NavLink :href="route('contact')" :active="route().current('contact')">Contact</NavLink>
                            </li>
                            <li>
-                               <NavLink>Contact</NavLink>
+                               <NavLink :href="route('faqs')" :active="route().current('faqs')">Faqs</NavLink>
                            </li>
                        </ul>
                    </div>
