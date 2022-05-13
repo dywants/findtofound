@@ -48,12 +48,13 @@ class HandleInertiaRequests extends Middleware
                     return Thefind::cursor()->map(function ($thefind) {
                         return [
                             'fullName' => $thefind->fullName,
-                            'amount_check' => money($thefind->amount_check),
+                            'amount_check' =>money(order_amount($thefind->amount_check)),
+                            'amount_piece' => money(amount_piece($thefind->piece_id)),
                             'findCity' => $thefind->findCity,
                             'photos' => asset('storage/findImages/'. $thefind->photos),
                             'details' => $thefind->details,
                             'created_at' => $thefind->created_at->diffForHumans(),
-                            'link' => route('find.show', ['thefind' => $thefind->id])
+                            'link' => route('find.show', ['thefind' => $thefind->id]),
                         ];
                     })->toArray();
 //                });

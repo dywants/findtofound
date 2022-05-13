@@ -30,7 +30,8 @@ class TheFoundController extends Controller
            'ward' => $thefind->ward,
            'details' => $thefind->details,
            'photos' => $thefind->photos,
-           'amount_check' => money($thefind->amount_check),
+           'amount_check' => money(order_amount($thefind->amount_check)),
+           'amount_piece' => money(amount_piece($thefind->piece_id))
        ]);
     }
 

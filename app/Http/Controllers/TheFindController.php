@@ -76,16 +76,6 @@ class TheFindController extends Controller
         if ($request->hasFile('photos')){
             $arrayImage = $request->photos;
 
-            function arrat_to_object($arrayImage)
-            {
-                $photoObj = "";
-                foreach($arrayImage as $image){
-                    $photoObj = $image;
-                }
-
-                return $photoObj;
-            }
-
             $imageObject = arrat_to_object($arrayImage);
             $imageName = time(). '.' . $user->id . now()->format('y') . '/' . now()->format('m') . $imageObject->extension();
             $imageObject->storeAs('findImages', $imageName);
@@ -126,7 +116,8 @@ class TheFindController extends Controller
             'ward' => $thefind->ward,
             'details' => $thefind->details,
             'photos' => $thefind->photos,
-            'amount_check' => money($thefind->amount_check),
+            'amount_check' => money(order_amount($thefind->amount_check)),
+            'amount_piece' => money(amount_piece($thefind->piece_id))
         ]);
     }
 

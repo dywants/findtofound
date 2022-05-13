@@ -81,7 +81,7 @@
                         <div class="mt-6">
                             <span
                                 class="text-xl underline text-gray-800 capitalize hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800">
-                                {{ amount_check.formatted }}
+                                {{ amount_check.amount == 0 ? amount_piece.formatted : amount_check.formatted}}
                             </span>
                         </div>
                     </div>
@@ -134,7 +134,7 @@ function closeView() {
 export default {
     name: "TheShowFind",
     components: {Link, HeaderPage},
-    props: ['fullName', 'findCity','details', 'amount_check', 'id', 'photos'],
+    props: ['fullName', 'findCity','details', 'amount_check', 'id', 'photos', 'amount_piece'],
     methods: {
         showImage() {
             return "/storage/findImages/";

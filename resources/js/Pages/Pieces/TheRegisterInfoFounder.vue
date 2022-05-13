@@ -43,7 +43,7 @@
                     </div>
                     <div class="mb-6">
                         <label for="amount_check" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Montant à payer</label>
-                        <Field type="text" id="amount_check" name="amount_check" :value=amount_check.formatted class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  disabled />
+                        <Field type="text"  id="amount_check" name="amount_check" :value="amount_check.amount == 0 ? amount_piece.formatted : amount_check.formatted"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  disabled />
                     </div>
 
                     <button type="submit" :disabled="isSubmitting"
@@ -65,7 +65,7 @@ import {Inertia} from "@inertiajs/inertia";
 export default {
     name: "TheRegisterInfoFounder",
     components: {HeaderPage, Link, Field, ErrorMessage},
-    props: ['fullName', 'amount_check', 'id' ,'validationSchema'],
+    props: ['fullName', 'amount_check', 'id' ,'validationSchema','amount_piece'],
     data() {
         return {
             errors: [],

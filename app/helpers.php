@@ -26,3 +26,35 @@ if (!function_exists('arrat_to_object')){
         return $elem;
     }
 }
+
+if (!function_exists('order_amount')){
+    /**
+     * @param $amount
+     * @return float|int
+     */
+    function order_amount($amount): float|int
+    {
+        $percentage = 45;
+
+        $amount += $amount * $percentage / 100;
+
+        return $amount;
+    }
+}
+
+if (!function_exists('amount_piece')){
+    /**
+     * @param $id
+     * @return float|int
+     */
+    function amount_piece($id): float|int
+    {
+        $percentage = config('app.percentage');
+
+       $piece = \App\Models\Piece::where('id' , $id)->get()->toArray();
+       $elem_piece = arrat_to_object($piece);
+       $amount_piece = $elem_piece['amount'];
+
+       return $amount = $amount_piece * $percentage / 100;
+    }
+}

@@ -61,7 +61,7 @@ function closeView() {
     Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Link,
     HeaderPage: _Layouts_HeaderPage__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['fullName', 'findCity', 'details', 'amount_check', 'id', 'photos'],
+  props: ['fullName', 'findCity', 'details', 'amount_check', 'id', 'photos', 'amount_piece'],
   methods: {
     showImage: function showImage() {
       return "/storage/findImages/";
@@ -337,7 +337,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount_check.formatted), 1
+  , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount_check.amount == 0 ? $props.amount_piece.formatted : $props.amount_check.formatted), 1
   /* TEXT */
   )])])])])])])], 64
   /* STABLE_FRAGMENT */

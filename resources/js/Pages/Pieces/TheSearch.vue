@@ -73,7 +73,7 @@
                             <p class="text-sm text-gray-500 mt-1 line-clamp-2 leading-4">{{ result.item.details }}</p>
                             <div class="text-right">
                                   <span class="text-sm text-gray-500 mt-4 line-clamp-2 px-1.5
-                            py-1 border border-gray-600 rounded-md mt-6 bg-gray-200">{{ result.item.amount_check.formatted }}</span>
+                            py-1 border border-gray-600 rounded-md mt-6 bg-gray-200">{{ result.item.amount_check.amount == 0 ? result.item.amount_piece.formatted : result.item.amount_check.formatted}}</span>
                             </div>
                         </div>
                     </div>

@@ -29,7 +29,7 @@ __webpack_require__.r(__webpack_exports__);
     Field: vee_validate__WEBPACK_IMPORTED_MODULE_4__.Field,
     ErrorMessage: vee_validate__WEBPACK_IMPORTED_MODULE_4__.ErrorMessage
   },
-  props: ['fullName', 'amount_check', 'id', 'validationSchema'],
+  props: ['fullName', 'amount_check', 'id', 'validationSchema', 'amount_piece'],
   data: function data() {
     return {
       errors: []
@@ -220,7 +220,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     id: "amount_check",
     name: "amount_check",
-    value: $props.amount_check.formatted,
+    value: $props.amount_check.amount == 0 ? $props.amount_piece.formatted : $props.amount_check.formatted,
     "class": "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
     disabled: ""
   }, null, 8
