@@ -1725,6 +1725,9 @@ input:checked + .toggle-bg {
 .max-w-5xl {
   max-width: 64rem;
 }
+.max-w-4xl {
+  max-width: 56rem;
+}
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -1766,6 +1769,10 @@ input:checked + .toggle-bg {
 }
 .rotate-180 {
   --tw-rotate: 180deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.rotate-0 {
+  --tw-rotate: 0deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .scale-95 {

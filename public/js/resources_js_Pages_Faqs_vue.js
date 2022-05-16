@@ -1,6 +1,32 @@
 "use strict";
 (self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_Pages_Faqs_vue"],{
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Accordion.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Accordion.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "Accordion",
+  data: function data() {
+    return {
+      isOpen: false
+    };
+  },
+  methods: {
+    toggleAccordion: function toggleAccordion() {
+      this.isOpen = !this.isOpen;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Faqs.vue?vue&type=script&setup=true&lang=js":
 /*!****************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Faqs.vue?vue&type=script&setup=true&lang=js ***!
@@ -13,6 +39,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Layouts_HeaderPage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/HeaderPage */ "./resources/js/Layouts/HeaderPage.vue");
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
+/* harmony import */ var _Components_Accordion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/Accordion */ "./resources/js/Components/Accordion.vue");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -21,7 +49,8 @@ __webpack_require__.r(__webpack_exports__);
     expose();
     var __returned__ = {
       HeaderPage: _Layouts_HeaderPage__WEBPACK_IMPORTED_MODULE_0__["default"],
-      Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Link
+      Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Link,
+      Accordion: _Components_Accordion__WEBPACK_IMPORTED_MODULE_2__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -30,6 +59,65 @@ __webpack_require__.r(__webpack_exports__);
     return __returned__;
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Accordion.vue?vue&type=template&id=d0b0a0e6":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Accordion.vue?vue&type=template&id=d0b0a0e6 ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = ["aria-expanded", "aria-controls"];
+
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  d: "M15 1.2l-7 7-7-7",
+  "stroke-width": "2",
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_3 = [_hoisted_2];
+var _hoisted_4 = ["id"];
+var _hoisted_5 = {
+  "class": "py-5 border-b border-gray-200 dark:border-gray-700"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[0] || (_cache[0] = function ($event) {
+      return $options.toggleAccordion();
+    }),
+    "class": "flex justify-between items-center py-5 w-full font-medium text-left text-gray-900 rounded-t-xl border-b border-gray-200 dark:border-gray-700 dark:text-white",
+    "aria-expanded": $data.isOpen,
+    "aria-controls": "collapse".concat(_ctx._uid)
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "title"), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["w-4 h-4 shrink-0 transition-all duration-200 transform", {
+      'rotate-180': $data.isOpen,
+      'rotate-0': !$data.isOpen
+    }]),
+    fill: "none",
+    stroke: "currentColor",
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 16 10",
+    "aria-hidden": "true"
+  }, _hoisted_3, 2
+  /* CLASS */
+  ))], 8
+  /* PROPS */
+  , _hoisted_1)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    id: "collapse".concat(_ctx._uid)
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "content")])], 8
+  /* PROPS */
+  , _hoisted_4), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.isOpen]])]);
+}
 
 /***/ }),
 
@@ -52,7 +140,31 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"max-w-2xl mx-auto bg-white p-16 mt-4 rounded\"><div id=\"accordion-flush\" data-accordion=\"collapse\" data-active-classes=\"bg-white dark:bg-gray-900 text-gray-900 dark:text-white\" data-inactive-classes=\"text-gray-500 dark:text-gray-400\"><h2 id=\"accordion-flush-heading-1\"><button type=\"button\" class=\"flex justify-between items-center py-5 w-full font-medium text-left text-gray-900 rounded-t-xl border-b border-gray-200 dark:border-gray-700 dark:text-white\" data-accordion-target=\"#accordion-flush-body-1\" aria-expanded=\"true\" aria-controls=\"accordion-flush-body-1\"><span>What is Flowbite?</span><svg data-accordion-icon class=\"w-6 h-6 rotate-180 shrink-0\" fill=\"currentColor\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"><path fill-rule=\"evenodd\" d=\"M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z\" clip-rule=\"evenodd\"></path></svg></button></h2><div id=\"accordion-flush-body-1\" aria-labelledby=\"accordion-flush-heading-1\"><div class=\"py-5 border-b border-gray-200 dark:border-gray-700\"><p class=\"mb-2 text-gray-500 dark:text-gray-400\">Flowbite is an open-source library of interactive components built on top of Tailwind CSS including buttons, dropdowns, modals, navbars, and more.</p><p class=\"text-gray-500 dark:text-gray-400\">Check out this guide to learn how to <a href=\"https://flowbite.com/docs/getting-started/introduction/\" class=\"text-blue-600 dark:text-blue-500 hover:underline\">get started</a> and start developing websites even faster with components on top of Tailwind CSS.</p></div></div><h2 id=\"accordion-flush-heading-2\"><button type=\"button\" class=\"flex justify-between items-center py-5 w-full font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400\" data-accordion-target=\"#accordion-flush-body-2\" aria-expanded=\"false\" aria-controls=\"accordion-flush-body-2\"><span>Is there a Figma file available?</span><svg data-accordion-icon class=\"w-6 h-6 shrink-0\" fill=\"currentColor\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"><path fill-rule=\"evenodd\" d=\"M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z\" clip-rule=\"evenodd\"></path></svg></button></h2><div id=\"accordion-flush-body-2\" class=\"hidden\" aria-labelledby=\"accordion-flush-heading-2\"><div class=\"py-5 border-b border-gray-200 dark:border-gray-700\"><p class=\"mb-2 text-gray-500 dark:text-gray-400\">Flowbite is first conceptualized and designed using the Figma software so everything you see in the library has a design equivalent in our Figma file.</p><p class=\"text-gray-500 dark:text-gray-400\">Check out the <a href=\"https://flowbite.com/figma/\" class=\"text-blue-600 dark:text-blue-500 hover:underline\">Figma design system</a> based on the utility classes from Tailwind CSS and components from Flowbite.</p></div></div><h2 id=\"accordion-flush-heading-3\"><button type=\"button\" class=\"flex justify-between items-center py-5 w-full font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400\" data-accordion-target=\"#accordion-flush-body-3\" aria-expanded=\"false\" aria-controls=\"accordion-flush-body-3\"><span>What are the differences between Flowbite and Tailwind UI?</span><svg data-accordion-icon class=\"w-6 h-6 shrink-0\" fill=\"currentColor\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"><path fill-rule=\"evenodd\" d=\"M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z\" clip-rule=\"evenodd\"></path></svg></button></h2><div id=\"accordion-flush-body-3\" class=\"hidden\" aria-labelledby=\"accordion-flush-heading-3\"><div class=\"py-5 border-b border-gray-200 dark:border-gray-700\"><p class=\"mb-2 text-gray-500 dark:text-gray-400\">The main difference is that the core components from Flowbite are open source under the MIT license, whereas Tailwind UI is a paid product. Another difference is that Flowbite relies on smaller and standalone components, whereas Tailwind UI offers sections of pages.</p><p class=\"mb-2 text-gray-500 dark:text-gray-400\">However, we actually recommend using both Flowbite, Flowbite Pro, and even Tailwind UI as there is no technical reason stopping you from using the best of two worlds.</p><p class=\"mb-2 text-gray-500 dark:text-gray-400\">Learn more about these technologies:</p><ul class=\"pl-5 list-disc text-gray-500 dark:text-gray-400\"><li><a href=\"https://flowbite.com/pro/\" class=\"text-blue-600 dark:text-blue-500 hover:underline\">Flowbite Pro</a></li><li><a href=\"https://tailwindui.com/\" rel=\"nofollow\" class=\"text-blue-600 dark:text-blue-500 hover:underline\">Tailwind UI</a></li></ul></div></div></div></div>", 1);
+var _hoisted_2 = {
+  "class": "max-w-4xl mx-auto bg-white p-16 mt-4 rounded shadow-sm"
+};
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "font-medium text-lg"
+}, "Accordion 1", -1
+/* HOISTED */
+);
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "mb-2 text-gray-500"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "Lorem"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", ipsum dolor sit amet consectetur adipisicing elit. Quia, porro. Non a excepturi, voluptatibus ipsam magnam, eligendi, accusantium ipsa quae quis praesentium voluptate saepe ullam sint ea itaque consectetur impedit? ")], -1
+/* HOISTED */
+);
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "font-medium text-lg"
+}, "Accordion 2", -1
+/* HOISTED */
+);
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "Lorem"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", ipsum dolor sit amet consectetur adipisicing elit. Quia, porro. Non a excepturi, voluptatibus ipsam magnam, eligendi, accusantium ipsa quae quis praesentium voluptate saepe ullam sint ea itaque consectetur impedit? ")], -1
+/* HOISTED */
+);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
@@ -66,10 +178,61 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" component "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" This is an example component "), _hoisted_2], 64
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" component "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" This is an example component "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Accordion"], {
+    "class": "mb-4"
+  }, {
+    title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_3];
+    }),
+    content: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_4];
+    }),
+    _: 1
+    /* STABLE */
+
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Accordion"], {
+    "class": "mb-4"
+  }, {
+    title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_5];
+    }),
+    content: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_6];
+    }),
+    _: 1
+    /* STABLE */
+
+  })])], 64
   /* STABLE_FRAGMENT */
   );
 }
+
+/***/ }),
+
+/***/ "./resources/js/Components/Accordion.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/Components/Accordion.vue ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Accordion_vue_vue_type_template_id_d0b0a0e6__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Accordion.vue?vue&type=template&id=d0b0a0e6 */ "./resources/js/Components/Accordion.vue?vue&type=template&id=d0b0a0e6");
+/* harmony import */ var _Accordion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Accordion.vue?vue&type=script&lang=js */ "./resources/js/Components/Accordion.vue?vue&type=script&lang=js");
+/* harmony import */ var _home_bayongct_www_findtofound_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,_home_bayongct_www_findtofound_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Accordion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Accordion_vue_vue_type_template_id_d0b0a0e6__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/Components/Accordion.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
 
 /***/ }),
 
@@ -100,6 +263,21 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/Components/Accordion.vue?vue&type=script&lang=js":
+/*!***********************************************************************!*\
+  !*** ./resources/js/Components/Accordion.vue?vue&type=script&lang=js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Accordion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Accordion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Accordion.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Accordion.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/Pages/Faqs.vue?vue&type=script&setup=true&lang=js":
 /*!************************************************************************!*\
   !*** ./resources/js/Pages/Faqs.vue?vue&type=script&setup=true&lang=js ***!
@@ -112,6 +290,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Faqs_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Faqs.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Faqs.vue?vue&type=script&setup=true&lang=js");
  
+
+/***/ }),
+
+/***/ "./resources/js/Components/Accordion.vue?vue&type=template&id=d0b0a0e6":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/Components/Accordion.vue?vue&type=template&id=d0b0a0e6 ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Accordion_vue_vue_type_template_id_d0b0a0e6__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Accordion_vue_vue_type_template_id_d0b0a0e6__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Accordion.vue?vue&type=template&id=d0b0a0e6 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Accordion.vue?vue&type=template&id=d0b0a0e6");
+
 
 /***/ }),
 
