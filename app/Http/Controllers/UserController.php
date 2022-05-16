@@ -19,15 +19,38 @@ class UserController extends Controller
     public function index(): \Inertia\Response
     {
         $user = auth()->user();
-        $amountByUser = User::query()
+        $amountByFinder = User::query()
             ->where('id', $user->id)
             ->withSum('finds','amount_check')
             ->get();
 
-        $thefind = arrat_to_object($amountByUser);
+        $amountByFinderStatus =  User::query()
+            ->where('id', $user->id)
+            ->withSum([
+                'finds' => fn ($query) => $query->where('approval_status', 1)],
+                'amount_check')
+            ->get();
+
+        $amountByUser = Thefound::query()
+            ->where('user_id', $user->id)
+            ->get();
+
+        $thefind = arrat_to_object($amountByFinder);
+        $amount_finder = arrat_to_object($amountByFinderStatus);
+        $thefound = arrat_to_object($amountByUser);
+
+        if ($user->hasRole('finder')){
+            $amount = '';
+        }else if($user->hasRole('user')){
+            $amount = money($thefound->amount);
+        }else{
+            $amount = '';
+        }
 
         return Inertia::render('Users/Index', [
-            'total_amount' => money($thefind->finds_sum_amount_check)
+            'total_presume_amount' => money($thefind->finds_sum_amount_check),
+            'total_amount' => money($amount_finder->finds_sum_amount_check),
+            'amount' => $amount
         ]);
     }
 

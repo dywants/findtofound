@@ -73,6 +73,8 @@ class TheFindController extends Controller
 
         $user->notify(new WelcomeEmailNotification($user,$generatedPassword));
 
+        $user->assignRole('finder');
+
         if ($request->hasFile('photos')){
             $arrayImage = $request->photos;
 

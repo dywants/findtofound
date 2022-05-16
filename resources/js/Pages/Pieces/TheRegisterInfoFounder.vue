@@ -42,8 +42,8 @@
                         <ErrorMessage class="mt-2 text-sm text-red-600" name="city" />
                     </div>
                     <div class="mb-6">
-                        <label for="amount_check" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Montant à payer</label>
-                        <Field type="text"  id="amount_check" name="amount_check" :value="amount_check.amount == 0 ? amount_piece.formatted : amount_check.formatted"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  disabled />
+                        <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Montant à payer (FCFA)</label>
+                        <Field type="text" id="amount" name="amount" :value="amount_check.amount == 0 ? amount_piece.amount : amount_check.amount"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  disabled />
                     </div>
 
                     <button type="submit" :disabled="isSubmitting"

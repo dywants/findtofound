@@ -143,9 +143,9 @@ var _hoisted_15 = {
 };
 
 var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "amount_check",
+  "for": "amount",
   "class": "block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-}, "Montant à payer", -1
+}, "Montant à payer (FCFA)", -1
 /* HOISTED */
 );
 
@@ -218,9 +218,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     name: "city"
   })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
     type: "text",
-    id: "amount_check",
-    name: "amount_check",
-    value: $props.amount_check.amount == 0 ? $props.amount_piece.formatted : $props.amount_check.formatted,
+    id: "amount",
+    name: "amount",
+    value: $props.amount_check.amount == 0 ? $props.amount_piece.amount : $props.amount_check.amount,
     "class": "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
     disabled: ""
   }, null, 8

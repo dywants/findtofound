@@ -92,9 +92,12 @@ class TheFoundController extends Controller
 
         $user->notify(new WelcomeEmailNotification($user,$generatedPassword));
 
+        $user->assignRole('user');
+
         Thefound::create([
             'user_id' => $user->id,
             'thefind_id' => $request->thefind_id,
+            'amount' => $request->amount,
         ]);
 
         Profile::create([
@@ -104,8 +107,14 @@ class TheFoundController extends Controller
         ]);
 
         return redirect()->route('paiement')->with([
-            'amount_check' => $request->amount_check,
+            'amount' => $request->amount,
         ]);
+    }
+
+    public function multipleexplode ($delimiters,$string): array
+    {
+        $phase = str_replace($delimiters, $delimiters[0], $string);
+        return explode($delimiters[0], $phase);
     }
 
     /**

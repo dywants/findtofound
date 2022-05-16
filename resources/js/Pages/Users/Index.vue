@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-4 xxl:col-span-4 px-6 py-6">
                     <!-- Start profile Card -->
-                    <div class="bg-white rounded-xl p-4 shadow-xl">
+                    <div v-if="$page.props.is_finder" class="bg-white rounded-xl p-4 shadow-xl">
                         <div class="flex flex-col justify-center items-center">
                             <div class="w-full bg-cover bg-center h-32">
                                 <div class="relative w-full h-full px-4 sm:px-6 lg:px-4 flex items-center justify-center">
@@ -34,14 +34,14 @@
                                             Solde à percevoir
                                         </h3>
                                         <h3 class="text-center text-3xl mt-2 font-bold">
-                                            RM 2000.00
+                                            {{ total_presume_amount.formatted }}
                                         </h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl p-4 shadow-xl mt-4">
+                    <div v-if="$page.props.is_finder" class="bg-white rounded-xl p-4 shadow-xl mt-4">
                         <div class="flex flex-col justify-center items-center">
                             <div class="w-full bg-cover bg-center h-32">
                                 <div class="relative w-full h-full px-4 sm:px-6 lg:px-4 flex items-center justify-center">
@@ -51,6 +51,22 @@
                                         </h3>
                                         <h3  class="text-center text-3xl mt-2 font-bold">
                                             {{ total_amount.formatted }}
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="$page.props.is_user" class="bg-white rounded-xl p-4 shadow-xl mt-4">
+                        <div class="flex flex-col justify-center items-center">
+                            <div class="w-full bg-cover bg-center h-32">
+                                <div class="relative w-full h-full px-4 sm:px-6 lg:px-4 flex items-center justify-center">
+                                    <div>
+                                        <h3 class="text-center text-lg">
+                                            Somme payée pour votre pièce
+                                        </h3>
+                                        <h3  class="text-center text-3xl mt-2 font-bold">
+                                            {{ amount.formatted }}
                                         </h3>
                                     </div>
                                 </div>
@@ -68,6 +84,8 @@ import Dashboard from '@/Pages/Dashboard'
 
 let props = defineProps({
     total_amount: Object,
+    total_presume_amount: Object,
+    amount: Object,
 });
 </script>
 

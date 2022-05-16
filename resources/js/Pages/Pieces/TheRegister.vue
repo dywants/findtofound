@@ -157,7 +157,7 @@ export default {
 
         function onSubmit(formData) {
             console.log(JSON.stringify(formData, null, 2));
-            // Inertia.post('/piece-enregistrer', formData);
+            Inertia.post('/piece-enregistrer', formData);
         }
         const validationSchema = [
             yup.object({

@@ -9,11 +9,9 @@
             <!-- Page Heading -->
             <HeaderPage/>
         </header>
-        <!--    <client-only>-->
         <main class="flex-grow">
             <slot />
         </main>
-        <!--    </client-only>-->
         <TheFooter />
     </div>
 </template>

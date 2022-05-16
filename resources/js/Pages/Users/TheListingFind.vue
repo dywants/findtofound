@@ -111,22 +111,6 @@ function formatDateFR(date) {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
     return new Date(date).toLocaleDateString('fr-FR', options)
 }
-
-// export default {
-//     name: "TheListingFind",
-//     components: { Dashboard, Head},
-//     props: ['listing'],
-//
-//     methods: {
-//         showImage() {
-//             return "/storage/findImages/";
-//         },
-//         formatDateFR(date) {
-//             const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
-//             return new Date(date).toLocaleDateString('fr-FR', options)
-//         },
-//     },
-// }
 </script>
 
 <style scoped>

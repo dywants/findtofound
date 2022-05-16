@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactIndexController;
 use App\Http\Controllers\FaqsIndexController;
 use App\Http\Controllers\HomeController;
@@ -21,15 +22,6 @@ use Inertia\Inertia;
 |
 */
 
-//Route::get('/', function () {
-//    return Inertia::render('Welcome', [
-//        'canLogin' => Route::has('login'),
-//        'canRegister' => Route::has('register'),
-//        'laravelVersion' => Application::VERSION,
-//        'phpVersion' => PHP_VERSION,
-//    ]);
-//});
-
 Route::get('/', HomeController::class)->name('home');
 Route::get('/piece-enregistrer', [TheFindController::class, 'index'])->name('find.register');
 Route::post('/piece-enregistrer', [TheFindController::class, 'store'])->name('find.store');
@@ -47,6 +39,12 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
     Route::get('/liste-piece-trouvee', [UserController::class, 'listing'])->name('find.list');
     Route::get('/ma-piece-trouvee', [UserController::class, 'myPiece'])->name('found.item');
     Route::get('/finder-user/{user}', [UserController::class, 'show'])->name('show.finder');
+});
+
+Route::middleware(['auth', 'verified'])->prefix('admin')->group(function (){
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::get('/new-user', [AdminController::class, 'create'])->name('admin.new.user');
 });
 
 

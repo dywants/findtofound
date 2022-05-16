@@ -34,7 +34,7 @@ if (!function_exists('order_amount')){
      */
     function order_amount($amount): float|int
     {
-        $percentage = 45;
+        $percentage = config('app.percentage');
 
         $amount += $amount * $percentage / 100;
 

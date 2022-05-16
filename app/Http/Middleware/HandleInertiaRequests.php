@@ -43,6 +43,9 @@ class HandleInertiaRequests extends Middleware
             'ziggy' => function () {
                 return (new Ziggy)->toArray();
             },
+            'is_admin' => $request->user() && $request->user()->hasRole('admin'),
+            'is_user' => $request->user() && $request->user()->hasRole('user'),
+            'is_finder' => $request->user() && $request->user()->hasRole('finder'),
             'searchItems' => function () {
 //                return Cache::rememberForever('searchItems', function () {
                     return Thefind::cursor()->map(function ($thefind) {

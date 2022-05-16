@@ -29,6 +29,9 @@
                                        </template>
 
                                        <template #content>
+                                           <BreezeDropdownLink v-if="$page.props.is_admin" :href="route('admin.index')" as="button">
+                                               Admin
+                                           </BreezeDropdownLink>
                                            <BreezeDropdownLink :href="route('dashboard')" as="button">
                                                Dashboard
                                            </BreezeDropdownLink>

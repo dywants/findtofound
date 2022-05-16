@@ -11,10 +11,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Rackbeat\UIAvatars\HasAvatar;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasAvatar;
+    use HasApiTokens, HasFactory, Notifiable, HasAvatar, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -83,7 +84,7 @@ class User extends Authenticatable
      */
     public function finds(): HasMany
     {
-        return $this->hasMany(Thefind::class);
+        return $this->hasMany(Thefind::class, 'user_id');
     }
 
     public function thefound(): HasOne
