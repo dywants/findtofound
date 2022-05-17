@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faq;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,6 +14,9 @@ class FaqsIndexController extends Controller
      */
    public function __invoke(): \Inertia\Response
    {
-       return Inertia::render('Faqs');
+       $faqs = Faq::latest()->get();
+       return Inertia::render('Faqs', [
+           'faqs' => $faqs
+       ]);
    }
 }
