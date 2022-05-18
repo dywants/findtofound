@@ -45,6 +45,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function (){
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
     Route::get('/new-user', [AdminController::class, 'create'])->name('admin.new.user');
+    Route::resource('faq', \App\Http\Controllers\Admin\FaqsController::class);
 });
 
 

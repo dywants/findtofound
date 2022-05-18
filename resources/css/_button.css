@@ -45,6 +45,10 @@
   @apply flex items-center flex-wrap justify-start;
 }
 
+.button.disabled{
+    @apply bg-gray-100 cursor-none rounded-md
+}
+
 .buttons.nowrap {
   @apply flex-nowrap;
 }
