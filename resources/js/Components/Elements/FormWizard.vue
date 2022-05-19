@@ -1,17 +1,6 @@
 <template>
     <form @submit="onSubmit">
         <TheCard>
-           <template #nav>
-               <div class="container">
-                   <div class="progress-container">
-                       <div class="progress" id="progress"></div>
-                       <div class="circle active">1</div>
-                       <div class="circle">2</div>
-                       <div class="circle">3</div>
-                       <div class="circle">4</div>
-                   </div>
-               </div>
-           </template>
             <template #body>
                 <slot/>
             </template>

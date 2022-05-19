@@ -2,9 +2,6 @@
 import HeaderPage from "@/Layouts/HeaderPage";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
-// import StepProgressBar from 'vue-steps-progress-bar'
-import StepProgress from "vue-step-progress";
-import 'vue-step-progress/dist/main.css';
 import InforObject from "@/Components/Steps/InforObject";
 import YourInformation from "@/Components/Steps/YourInformation";
 import Validation from "@/Components/Steps/Validation";
@@ -12,16 +9,6 @@ import FormWizard from "@/Components/Elements/FormWizard";
 import FormStep from "@/Components/Elements/FormStep";
 import * as yup from "yup";
 import {Inertia} from '@inertiajs/inertia';
-import {useForm} from '@inertiajs/inertia-vue3'
-
-// defineProps({
-//     errors: Object
-// });
-
-const progress = document.getElementById('progress');
-const prev = document.getElementById('preBtn');
-const next = document.getElementById('nextBtn');
-const circles = document.querySelectorAll('.circle');
 
 export default {
     name: "TheRegister",
@@ -33,7 +20,6 @@ export default {
         InforObject,
         HeaderPage,
         "v-loading": Loading,
-        "v-step-progress": StepProgress,
     },
     computed: {
         isLoading() {
@@ -112,49 +98,6 @@ export default {
     },
 
     setup(){
-        let currentActive= 1;
-
-        function goToNext(){
-            currentActive++;
-            if(currentActive > circles.length){
-                currentActive =circles.length;
-            }
-            update();
-            console.log(currentActive)
-        }
-
-        function goToPrev(){
-            currentActive--;
-            if(currentActive <1){
-                currentActive =1;
-            }
-
-            update();
-        }
-
-        function update(){
-            circles.forEach((circle, idx)=>{
-                if(idx < currentActive){
-                    circle.classList.add('active')
-                }else {
-                    circle.classList.remove('active')
-                }
-            })
-
-            const actives = document.querySelectorAll('.active');
-            progress.style.width=((actives.length -1) / (circles.length-1))*100 + '%';
-
-            if(currentActive ===1){
-                prev.disabled= true;
-            }else if(currentActive === circles.length){
-                next.disabled= true;
-            }else
-            {
-                prev.disabled= false;
-                next.disabled= false;
-            }
-        }
-
         function onSubmit(formData) {
             console.log(JSON.stringify(formData, null, 2));
             Inertia.post('/piece-enregistrer', formData);
@@ -233,8 +176,7 @@ export default {
         </nav>
 
         <div class="is-clearfix mb-3">
-<!--            <v-step-progress :steps="['Informations de la pièce', 'Vos informations', 'Validation']"-->
-<!--                             :current-step="step" icon-class="fa fa-check" />-->
+
            <FormWizard :validation-schema="validationSchema" @submit="onSubmit">
                <FormStep>
                    <template #header>Entrez les informations de la pièce </template>
