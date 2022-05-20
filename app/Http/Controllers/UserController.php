@@ -6,7 +6,10 @@ use App\Models\Piece;
 use App\Models\Thefind;
 use App\Models\Thefound;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -150,9 +153,9 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function update(Request $request, User $user): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, User $user): RedirectResponse
     {
         $user->update( [
             'name' => $request->name
@@ -163,6 +166,26 @@ class UserController extends Controller
 
         $request->session()->flash('success', 'User && profile updated successfully');
 
+        return redirect()->back();
+    }
+
+    public function updatePassword(Request $request , User $user): RedirectResponse
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required'
+        ]);
+
+        if(!Hash::check($request->old_password, $user->password)){
+            $request->session()->flash('error', 'Ancien mot de passe ne correspond pas');
+            return redirect()->back();
+        }
+
+        $user->update([
+            'password' => Hash::make($request->new_pasword)
+        ]);
+
+        $request->session()->flash('success', 'Mot de passe motifier avec success');
         return redirect()->back();
     }
 
