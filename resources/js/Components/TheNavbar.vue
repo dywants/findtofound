@@ -35,6 +35,9 @@
                                            <BreezeDropdownLink :href="route('dashboard')" as="button">
                                                Dashboard
                                            </BreezeDropdownLink>
+                                           <BreezeDropdownLink :href="route('user.profile')" as="button">
+                                               Profile
+                                           </BreezeDropdownLink>
                                            <BreezeDropdownLink :href="route('logout')" method="post" as="button">
                                                Déconnexion
                                            </BreezeDropdownLink>

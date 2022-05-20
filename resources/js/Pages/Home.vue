@@ -31,7 +31,7 @@
                         <img src="images/icons/search.svg" class="w-10 h-10 object-contain" width="512" height="512" alt="burger illustration">
 
                         <div class="space-y-2">
-                            <h5 class="text-xl text-gray-800 font-medium transition group-hover:text-yellow-600">Retrouver une pièce</h5>
+                            <h5 class="text-xl text-gray-800 font-medium transition group-hover:text-yellow-600">Rechercher une pièce</h5>
                             <p class="text-sm text-gray-600">Si vous etes a la recherche de votre pièce perdues, vous pouvez la retrouver
                                 via notre formulaire de recherche en cliquant sur <span class="text-[17px] font-semibold">Recherche pièce</span></p>
                         </div>

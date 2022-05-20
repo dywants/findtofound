@@ -39,6 +39,8 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
     Route::get('/liste-piece-trouvee', [UserController::class, 'listing'])->name('find.list');
     Route::get('/ma-piece-trouvee', [UserController::class, 'myPiece'])->name('found.item');
     Route::get('/finder-user/{user}', [UserController::class, 'show'])->name('show.finder');
+    Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::put('/profile/{user}/updated', [UserController::class, 'update'])->name('user.update');
 });
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function (){

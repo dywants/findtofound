@@ -29,7 +29,7 @@ const submit = () => {
     <div>
         <Head title="Log in" />
 
-      <div class="min-h-screen bg-no-repeat bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1486520299386-6d106b22014b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80')">
+      <div class="min-h-screen bg-no-repeat bg-contain" style="background-image: url('images/login.svg')">
           <div class="flex justify-center items-center md:justify-end relative">
               <div class="absolute top-12 right-10">
                   <BreezeValidationErrors class="mb-4" />

@@ -123,6 +123,17 @@ class UserController extends Controller
        ]);
     }
 
+    public function profile(): \Inertia\Response
+    {
+        $userObject = User::where('id', auth()->user()->id)->with('profile')->get();
+
+        $user = arrat_to_object($userObject);
+
+        return Inertia::render('Users/Profile', [
+            'user' => $user
+        ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -139,11 +150,20 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user): \Illuminate\Http\RedirectResponse
     {
-        //
+        $user->update( [
+            'name' => $request->name
+        ]);
+
+        $profile = $user->profile;
+        $profile->update($request->all());
+
+        $request->session()->flash('success', 'User && profile updated successfully');
+
+        return redirect()->back();
     }
 
     /**
