@@ -27,6 +27,15 @@ if (!function_exists('arrat_to_object')){
     }
 }
 
+if(!function_exists('decode_image')){
+    function decode_image($data){
+
+        foreach(json_decode($data,true) as $item){
+            return $item;
+        }
+    }
+}
+
 if (!function_exists('order_amount')){
     /**
      * @param $amount

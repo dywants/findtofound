@@ -30,11 +30,45 @@
         </div>
         <div class="mb-6">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="photos">Upload image pièce perdué</label>
-            <Field
-                class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent"
-                aria-describedby="user_avatar_help" name="photos" id="photos" type="file" enctype="multipart/form-data" />
+<!--            <Field-->
+<!--                class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent"-->
+<!--                aria-describedby="user_avatar_help" name="photos" id="photos"  @change="previewImage"-->
+<!--                ref="photos" type="file" enctype="multipart/form-data" />-->
+            <Field class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent"
+                   ref="photos" name="photos"
+                   type="file" enctype="multipart/form-data"
+                   multiple
+                   accept="image/jpeg"
+                   @change="onFileChange"
+            />
+            <div class="flex items-center gap-4">
+                <img v-for="url in imgUrl" class="w-64 mt-4 h-64 rounded" :src="url"/>
+            </div>
             <ErrorMessage name="photos" class="mt-2 text-sm text-red-600" />
+<!--            <img-->
+<!--                v-if="url"-->
+<!--                :src="url"-->
+<!--                class="w-64 mt-4 h-64"-->
+<!--             alt="image"/>-->
         </div>
+<!--        <div class="mb-6">-->
+<!--            <Field class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent"-->
+<!--                ref="photos" name="photos"-->
+<!--                type="file" enctype="multipart/form-data"-->
+<!--                multiple-->
+<!--                accept="image/jpeg"-->
+<!--                @change="onFileChange"-->
+<!--            />-->
+<!--           <div class="flex items-center gap-4">-->
+<!--               <img v-for="url in imgUrl" class="w-64 mt-4 h-64 rounded" :src="url"/>-->
+<!--           </div>-->
+<!--            <div v-for="(image, key) in images">-->
+<!--                <div>-->
+<!--                    <img class="preview" v-bind:ref="'image' +parseInt( key )" />-->
+<!--                    {{ image.name }}-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="mb-6">
             <label for="details" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Details supplementaire</label>
             <Field id="details" as="textarea" rows="4" name="details"
@@ -51,6 +85,13 @@ export default {
     name: "InforObject",
     components: {Field, ErrorMessage},
     props: ['pieces', 'amount'],
+    data() {
+        return {
+            url: null,
+            photos: [],
+            imgUrl: []
+        }
+    },
      methods: {
          onChange(){
              let pieceId = event.target.value;
@@ -59,6 +100,30 @@ export default {
 
              this.$emit("amount", pieceSelect.amount)
          },
+         previewImage(e) {
+             const file = e.target.files[0];
+             this.url = URL.createObjectURL(file);
+         },
+         onFileChange(e) {
+             let vm = this;
+             let selectedFiles = e.target.files;
+
+             for (let i = 0; i < selectedFiles.length; i++) {
+                 this.photos.push(selectedFiles[i]);
+                 this.imgUrl.push(URL.createObjectURL(selectedFiles[i]))
+             }
+
+             for (let i = 0; i < this.photos.length; i++) {
+                 let reader = new FileReader();
+                 reader.onload = (e) => {
+                     this.$refs.photo[i].src = reader.result;
+
+                     console.log(this.$refs.photo[i].src);
+                 };
+
+                 reader.readAsDataURL(this.photos[i]);
+             }
+         }
      }
 }
 </script>

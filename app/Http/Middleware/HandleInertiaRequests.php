@@ -54,7 +54,8 @@ class HandleInertiaRequests extends Middleware
                             'amount_check' =>money(order_amount($thefind->amount_check)),
                             'amount_piece' => money(amount_piece($thefind->piece_id)),
                             'findCity' => $thefind->findCity,
-                            'photos' => asset('storage/findImages/'. $thefind->photos),
+//                            'photos' => asset('storage/findImages/'. $thefind->photos),
+                            'photos' => decode_image($thefind->photos),
                             'details' => $thefind->details,
                             'created_at' => $thefind->created_at->diffForHumans(),
                             'link' => route('find.show', ['thefind' => $thefind->id]),
@@ -64,7 +65,8 @@ class HandleInertiaRequests extends Middleware
             },
             'flash' => [
                 'message' => fn() => $request->session()->get('message'),
-                'success' => fn() => $request->session()->get('success')
+                'success' => fn() => $request->session()->get('success'),
+                'error' => fn() => $request->session()->get('error')
             ]
         ]);
     }

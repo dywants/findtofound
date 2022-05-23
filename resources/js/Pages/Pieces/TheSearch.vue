@@ -60,7 +60,7 @@
                             <div class="pl-4 w-full h-full flex items-center justify-center">
                                 <img :alt=result.item.fullName
                                      class="w-full h-full object-cover object-center transition duration-50"
-                                     loading="lazy" :src=result.item.photos>
+                                     loading="lazy" :src="showImage(result.item.photos)">
                             </div>
                         </div>
 
@@ -88,23 +88,24 @@
 
 <script>
 import HeaderPage from "@/Layouts/HeaderPage";
-import { Link } from '@inertiajs/inertia-vue3';
+import {Link, usePage} from '@inertiajs/inertia-vue3';
 import Fuse from 'fuse.js';
 
 export default {
     name: "TheSearch",
     components: {HeaderPage,Link},
-    props: ['formatted'],
+    props: ['formatted', 'searchItems'],
     data() {
         return {
             term: null,
-            fuse: null
+            fuse: null,
+            urlImage: '',
         }
     },
     computed: {
         results() {
             return this.term ? this.fuse.search(this.term).slice(0, 8) : [];
-        }
+        },
     },
     created() {
         this.fuse = new Fuse(this.$page.props.searchItems, {
@@ -114,8 +115,11 @@ export default {
     methods: {
         reset() {
             this.term = null;
-        }
-    }
+        },
+        showImage(file) {
+            return "/storage/findImages/" + file
+        },
+    },
 }
 </script>
 

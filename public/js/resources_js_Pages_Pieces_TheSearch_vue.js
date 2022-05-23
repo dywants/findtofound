@@ -23,11 +23,12 @@ __webpack_require__.r(__webpack_exports__);
     HeaderPage: _Layouts_HeaderPage__WEBPACK_IMPORTED_MODULE_0__["default"],
     Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Link
   },
-  props: ['formatted'],
+  props: ['formatted', 'searchItems'],
   data: function data() {
     return {
       term: null,
-      fuse: null
+      fuse: null,
+      urlImage: ''
     };
   },
   computed: {
@@ -43,6 +44,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     reset: function reset() {
       this.term = null;
+    },
+    showImage: function showImage(file) {
+      return "/storage/findImages/" + file;
     }
   }
 });
@@ -208,7 +212,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           alt: result.item.fullName,
           "class": "w-full h-full object-cover object-center transition duration-50",
           loading: "lazy",
-          src: result.item.photos
+          src: $options.showImage(result.item.photos)
         }, null, 8
         /* PROPS */
         , _hoisted_15)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(result.item.fullName), 1

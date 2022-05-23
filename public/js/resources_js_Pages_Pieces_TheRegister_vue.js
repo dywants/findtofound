@@ -312,6 +312,13 @@ __webpack_require__.r(__webpack_exports__);
     ErrorMessage: vee_validate__WEBPACK_IMPORTED_MODULE_0__.ErrorMessage
   },
   props: ['pieces', 'amount'],
+  data: function data() {
+    return {
+      url: null,
+      photos: [],
+      imgUrl: []
+    };
+  },
   methods: {
     onChange: function onChange() {
       var pieceId = event.target.value;
@@ -319,6 +326,36 @@ __webpack_require__.r(__webpack_exports__);
         return piece.id == pieceId;
       });
       this.$emit("amount", pieceSelect.amount);
+    },
+    previewImage: function previewImage(e) {
+      var file = e.target.files[0];
+      this.url = URL.createObjectURL(file);
+    },
+    onFileChange: function onFileChange(e) {
+      var _this = this;
+
+      var vm = this;
+      var selectedFiles = e.target.files;
+
+      for (var i = 0; i < selectedFiles.length; i++) {
+        this.photos.push(selectedFiles[i]);
+        this.imgUrl.push(URL.createObjectURL(selectedFiles[i]));
+      }
+
+      var _loop = function _loop(_i) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          _this.$refs.photo[_i].src = reader.result;
+          console.log(_this.$refs.photo[_i].src);
+        };
+
+        reader.readAsDataURL(_this.photos[_i]);
+      };
+
+      for (var _i = 0; _i < this.photos.length; _i++) {
+        _loop(_i);
+      }
     }
   }
 });
@@ -837,10 +874,14 @@ var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_13 = {
+  "class": "flex items-center gap-4"
+};
+var _hoisted_14 = ["src"];
+var _hoisted_15 = {
   "class": "mb-6"
 };
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "details",
   "class": "block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
 }, "Details supplementaire", -1
@@ -905,17 +946,30 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ErrorMessage, {
     name: "ward",
     "class": "mt-2 text-sm text-red-600"
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <Field"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                class=\"block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                aria-describedby=\"user_avatar_help\" name=\"photos\" id=\"photos\"  @change=\"previewImage\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                ref=\"photos\" type=\"file\" enctype=\"multipart/form-data\" />"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
     "class": "block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent",
-    "aria-describedby": "user_avatar_help",
+    ref: "photos",
     name: "photos",
-    id: "photos",
     type: "file",
-    enctype: "multipart/form-data"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ErrorMessage, {
+    enctype: "multipart/form-data",
+    multiple: "",
+    accept: "image/jpeg",
+    onChange: $options.onFileChange
+  }, null, 8
+  /* PROPS */
+  , ["onChange"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.imgUrl, function (url) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
+      "class": "w-64 mt-4 h-64 rounded",
+      src: url
+    }, null, 8
+    /* PROPS */
+    , _hoisted_14);
+  }), 256
+  /* UNKEYED_FRAGMENT */
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ErrorMessage, {
     name: "photos",
     "class": "mt-2 text-sm text-red-600"
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <img"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                v-if=\"url\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                :src=\"url\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                class=\"w-64 mt-4 h-64\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             alt=\"image\"/>")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <div class=\"mb-6\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <Field class=\"block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                ref=\"photos\" name=\"photos\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                type=\"file\" enctype=\"multipart/form-data\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                multiple"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                accept=\"image/jpeg\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                @change=\"onFileChange\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            />"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("           <div class=\"flex items-center gap-4\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("               <img v-for=\"url in imgUrl\" class=\"w-64 mt-4 h-64 rounded\" :src=\"url\"/>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("           </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <div v-for=\"(image, key) in images\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                    <img class=\"preview\" v-bind:ref=\"'image' +parseInt( key )\" />"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                    {{ image.name }}"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
     id: "details",
     as: "textarea",
     rows: "4",

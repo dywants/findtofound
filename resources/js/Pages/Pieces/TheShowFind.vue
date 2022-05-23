@@ -38,7 +38,7 @@
                     <div
                         class="lg:w-1/2 flex justify-between items-strech bg-gray-50  px-2 py-20 md:py-6 md:px-6 lg:py-24">
                         <div class="flex items-center">
-                            <button onclick="goPrev()" aria-label="slide back"
+                            <button @click="prev()" aria-label="slide back"
                                     class="focus:outline-none focus:ring-2 focus:ring-gray-800 hover:bg-gray-100">
                                 <svg class="w-10 h-10 lg:w-16 lg:h-16" viewBox="0 0 64 64" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
@@ -47,16 +47,18 @@
                                 </svg>
                             </button>
                         </div>
-<!--                        <div class="slider">-->
-<!--                            <div class="slide-ana lg:relative">-->
-                                <div class="w-full h-full">
-                                    <img :src="showImage() + photos"
-                                        class="w-full h-full object-cover" :alt=fullName />
+                        <transition-group name='slide-fade' tag='div'>
+                            <div v-for="i in [currentIndex]" :key="i" class="slider">
+                                <div class="flex justify-center items-center">
+                                    <div class="w-full h-full flex justify-center items-center">
+                                        <img :alt=fullName
+                                             :src="showImage(currentImg)" class="object-cover">
+                                    </div>
                                 </div>
-<!--                            </div>-->
-<!--                        </div>-->
+                            </div>
+                        </transition-group>
                         <div class="flex items-center">
-                            <button onclick="goNext()" aria-label="slide forward"
+                            <button @click="next()" aria-label="slide forward"
                                     class="focus:outline-none focus:ring-2 focus:ring-gray-800 hover:bg-gray-100">
                                 <svg class="w-10 h-10 lg:w-16 lg:h-16" viewBox="0 0 64 64" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +75,7 @@
                         <p class="text-3xl font-medium text-gray-600 dark:text-white mt-8 md:mt-10"></p>
                         <div
                             class="flex items-center flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 lg:space-x-8 mt-4 md:mt-16">
-                            <Link
+                            <Link :href="route('found.info', {thefind: id})"
                                 class="w-full md:w-3/5 text-base text-center rounded-md font-medium leading-none text-white uppercase py-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-green-600 hover:bg-green-700 text-white ">
                                 Valider votre trouvalle
                             </Link>
@@ -93,79 +95,65 @@
 
 <script>
 import HeaderPage from "@/Layouts/HeaderPage";
-import { Link } from '@inertiajs/inertia-vue3';
-let slides = document.querySelectorAll(".slide-ana>div");
-let slideSayisi = slides.length;
-let prev = document.getElementById("prev");
-let next = document.getElementById("next");
-for (let index = 0; index < slides.length; index++) {
-    const element = slides[index];
-    element.style.transform = "translateX(" + 100 * index + "%)";
-}
-let loop = 0 + 1000 * slideSayisi;
-
-function goNext() {
-    loop++;
-    for (let index = 0; index < slides.length; index++) {
-        const element = slides[index];
-        element.style.transform =
-            "translateX(" + 100 * (index - (loop % slideSayisi)) + "%)";
-    }
-}
-
-function goPrev() {
-    loop--;
-    for (let index = 0; index < slides.length; index++) {
-        const element = slides[index];
-        element.style.transform =
-            "translateX(" + 100 * (index - (loop % slideSayisi)) + "%)";
-    }
-}
-
-function openView() {
-    document.getElementById("viewerButton").classList.add("hidden");
-    document.getElementById("viewerBox").classList.remove("hidden");
-}
-function closeView() {
-    document.getElementById("viewerBox").classList.add("hidden");
-    document.getElementById("viewerButton").classList.remove("hidden");
-}
+import {Link, usePage} from '@inertiajs/inertia-vue3';
 
 export default {
     name: "TheShowFind",
     components: {Link, HeaderPage},
     props: ['fullName', 'findCity','details', 'amount_check', 'id', 'photos', 'amount_piece'],
-    methods: {
-        showImage() {
-            return "/storage/findImages/";
-        },
+    data() {
+        return {
+            images: this.photos,
+            currentIndex: 0,
+        }
     },
+
+    computed: {
+        currentImg() {
+            return this.images[Math.abs(this.currentIndex) % this.images.length];
+        }
+    },
+    methods: {
+        showImage(file) {
+            return "/storage/findImages/" + file;
+        },
+
+        next() {
+            this.currentIndex += 1
+        },
+        prev() {
+            this.currentIndex -= 1
+        }
+    },
+    setup(){
+        const photos = usePage().props.value.photos;
+
+        return {
+            photos
+        }
+    }
 }
 </script>
 
 <style scoped>
 .slider {
-    width: 200px;
-    height: 400px;
+    width: 280px;
     position: relative;
     overflow: hidden;
 }
 
-.slide-ana {
-    height: 360px;
+.slide-fade-enter-active {
+    transition: all 0.3s ease-out;
 }
 
-.slide-ana > div {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    transition: all 0.7s;
+.slide-fade-leave-active {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
-@media (min-width: 200px) and (max-width: 639px) {
-    .slider {
-        height: 300px;
-        width: 170px;
-    }
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+    transform: translateX(20px);
+    opacity: 0;
 }
 </style>

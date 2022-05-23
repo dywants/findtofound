@@ -27,7 +27,7 @@ class TheFindController extends Controller
      *
      * @return \Inertia\Response
      */
-    public function index()
+    public function index(): \Inertia\Response
     {
         $pieces = Piece::all();
 
@@ -78,9 +78,12 @@ class TheFindController extends Controller
         if ($request->hasFile('photos')){
             $arrayImage = $request->photos;
 
-            $imageObject = arrat_to_object($arrayImage);
-            $imageName = time(). '.' . $user->id . now()->format('y') . '/' . now()->format('m') . $imageObject->extension();
-            $imageObject->storeAs('findImages', $imageName);
+            foreach($arrayImage as $file)
+            {
+                $imageName = time(). '.' . $user->id . now()->format('y') . '/' . now()->format('m') . $file->getClientOriginalName();
+                $file->storeAs('findImages', $imageName);
+                $imgData[] = $imageName;
+            }
         }
 
         Thefind::create([
@@ -89,7 +92,7 @@ class TheFindController extends Controller
             'ward' => $request->ward,
             'details' => $request->details,
             'amount_check' => $request->amount_check,
-            'photos' => $imageName,
+            'photos' => json_encode($imgData, true),
             'user_id' => $user->id,
             'piece_id' => $request->piece_id,
         ]);
@@ -117,7 +120,7 @@ class TheFindController extends Controller
             'findCity' => $thefind->findCity,
             'ward' => $thefind->ward,
             'details' => $thefind->details,
-            'photos' => $thefind->photos,
+            'photos' => json_decode($thefind->photos),
             'amount_check' => money(order_amount($thefind->amount_check)),
             'amount_piece' => money(amount_piece($thefind->piece_id))
         ]);
@@ -147,7 +150,7 @@ class TheFindController extends Controller
             'approval_status' => 1
         ]);
 
-        $request->session()->flash('success', 'Felicitation, vous avez retrouver votre pièce perdue!');
+        $request->session()->flash('success', 'Félicitation, vous avez retrouver votre pièce perdue!');
 
         return redirect()->route('dashboard');
     }
