@@ -1,7 +1,5 @@
 <script>
 import HeaderPage from "@/Layouts/HeaderPage";
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
 import InforObject from "@/Components/Steps/InforObject";
 import YourInformation from "@/Components/Steps/YourInformation";
 import Validation from "@/Components/Steps/Validation";
@@ -22,7 +20,6 @@ export default {
         InforObject,
         HeaderPage,
         ProgressBar,
-        "v-loading": Loading,
     },
     computed: {
         isLoading() {
@@ -31,7 +28,7 @@ export default {
         getSectionName(){
             switch (this.currentStepIdx) {
                 case 0:
-                    return "Informations pièce retouvée"
+                    return "Informations pièce retrouvée"
                 case 1:
                     return "Vos informations"
                 default:
@@ -158,7 +155,6 @@ export default {
 
            </FormWizard>
         </div>
-        <v-loading :active.sync="isLoading" :is-full-page="fullPage" />
     </div>
 </template>
 

@@ -1,9 +1,6 @@
 import { createApp, h } from 'vue';
 import { createInertiaApp, Link, Head } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
-import 'flowbite';
 import { defineRule, configure } from 'vee-validate';
 import { localize } from '@vee-validate/i18n';
 import fr from '@vee-validate/i18n/dist/locale/fr.json';
@@ -35,7 +32,6 @@ createInertiaApp({
             .use(plugin)
             .component("Link", Link)
             .component("Head", Head)
-            .use(ElementPlus)
             .mixin({ methods: { route } })
             .mount(el);
     },
