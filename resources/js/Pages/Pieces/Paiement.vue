@@ -8,18 +8,35 @@
         </template>
     </HeaderPage>
 
-    <div class="min-w-screen min-h-screen bg-gray-50 py-5">
-        <div class="px-5">
-            <div class="mb-2">
-                <a href="#" class="focus:outline-none hover:underline text-gray-500 text-sm"><i class="mdi mdi-arrow-left text-gray-400"></i>Back</a>
-            </div>
-            <div class="mb-2">
-                <h1 class="text-3xl md:text-5xl font-bold text-gray-600">Checkout.</h1>
-            </div>
-            <div class="mb-5 text-gray-400">
-                <a href="#" class="focus:outline-none hover:underline text-gray-500">Home</a> / <a href="#" class="focus:outline-none hover:underline text-gray-500">Cart</a> / <span class="text-gray-600">Checkout</span>
-            </div>
-        </div>
+    <div class="max-w-screen-xl p-4 mx-auto mt-8">
+        <nav class="flex py-3 px-5 text-gray-700 bg-gray-50 rounded-lg border border-gray-200 " aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <Link :href="route('home')" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                        <svg class="mr-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                        Accueil
+                    </Link>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                        <Link :href="route('found.search')" class="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">Rechercher une pièce</Link>
+                    </div>
+                </li>
+<!--                <li>-->
+<!--                    <div class="flex items-center">-->
+<!--                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>-->
+<!--                        <Link :href="route('found.info')" class="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">Validation</Link>-->
+<!--                    </div>-->
+<!--                </li>-->
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                        <span class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">Paiement</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
         <div class="w-full bg-white border-t border-b border-gray-200 px-5 py-10 text-gray-800">
             <div class="w-full">
                 <div class="-mx-3 md:flex items-start">
@@ -35,19 +52,6 @@
                                 </div>
                                 <div>
                                     <span class="font-semibold text-gray-600 text-xl">$210</span><span class="font-semibold text-gray-600 text-sm">.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-6 pb-6 border-b border-gray-200">
-                            <div class="-mx-2 flex items-end justify-end">
-                                <div class="flex-grow px-2 lg:max-w-xs">
-                                    <label class="text-gray-600 font-semibold text-sm mb-2 ml-1">Discount code</label>
-                                    <div>
-                                        <input class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" placeholder="XXXXXX" type="text"/>
-                                    </div>
-                                </div>
-                                <div class="px-2">
-                                    <button class="block w-full max-w-xs mx-auto border border-transparent bg-gray-400 hover:bg-gray-500 focus:bg-gray-500 text-white rounded-md px-5 py-2 font-semibold">APPLY</button>
                                 </div>
                             </div>
                         </div>

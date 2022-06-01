@@ -26,7 +26,7 @@ import Button from "@/Components/Button";
 export default {
     name: "FormWizard",
     components: {Button, TheCard},
-    emits: ["next", "submit"],
+    emits: ["next", "submit", "currentId"],
     props: {
         validationSchema: {
             type: Array,
@@ -36,10 +36,6 @@ export default {
     setup(props, { emit }) {
         const formData = ref({});
         const currentStepIdx = ref(0);
-        const progress = document.getElementById('progress');
-        const prev = document.getElementById('preBtn');
-        const next = document.getElementById('nextBtn');
-        const circles = document.querySelectorAll('.circle');
 
         // Injects the starting step, child <form-steps> will use this to generate their ids
         const stepCounter = ref(0);
@@ -47,6 +43,12 @@ export default {
         // Inject the live ref of the current index to child components
         // will be used to toggle each form-step visibility
         provide("CURRENT_STEP_INDEX", currentStepIdx);
+
+        const currentIdx = computed(() => {
+            return currentStepIdx.value;
+        });
+
+        emit('CURRENT_STEP', currentIdx)
 
         // if this is the last step
         const isLastStep = computed(() => {
@@ -87,7 +89,6 @@ export default {
 
             if (!isLastStep.value) {
                 currentStepIdx.value++;
-                update();
                 emit("next", formData.value);
 
                 return;
@@ -108,7 +109,6 @@ export default {
 
             currentStepIdx.value--;
 
-            update();
             resetForm({
                 values: {
                     ...formData.value,
@@ -116,27 +116,13 @@ export default {
             });
         }
 
-        function update(){
-            circles.forEach((circle, idx)=>{
-                if(idx < currentStepIdx){
-                    circle.classList.add('active')
-                }else {
-                    circle.classList.remove('active')
-                }
-            })
-
-            const actives = document.querySelectorAll('.active');
-
-            progress.style.width=((actives.length -1) / (circles.length-1))*100 + '%';
-
-        }
-
         return {
             onSubmit,
             hasPrevious,
             isLastStep,
             goToPrev,
-            uploadImage
+            uploadImage,
+            currentIdx,
         };
     },
 };

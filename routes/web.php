@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactIndexController;
 use App\Http\Controllers\FaqsIndexController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\TheFindController;
 use App\Http\Controllers\TheFoundController;
 use App\Http\Controllers\UserController;
@@ -50,6 +51,15 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function (){
     Route::get('/new-user', [AdminController::class, 'create'])->name('admin.new.user');
     Route::resource('faq', \App\Http\Controllers\Admin\FaqsController::class);
 });
+
+//Paiment paypal
+Route::middleware(['auth', 'verified'])->group(function (){
+    //Route::get('payment', [PaypalController::class, 'index'])->name('paypal.payment');
+    Route::post('/payment', [PaypalController::class, 'store'])->name('paypal.store');
+//Route::get('paymentsuccess', 'PaymentController@payment_success');
+//Route::get('paymenterror', 'PaymentController@payment_error');
+});
+
 
 
 require __DIR__.'/auth.php';

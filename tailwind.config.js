@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const  percentageWidth = require('tailwindcss-percentage-width');
 
 module.exports = {
     content: [
@@ -25,6 +26,7 @@ module.exports = {
 
     plugins: [
         require('@tailwindcss/forms'),
-        require('flowbite/plugin')
+        require('flowbite/plugin'),
+        percentageWidth
     ],
 };

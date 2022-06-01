@@ -135,7 +135,8 @@ __webpack_require__.r(__webpack_exports__);
       return currentIdx === formStepIdx.value;
     });
     return {
-      shouldShow: shouldShow
+      shouldShow: shouldShow,
+      formStepIdx: formStepIdx
     };
   }
 });
@@ -173,7 +174,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     Button: _Components_Button__WEBPACK_IMPORTED_MODULE_2__["default"],
     TheCard: _Components_Elements_TheCard__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  emits: ["next", "submit"],
+  emits: ["next", "submit", "currentId"],
   props: {
     validationSchema: {
       type: Array,
@@ -183,17 +184,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   setup: function setup(props, _ref) {
     var emit = _ref.emit;
     var formData = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({});
-    var currentStepIdx = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0);
-    var progress = document.getElementById('progress');
-    var prev = document.getElementById('preBtn');
-    var next = document.getElementById('nextBtn');
-    var circles = document.querySelectorAll('.circle'); // Injects the starting step, child <form-steps> will use this to generate their ids
+    var currentStepIdx = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0); // Injects the starting step, child <form-steps> will use this to generate their ids
 
     var stepCounter = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0);
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.provide)("STEP_COUNTER", stepCounter); // Inject the live ref of the current index to child components
     // will be used to toggle each form-step visibility
 
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.provide)("CURRENT_STEP_INDEX", currentStepIdx); // if this is the last step
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.provide)("CURRENT_STEP_INDEX", currentStepIdx);
+    var currentIdx = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+      return currentStepIdx.value;
+    });
+    emit('CURRENT_STEP', currentIdx); // if this is the last step
 
     var isLastStep = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
       return currentStepIdx.value === stepCounter.value - 1;
@@ -226,7 +227,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (!isLastStep.value) {
         currentStepIdx.value++;
-        update();
         emit("next", formData.value);
         return;
       }
@@ -245,22 +245,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       currentStepIdx.value--;
-      update();
       resetForm({
         values: _objectSpread({}, formData.value)
       });
-    }
-
-    function update() {
-      circles.forEach(function (circle, idx) {
-        if (idx < currentStepIdx) {
-          circle.classList.add('active');
-        } else {
-          circle.classList.remove('active');
-        }
-      });
-      var actives = document.querySelectorAll('.active');
-      progress.style.width = (actives.length - 1) / (circles.length - 1) * 100 + '%';
     }
 
     return {
@@ -268,8 +255,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       hasPrevious: hasPrevious,
       isLastStep: isLastStep,
       goToPrev: goToPrev,
-      uploadImage: uploadImage
+      uploadImage: uploadImage,
+      currentIdx: currentIdx
     };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/ProgressBar.vue?vue&type=script&lang=js":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/ProgressBar.vue?vue&type=script&lang=js ***!
+  \**************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var tailwindcss_lib_util_dataTypes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tailwindcss/lib/util/dataTypes */ "./node_modules/tailwindcss/lib/util/dataTypes.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "ProgressBar",
+  props: {
+    percentage: Number
+  },
+  methods: {
+    beforeEnter: function beforeEnter(el) {
+      el.style.width = 0;
+    },
+    enter: function enter(el) {
+      console.log(this.percentage);
+      el.style.width = "".concat(this.percentage, "%");
+      el.style.transition = "width 1s linear";
+    }
   }
 });
 
@@ -451,6 +471,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_Elements_FormStep__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Components/Elements/FormStep */ "./resources/js/Components/Elements/FormStep.vue");
 /* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! yup */ "./node_modules/yup/es/index.js");
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _Components_Elements_ProgressBar__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/Components/Elements/ProgressBar */ "./resources/js/Components/Elements/ProgressBar.vue");
+
 
 
 
@@ -470,26 +492,38 @@ __webpack_require__.r(__webpack_exports__);
     YourInformation: _Components_Steps_YourInformation__WEBPACK_IMPORTED_MODULE_4__["default"],
     InforObject: _Components_Steps_InforObject__WEBPACK_IMPORTED_MODULE_3__["default"],
     HeaderPage: _Layouts_HeaderPage__WEBPACK_IMPORTED_MODULE_0__["default"],
+    ProgressBar: _Components_Elements_ProgressBar__WEBPACK_IMPORTED_MODULE_10__["default"],
     "v-loading": (vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1___default())
   },
   computed: {
     isLoading: function isLoading() {
       return this.isLoadingRegisterPiece;
     },
-    stepperProgress: function stepperProgress() {
-      return 100 / 3 * (this.currentStepIdx - 1) + '%';
+    getSectionName: function getSectionName() {
+      switch (this.currentStepIdx) {
+        case 0:
+          return "Informations pièce retouvée";
+
+        case 1:
+          return "Vos informations";
+
+        default:
+          return "Validations";
+      }
     }
   },
   props: ['pieces'],
   data: function data() {
     return {
       isLoadingRegisterPiece: false,
-      currentStepIdx: 1,
+      currentStepIdx: '',
+      stepName: '',
       piece: {
         type: ""
       },
       informationsPiece: [],
       fullPage: true,
+      percentage: 0,
       amount: '',
       steps: [{
         number: '1',
@@ -501,39 +535,15 @@ __webpack_require__.r(__webpack_exports__);
         number: '3',
         name: 'Validations'
       }],
-      options: {
-        maxWidth: '100%',
-        nodeWidth: 40,
-        nodeHeight: 40,
-        barHeight: 3,
-        showTooltip: true,
-        showContent: true,
-        // barType can be dashed or solid
-        barType: 'dashed',
-        // expects a function
-        onNext: this.onNext,
-        // expects a function
-        onFinish: this.onFinish,
-        nodes: [{
-          content: 'step 1',
-          tooltip: 'sth about step 1'
-        }, {
-          content: 'step 2',
-          tooltip: 'sth about step 2'
-        }, {
-          content: 'step 3',
-          tooltip: 'sth about step 3'
-        }, {
-          content: 'step 4',
-          tooltip: 'sth about step 4'
-        }]
-      },
       errors: []
     };
   },
   methods: {
     sendAmount: function sendAmount(amount) {
       this.amount = amount;
+    },
+    currentStep: function currentStep(CURRENT_STEP) {
+      this.currentStepIdx = CURRENT_STEP;
     }
   },
   setup: function setup() {
@@ -769,6 +779,71 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/ProgressBar.vue?vue&type=template&id=9e36d98e&scoped=true":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/ProgressBar.vue?vue&type=template&id=9e36d98e&scoped=true ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+var _withScopeId = function _withScopeId(n) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-9e36d98e"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
+};
+
+var _hoisted_1 = {
+  "class": "progress-bar"
+};
+var _hoisted_2 = {
+  "class": "info"
+};
+var _hoisted_3 = {
+  "class": "percentage"
+};
+
+var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "background-bar"
+  }, null, -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_5 = ["aria-valuenow"];
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.percentage) + "% ", 1
+  /* TEXT */
+  )]), _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+    appear: "",
+    onBeforeAppear: $options.beforeEnter,
+    onAfterAppear: $options.enter
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        "class": "tracker-bar",
+        "aria-valuenow": $props.percentage,
+        "aria-valuemin": "0",
+        "aria-valuemax": "100"
+      }, null, 8
+      /* PROPS */
+      , _hoisted_5)];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["onBeforeAppear", "onAfterAppear"])]);
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/TheCard.vue?vue&type=template&id=64bba898":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/TheCard.vue?vue&type=template&id=64bba898 ***!
@@ -946,7 +1021,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ErrorMessage, {
     name: "ward",
     "class": "mt-2 text-sm text-red-600"
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <Field"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                class=\"block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                aria-describedby=\"user_avatar_help\" name=\"photos\" id=\"photos\"  @change=\"previewImage\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                ref=\"photos\" type=\"file\" enctype=\"multipart/form-data\" />"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
     "class": "block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent",
     ref: "photos",
     name: "photos",
@@ -969,7 +1044,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ErrorMessage, {
     name: "photos",
     "class": "mt-2 text-sm text-red-600"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <img"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                v-if=\"url\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                :src=\"url\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                class=\"w-64 mt-4 h-64\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("             alt=\"image\"/>")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <div class=\"mb-6\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <Field class=\"block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                ref=\"photos\" name=\"photos\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                type=\"file\" enctype=\"multipart/form-data\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                multiple"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                accept=\"image/jpeg\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                @change=\"onFileChange\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            />"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("           <div class=\"flex items-center gap-4\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("               <img v-for=\"url in imgUrl\" class=\"w-64 mt-4 h-64 rounded\" :src=\"url\"/>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("           </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <div v-for=\"(image, key) in images\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                    <img class=\"preview\" v-bind:ref=\"'image' +parseInt( key )\" />"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                    {{ image.name }}"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
     id: "details",
     as: "textarea",
     rows: "4",
@@ -1258,57 +1333,24 @@ var _hoisted_1 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_2 = {
   "class": "max-w-screen-xl p-4 mx-auto mt-8"
 };
-
-var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
-    "class": "sr-only"
-  }, "Steps", -1
-  /* HOISTED */
-  );
-});
-
+var _hoisted_3 = {
+  "class": "max-w-5xl mx-auto"
+};
 var _hoisted_4 = {
-  "class": "w-full"
+  "class": "text-lg font-semibold text-gray-500"
 };
 var _hoisted_5 = {
-  "class": "flex items-center justify-between space-x-12 text-xs font-medium text-gray-500 sm:space-x-4 w-full relative"
+  "class": "mt-4 overflow-hidden bg-gray-200 rounded-full"
 };
 var _hoisted_6 = {
-  "class": "leading-6 w-10 h-10 rounded-full text-[14px] font-bold flex items-center justify-center bg-blue-50"
-};
-
-var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    "class": "leading-6 w-10 h-10 rounded-full text-[14px] font-bold flex items-center justify-center text-green-600 rounded bg-green-50"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
-    xmlns: "http://www.w3.org/2000/svg",
-    "class": "w-8 h-8",
-    viewBox: "0 0 20 20",
-    fill: "currentColor"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
-    "fill-rule": "evenodd",
-    d: "M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z",
-    "clip-rule": "evenodd"
-  })])], -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_8 = {
-  "class": "ml-2"
-};
-var _hoisted_9 = {
-  "class": "stepper-progress"
-};
-var _hoisted_10 = {
   "class": "is-clearfix mb-3"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Entrez les informations de la pièce ");
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Entrez les informations de la pièce ");
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("VOS INFORMATIONS PERSONNELLES");
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("VOS INFORMATIONS PERSONNELLES");
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Validation");
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Validation");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
@@ -1336,35 +1378,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", null, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ol", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.steps, function (item) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
-      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
-        'current': $data.currentStepIdx == item,
-        'success': $data.currentStepIdx > item
-      }, "flex items-center flex-col space-y-2"]),
-      key: item
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.number), 1
-    /* TEXT */
-    ), _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
-    /* TEXT */
-    )], 2
-    /* CLASS */
-    );
-  }), 128
-  /* KEYED_FRAGMENT */
-  )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)('width:' + $options.stepperProgress),
-    "class": "stepper-progress-bar"
-  }, null, 4
-  /* STYLE */
-  )])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FormWizard, {
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentStepIdx) + "/3 - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getSectionName), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)($data.percentage),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
+      'w-0%': $data.currentStepIdx === 0,
+      'w-35%': $data.currentStepIdx === 1,
+      'w-75%': $data.currentStepIdx === 2
+    }, "h-4 bg-blue-600 text-white rounded-full"])
+  }, null, 6
+  /* CLASS, STYLE */
+  )])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FormWizard, {
     "validation-schema": $setup.validationSchema,
-    onSubmit: $setup.onSubmit
+    onSubmit: $setup.onSubmit,
+    onCURRENT_STEP: $options.currentStep
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FormStep, null, {
         header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_11];
+          return [_hoisted_7];
         }),
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InforObject, {
@@ -1379,7 +1412,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FormStep, null, {
         header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_12];
+          return [_hoisted_8];
         }),
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_YourInformation)];
@@ -1389,7 +1422,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FormStep, null, {
         header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_13];
+          return [_hoisted_9];
         }),
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Validation, {
@@ -1408,7 +1441,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["validation-schema", "onSubmit"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_loading, {
+  , ["validation-schema", "onSubmit", "onCURRENT_STEP"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_loading, {
     active: $options.isLoading,
     "is-full-page": $data.fullPage
   }, null, 8
@@ -1452,6 +1485,169 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/color-name/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/color-name/index.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = {
+	"aliceblue": [240, 248, 255],
+	"antiquewhite": [250, 235, 215],
+	"aqua": [0, 255, 255],
+	"aquamarine": [127, 255, 212],
+	"azure": [240, 255, 255],
+	"beige": [245, 245, 220],
+	"bisque": [255, 228, 196],
+	"black": [0, 0, 0],
+	"blanchedalmond": [255, 235, 205],
+	"blue": [0, 0, 255],
+	"blueviolet": [138, 43, 226],
+	"brown": [165, 42, 42],
+	"burlywood": [222, 184, 135],
+	"cadetblue": [95, 158, 160],
+	"chartreuse": [127, 255, 0],
+	"chocolate": [210, 105, 30],
+	"coral": [255, 127, 80],
+	"cornflowerblue": [100, 149, 237],
+	"cornsilk": [255, 248, 220],
+	"crimson": [220, 20, 60],
+	"cyan": [0, 255, 255],
+	"darkblue": [0, 0, 139],
+	"darkcyan": [0, 139, 139],
+	"darkgoldenrod": [184, 134, 11],
+	"darkgray": [169, 169, 169],
+	"darkgreen": [0, 100, 0],
+	"darkgrey": [169, 169, 169],
+	"darkkhaki": [189, 183, 107],
+	"darkmagenta": [139, 0, 139],
+	"darkolivegreen": [85, 107, 47],
+	"darkorange": [255, 140, 0],
+	"darkorchid": [153, 50, 204],
+	"darkred": [139, 0, 0],
+	"darksalmon": [233, 150, 122],
+	"darkseagreen": [143, 188, 143],
+	"darkslateblue": [72, 61, 139],
+	"darkslategray": [47, 79, 79],
+	"darkslategrey": [47, 79, 79],
+	"darkturquoise": [0, 206, 209],
+	"darkviolet": [148, 0, 211],
+	"deeppink": [255, 20, 147],
+	"deepskyblue": [0, 191, 255],
+	"dimgray": [105, 105, 105],
+	"dimgrey": [105, 105, 105],
+	"dodgerblue": [30, 144, 255],
+	"firebrick": [178, 34, 34],
+	"floralwhite": [255, 250, 240],
+	"forestgreen": [34, 139, 34],
+	"fuchsia": [255, 0, 255],
+	"gainsboro": [220, 220, 220],
+	"ghostwhite": [248, 248, 255],
+	"gold": [255, 215, 0],
+	"goldenrod": [218, 165, 32],
+	"gray": [128, 128, 128],
+	"green": [0, 128, 0],
+	"greenyellow": [173, 255, 47],
+	"grey": [128, 128, 128],
+	"honeydew": [240, 255, 240],
+	"hotpink": [255, 105, 180],
+	"indianred": [205, 92, 92],
+	"indigo": [75, 0, 130],
+	"ivory": [255, 255, 240],
+	"khaki": [240, 230, 140],
+	"lavender": [230, 230, 250],
+	"lavenderblush": [255, 240, 245],
+	"lawngreen": [124, 252, 0],
+	"lemonchiffon": [255, 250, 205],
+	"lightblue": [173, 216, 230],
+	"lightcoral": [240, 128, 128],
+	"lightcyan": [224, 255, 255],
+	"lightgoldenrodyellow": [250, 250, 210],
+	"lightgray": [211, 211, 211],
+	"lightgreen": [144, 238, 144],
+	"lightgrey": [211, 211, 211],
+	"lightpink": [255, 182, 193],
+	"lightsalmon": [255, 160, 122],
+	"lightseagreen": [32, 178, 170],
+	"lightskyblue": [135, 206, 250],
+	"lightslategray": [119, 136, 153],
+	"lightslategrey": [119, 136, 153],
+	"lightsteelblue": [176, 196, 222],
+	"lightyellow": [255, 255, 224],
+	"lime": [0, 255, 0],
+	"limegreen": [50, 205, 50],
+	"linen": [250, 240, 230],
+	"magenta": [255, 0, 255],
+	"maroon": [128, 0, 0],
+	"mediumaquamarine": [102, 205, 170],
+	"mediumblue": [0, 0, 205],
+	"mediumorchid": [186, 85, 211],
+	"mediumpurple": [147, 112, 219],
+	"mediumseagreen": [60, 179, 113],
+	"mediumslateblue": [123, 104, 238],
+	"mediumspringgreen": [0, 250, 154],
+	"mediumturquoise": [72, 209, 204],
+	"mediumvioletred": [199, 21, 133],
+	"midnightblue": [25, 25, 112],
+	"mintcream": [245, 255, 250],
+	"mistyrose": [255, 228, 225],
+	"moccasin": [255, 228, 181],
+	"navajowhite": [255, 222, 173],
+	"navy": [0, 0, 128],
+	"oldlace": [253, 245, 230],
+	"olive": [128, 128, 0],
+	"olivedrab": [107, 142, 35],
+	"orange": [255, 165, 0],
+	"orangered": [255, 69, 0],
+	"orchid": [218, 112, 214],
+	"palegoldenrod": [238, 232, 170],
+	"palegreen": [152, 251, 152],
+	"paleturquoise": [175, 238, 238],
+	"palevioletred": [219, 112, 147],
+	"papayawhip": [255, 239, 213],
+	"peachpuff": [255, 218, 185],
+	"peru": [205, 133, 63],
+	"pink": [255, 192, 203],
+	"plum": [221, 160, 221],
+	"powderblue": [176, 224, 230],
+	"purple": [128, 0, 128],
+	"rebeccapurple": [102, 51, 153],
+	"red": [255, 0, 0],
+	"rosybrown": [188, 143, 143],
+	"royalblue": [65, 105, 225],
+	"saddlebrown": [139, 69, 19],
+	"salmon": [250, 128, 114],
+	"sandybrown": [244, 164, 96],
+	"seagreen": [46, 139, 87],
+	"seashell": [255, 245, 238],
+	"sienna": [160, 82, 45],
+	"silver": [192, 192, 192],
+	"skyblue": [135, 206, 235],
+	"slateblue": [106, 90, 205],
+	"slategray": [112, 128, 144],
+	"slategrey": [112, 128, 144],
+	"snow": [255, 250, 250],
+	"springgreen": [0, 255, 127],
+	"steelblue": [70, 130, 180],
+	"tan": [210, 180, 140],
+	"teal": [0, 128, 128],
+	"thistle": [216, 191, 216],
+	"tomato": [255, 99, 71],
+	"turquoise": [64, 224, 208],
+	"violet": [238, 130, 238],
+	"wheat": [245, 222, 179],
+	"white": [255, 255, 255],
+	"whitesmoke": [245, 245, 245],
+	"yellow": [255, 255, 0],
+	"yellowgreen": [154, 205, 50]
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/FormWizard.vue?vue&type=style&index=0&id=7611d60c&lang=css":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/FormWizard.vue?vue&type=style&index=0&id=7611d60c&lang=css ***!
@@ -1476,6 +1672,30 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n/*.container{*/\n/*    text-align: c
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/ProgressBar.vue?vue&type=style&index=0&id=9e36d98e&scoped=true&lang=css":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/ProgressBar.vue?vue&type=style&index=0&id=9e36d98e&scoped=true&lang=css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.active .tracker-bar[data-v-9e36d98e] {\n    background: #ff298a !important;\n}\n.progress-bar[data-v-9e36d98e] {\n    width: 100%;\n}\n.info[data-v-9e36d98e]{\n    font-size: 17px;\n    justify-content: space-between;\n    display: flex;\n    color: grey;\n    text-transform: uppercase;\n}\n.percentage[data-v-9e36d98e] {\n    font-weight: bolder;\n}\n.background-bar[data-v-9e36d98e] {\n    background: #ccc;\n    width: 100%;\n    height: 5px;\n}\n.tracker-bar[data-v-9e36d98e] {\n    background: grey;\n    height: 5px;\n    width: 0;\n    transition: width 0.5s linear;\n    margin-top: -5px;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Pieces/TheRegister.vue?vue&type=style&index=0&id=5c2adab3&scoped=true&lang=css":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Pieces/TheRegister.vue?vue&type=style&index=0&id=5c2adab3&scoped=true&lang=css ***!
@@ -1493,7 +1713,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.stepper-progress[data-v-5c2adab3] {\n    position: absolute;\n    background-color: #C5C5C5;\n    height: 2px;\n    width: 90%;\n    z-index: -1;\n    top: 20px;\n    left: 55px;\n    right: 0;\n    /*margin: 0 auto;*/\n}\n.stepper-progress-bar[data-v-5c2adab3] {\n    position: absolute;\n    left: 0;\n    height: 100%;\n    width: 0%;\n    background-color: #75CC65;\n    transition: all 500ms ease;\n}\n.icon-success[data-v-5c2adab3]{\n    opacity: 1;\n    transform: scale(1);\n}\n.progressbar li[data-v-5c2adab3]:first-child:after{\n    content: none;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.progressbar li[data-v-5c2adab3]:first-child:after{\n    content: none;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7043,6 +7263,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/ProgressBar.vue?vue&type=style&index=0&id=9e36d98e&scoped=true&lang=css":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/ProgressBar.vue?vue&type=style&index=0&id=9e36d98e&scoped=true&lang=css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ProgressBar_vue_vue_type_style_index_0_id_9e36d98e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ProgressBar.vue?vue&type=style&index=0&id=9e36d98e&scoped=true&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/ProgressBar.vue?vue&type=style&index=0&id=9e36d98e&scoped=true&lang=css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ProgressBar_vue_vue_type_style_index_0_id_9e36d98e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ProgressBar_vue_vue_type_style_index_0_id_9e36d98e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Pieces/TheRegister.vue?vue&type=style&index=0&id=5c2adab3&scoped=true&lang=css":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Pieces/TheRegister.vue?vue&type=style&index=0&id=5c2adab3&scoped=true&lang=css ***!
@@ -7070,6 +7320,448 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TheRegister_vue_vue_type_style_index_0_id_5c2adab3_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/tailwindcss/lib/util/color.js":
+/*!****************************************************!*\
+  !*** ./node_modules/tailwindcss/lib/util/color.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.parseColor = parseColor;
+exports.formatColor = formatColor;
+var _colorName = _interopRequireDefault(__webpack_require__(/*! color-name */ "./node_modules/color-name/index.js"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        default: obj
+    };
+}
+let HEX = /^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})?$/i;
+let SHORT_HEX = /^#([a-f\d])([a-f\d])([a-f\d])([a-f\d])?$/i;
+let VALUE = `(?:\\d+|\\d*\\.\\d+)%?`;
+let SEP = `(?:\\s*,\\s*|\\s+)`;
+let ALPHA_SEP = `\\s*[,/]\\s*`;
+let RGB = new RegExp(`^rgba?\\(\\s*(${VALUE})${SEP}(${VALUE})${SEP}(${VALUE})(?:${ALPHA_SEP}(${VALUE}))?\\s*\\)$`);
+let HSL = new RegExp(`^hsla?\\(\\s*((?:${VALUE})(?:deg|rad|grad|turn)?)${SEP}(${VALUE})${SEP}(${VALUE})(?:${ALPHA_SEP}(${VALUE}))?\\s*\\)$`);
+function parseColor(value) {
+    if (typeof value !== 'string') {
+        return null;
+    }
+    value = value.trim();
+    if (value === 'transparent') {
+        return {
+            mode: 'rgb',
+            color: [
+                '0',
+                '0',
+                '0'
+            ],
+            alpha: '0'
+        };
+    }
+    if (value in _colorName.default) {
+        return {
+            mode: 'rgb',
+            color: _colorName.default[value].map((v)=>v.toString()
+            )
+        };
+    }
+    let hex = value.replace(SHORT_HEX, (_, r, g, b, a)=>[
+            '#',
+            r,
+            r,
+            g,
+            g,
+            b,
+            b,
+            a ? a + a : ''
+        ].join('')
+    ).match(HEX);
+    if (hex !== null) {
+        return {
+            mode: 'rgb',
+            color: [
+                parseInt(hex[1], 16),
+                parseInt(hex[2], 16),
+                parseInt(hex[3], 16)
+            ].map((v)=>v.toString()
+            ),
+            alpha: hex[4] ? (parseInt(hex[4], 16) / 255).toString() : undefined
+        };
+    }
+    let rgbMatch = value.match(RGB);
+    if (rgbMatch !== null) {
+        var ref, ref1;
+        return {
+            mode: 'rgb',
+            color: [
+                rgbMatch[1],
+                rgbMatch[2],
+                rgbMatch[3]
+            ].map((v)=>v.toString()
+            ),
+            alpha: (ref = rgbMatch[4]) === null || ref === void 0 ? void 0 : (ref1 = ref.toString) === null || ref1 === void 0 ? void 0 : ref1.call(ref)
+        };
+    }
+    let hslMatch = value.match(HSL);
+    if (hslMatch !== null) {
+        var ref2, ref3;
+        return {
+            mode: 'hsl',
+            color: [
+                hslMatch[1],
+                hslMatch[2],
+                hslMatch[3]
+            ].map((v)=>v.toString()
+            ),
+            alpha: (ref2 = hslMatch[4]) === null || ref2 === void 0 ? void 0 : (ref3 = ref2.toString) === null || ref3 === void 0 ? void 0 : ref3.call(ref2)
+        };
+    }
+    return null;
+}
+function formatColor({ mode , color , alpha  }) {
+    let hasAlpha = alpha !== undefined;
+    return `${mode}(${color.join(' ')}${hasAlpha ? ` / ${alpha}` : ''})`;
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/tailwindcss/lib/util/dataTypes.js":
+/*!********************************************************!*\
+  !*** ./node_modules/tailwindcss/lib/util/dataTypes.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.normalize = normalize;
+exports.url = url;
+exports.number = number;
+exports.percentage = percentage;
+exports.length = length;
+exports.lineWidth = lineWidth;
+exports.shadow = shadow;
+exports.color = color;
+exports.image = image;
+exports.gradient = gradient;
+exports.position = position;
+exports.familyName = familyName;
+exports.genericName = genericName;
+exports.absoluteSize = absoluteSize;
+exports.relativeSize = relativeSize;
+var _color = __webpack_require__(/*! ./color */ "./node_modules/tailwindcss/lib/util/color.js");
+var _parseBoxShadowValue = __webpack_require__(/*! ./parseBoxShadowValue */ "./node_modules/tailwindcss/lib/util/parseBoxShadowValue.js");
+let cssFunctions = [
+    'min',
+    'max',
+    'clamp',
+    'calc'
+];
+// Ref: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Types
+let COMMA = /,(?![^(]*\))/g // Comma separator that is not located between brackets. E.g.: `cubiz-bezier(a, b, c)` these don't count.
+;
+let UNDERSCORE = /_(?![^(]*\))/g // Underscore separator that is not located between brackets. E.g.: `rgba(255,_255,_255)_black` these don't count.
+;
+function normalize(value, isRoot = true) {
+    // Keep raw strings if it starts with `url(`
+    if (value.includes('url(')) {
+        return value.split(/(url\(.*?\))/g).filter(Boolean).map((part)=>{
+            if (/^url\(.*?\)$/.test(part)) {
+                return part;
+            }
+            return normalize(part, false);
+        }).join('');
+    }
+    // Convert `_` to ` `, except for escaped underscores `\_`
+    value = value.replace(/([^\\])_+/g, (fullMatch, characterBefore)=>characterBefore + ' '.repeat(fullMatch.length - 1)
+    ).replace(/^_/g, ' ').replace(/\\_/g, '_');
+    // Remove leftover whitespace
+    if (isRoot) {
+        value = value.trim();
+    }
+    // Add spaces around operators inside calc() that do not follow an operator
+    // or '('.
+    return value.replace(/(-?\d*\.?\d(?!\b-.+[,)](?![^+\-/*])\D)(?:%|[a-z]+)?|\))([+\-/*])/g, '$1 $2 ');
+}
+function url(value) {
+    return value.startsWith('url(');
+}
+function number(value) {
+    return !isNaN(Number(value)) || cssFunctions.some((fn)=>new RegExp(`^${fn}\\(.+?`).test(value)
+    );
+}
+function percentage(value) {
+    return /%$/g.test(value) || cssFunctions.some((fn)=>new RegExp(`^${fn}\\(.+?%`).test(value)
+    );
+}
+let lengthUnits = [
+    'cm',
+    'mm',
+    'Q',
+    'in',
+    'pc',
+    'pt',
+    'px',
+    'em',
+    'ex',
+    'ch',
+    'rem',
+    'lh',
+    'vw',
+    'vh',
+    'vmin',
+    'vmax', 
+];
+let lengthUnitsPattern = `(?:${lengthUnits.join('|')})`;
+function length(value) {
+    return value.split(UNDERSCORE).every((part)=>{
+        return part === '0' || new RegExp(`${lengthUnitsPattern}$`).test(part) || cssFunctions.some((fn)=>new RegExp(`^${fn}\\(.+?${lengthUnitsPattern}`).test(part)
+        );
+    });
+}
+let lineWidths = new Set([
+    'thin',
+    'medium',
+    'thick'
+]);
+function lineWidth(value) {
+    return lineWidths.has(value);
+}
+function shadow(value) {
+    let parsedShadows = (0, _parseBoxShadowValue).parseBoxShadowValue(normalize(value));
+    for (let parsedShadow of parsedShadows){
+        if (!parsedShadow.valid) {
+            return false;
+        }
+    }
+    return true;
+}
+function color(value) {
+    let colors = 0;
+    let result = value.split(UNDERSCORE).every((part)=>{
+        part = normalize(part);
+        if (part.startsWith('var(')) return true;
+        if ((0, _color).parseColor(part) !== null) return colors++, true;
+        return false;
+    });
+    if (!result) return false;
+    return colors > 0;
+}
+function image(value) {
+    let images = 0;
+    let result = value.split(COMMA).every((part)=>{
+        part = normalize(part);
+        if (part.startsWith('var(')) return true;
+        if (url(part) || gradient(part) || [
+            'element(',
+            'image(',
+            'cross-fade(',
+            'image-set('
+        ].some((fn)=>part.startsWith(fn)
+        )) {
+            images++;
+            return true;
+        }
+        return false;
+    });
+    if (!result) return false;
+    return images > 0;
+}
+let gradientTypes = new Set([
+    'linear-gradient',
+    'radial-gradient',
+    'repeating-linear-gradient',
+    'repeating-radial-gradient',
+    'conic-gradient', 
+]);
+function gradient(value) {
+    value = normalize(value);
+    for (let type of gradientTypes){
+        if (value.startsWith(`${type}(`)) {
+            return true;
+        }
+    }
+    return false;
+}
+let validPositions = new Set([
+    'center',
+    'top',
+    'right',
+    'bottom',
+    'left'
+]);
+function position(value) {
+    let positions = 0;
+    let result = value.split(UNDERSCORE).every((part)=>{
+        part = normalize(part);
+        if (part.startsWith('var(')) return true;
+        if (validPositions.has(part) || length(part) || percentage(part)) {
+            positions++;
+            return true;
+        }
+        return false;
+    });
+    if (!result) return false;
+    return positions > 0;
+}
+function familyName(value) {
+    let fonts = 0;
+    let result = value.split(COMMA).every((part)=>{
+        part = normalize(part);
+        if (part.startsWith('var(')) return true;
+        // If it contains spaces, then it should be quoted
+        if (part.includes(' ')) {
+            if (!/(['"])([^"']+)\1/g.test(part)) {
+                return false;
+            }
+        }
+        // If it starts with a number, it's invalid
+        if (/^\d/g.test(part)) {
+            return false;
+        }
+        fonts++;
+        return true;
+    });
+    if (!result) return false;
+    return fonts > 0;
+}
+let genericNames = new Set([
+    'serif',
+    'sans-serif',
+    'monospace',
+    'cursive',
+    'fantasy',
+    'system-ui',
+    'ui-serif',
+    'ui-sans-serif',
+    'ui-monospace',
+    'ui-rounded',
+    'math',
+    'emoji',
+    'fangsong', 
+]);
+function genericName(value) {
+    return genericNames.has(value);
+}
+let absoluteSizes = new Set([
+    'xx-small',
+    'x-small',
+    'small',
+    'medium',
+    'large',
+    'x-large',
+    'x-large',
+    'xxx-large', 
+]);
+function absoluteSize(value) {
+    return absoluteSizes.has(value);
+}
+let relativeSizes = new Set([
+    'larger',
+    'smaller'
+]);
+function relativeSize(value) {
+    return relativeSizes.has(value);
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/tailwindcss/lib/util/parseBoxShadowValue.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/tailwindcss/lib/util/parseBoxShadowValue.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.parseBoxShadowValue = parseBoxShadowValue;
+exports.formatBoxShadowValue = formatBoxShadowValue;
+let KEYWORDS = new Set([
+    'inset',
+    'inherit',
+    'initial',
+    'revert',
+    'unset'
+]);
+let COMMA = /\,(?![^(]*\))/g // Comma separator that is not located between brackets. E.g.: `cubiz-bezier(a, b, c)` these don't count.
+;
+let SPACE = /\ +(?![^(]*\))/g // Similar to the one above, but with spaces instead.
+;
+let LENGTH = /^-?(\d+|\.\d+)(.*?)$/g;
+function parseBoxShadowValue(input) {
+    let shadows = input.split(COMMA);
+    return shadows.map((shadow)=>{
+        let value = shadow.trim();
+        let result = {
+            raw: value
+        };
+        let parts = value.split(SPACE);
+        let seen = new Set();
+        for (let part of parts){
+            // Reset index, since the regex is stateful.
+            LENGTH.lastIndex = 0;
+            // Keyword
+            if (!seen.has('KEYWORD') && KEYWORDS.has(part)) {
+                result.keyword = part;
+                seen.add('KEYWORD');
+            } else if (LENGTH.test(part)) {
+                if (!seen.has('X')) {
+                    result.x = part;
+                    seen.add('X');
+                } else if (!seen.has('Y')) {
+                    result.y = part;
+                    seen.add('Y');
+                } else if (!seen.has('BLUR')) {
+                    result.blur = part;
+                    seen.add('BLUR');
+                } else if (!seen.has('SPREAD')) {
+                    result.spread = part;
+                    seen.add('SPREAD');
+                }
+            } else {
+                if (!result.color) {
+                    result.color = part;
+                } else {
+                    if (!result.unknown) result.unknown = [];
+                    result.unknown.push(part);
+                }
+            }
+        }
+        // Check if valid
+        result.valid = result.x !== undefined && result.y !== undefined;
+        return result;
+    });
+}
+function formatBoxShadowValue(shadows) {
+    return shadows.map((shadow)=>{
+        if (!shadow.valid) {
+            return shadow.raw;
+        }
+        return [
+            shadow.keyword,
+            shadow.x,
+            shadow.y,
+            shadow.blur,
+            shadow.spread,
+            shadow.color
+        ].filter(Boolean).join(' ');
+    }).join(', ');
+}
+
 
 /***/ }),
 
@@ -7296,6 +7988,37 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/Components/Elements/ProgressBar.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/Components/Elements/ProgressBar.vue ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ProgressBar_vue_vue_type_template_id_9e36d98e_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProgressBar.vue?vue&type=template&id=9e36d98e&scoped=true */ "./resources/js/Components/Elements/ProgressBar.vue?vue&type=template&id=9e36d98e&scoped=true");
+/* harmony import */ var _ProgressBar_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProgressBar.vue?vue&type=script&lang=js */ "./resources/js/Components/Elements/ProgressBar.vue?vue&type=script&lang=js");
+/* harmony import */ var _ProgressBar_vue_vue_type_style_index_0_id_9e36d98e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ProgressBar.vue?vue&type=style&index=0&id=9e36d98e&scoped=true&lang=css */ "./resources/js/Components/Elements/ProgressBar.vue?vue&type=style&index=0&id=9e36d98e&scoped=true&lang=css");
+/* harmony import */ var _home_bayongct_www_findtofound_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+
+
+const __exports__ = /*#__PURE__*/(0,_home_bayongct_www_findtofound_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_ProgressBar_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ProgressBar_vue_vue_type_template_id_9e36d98e_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-9e36d98e"],['__file',"resources/js/Components/Elements/ProgressBar.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/Components/Elements/TheCard.vue":
 /*!******************************************************!*\
   !*** ./resources/js/Components/Elements/TheCard.vue ***!
@@ -7503,6 +8226,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Components/Elements/ProgressBar.vue?vue&type=script&lang=js":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/Components/Elements/ProgressBar.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ProgressBar_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ProgressBar_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ProgressBar.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/ProgressBar.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/Components/Elements/TheCard.vue?vue&type=script&lang=js":
 /*!******************************************************************************!*\
   !*** ./resources/js/Components/Elements/TheCard.vue?vue&type=script&lang=js ***!
@@ -7647,6 +8386,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Components/Elements/ProgressBar.vue?vue&type=template&id=9e36d98e&scoped=true":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/Components/Elements/ProgressBar.vue?vue&type=template&id=9e36d98e&scoped=true ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ProgressBar_vue_vue_type_template_id_9e36d98e_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ProgressBar_vue_vue_type_template_id_9e36d98e_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ProgressBar.vue?vue&type=template&id=9e36d98e&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/ProgressBar.vue?vue&type=template&id=9e36d98e&scoped=true");
+
+
+/***/ }),
+
 /***/ "./resources/js/Components/Elements/TheCard.vue?vue&type=template&id=64bba898":
 /*!************************************************************************************!*\
   !*** ./resources/js/Components/Elements/TheCard.vue?vue&type=template&id=64bba898 ***!
@@ -7736,6 +8491,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FormWizard_vue_vue_type_style_index_0_id_7611d60c_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./FormWizard.vue?vue&type=style&index=0&id=7611d60c&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/FormWizard.vue?vue&type=style&index=0&id=7611d60c&lang=css");
+
+
+/***/ }),
+
+/***/ "./resources/js/Components/Elements/ProgressBar.vue?vue&type=style&index=0&id=9e36d98e&scoped=true&lang=css":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/Components/Elements/ProgressBar.vue?vue&type=style&index=0&id=9e36d98e&scoped=true&lang=css ***!
+  \******************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ProgressBar_vue_vue_type_style_index_0_id_9e36d98e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ProgressBar.vue?vue&type=style&index=0&id=9e36d98e&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Elements/ProgressBar.vue?vue&type=style&index=0&id=9e36d98e&scoped=true&lang=css");
 
 
 /***/ }),

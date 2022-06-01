@@ -24,6 +24,11 @@
     </head>
     <body class="font-sans antialiased">
         @inertia
+        @php
+            $clientId = env('PAYPAL_CLIENT_ID');
+            $currency = env('PAYPAL_CURRENCY');
+        @endphp
+        <script src="https://www.paypal.com/sdk/js?client-id={{$clientId}}&currency={{$currency}}&intent=authorize"></script>
 
 {{--        @env ('local')--}}
 {{--            <script src="http://localhost:8080/js/bundle.js"></script>--}}

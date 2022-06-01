@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use AmrShawky\LaravelCurrency\Facade\Currency;
 use App\Models\Profile;
 use App\Models\Thefind;
 use App\Models\Thefound;
 use App\Models\User;
 use App\Notifications\WelcomeEmailNotification;
+use App\Services\PaypalPayment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +25,16 @@ class TheFoundController extends Controller
      */
     public function register(Thefind $thefind): \Inertia\Response
     {
+
+        if (\auth()->user()){
+//            $payment = new PaypalPayment(env('PAYPAL_CLIENT_ID'), env('PAYPAL_CLIENT_SECRET'),true);
+            $amount_paypal = $this->getAmountPaypal();
+            $type_piece = $thefind->piece->name;
+        }else{
+            $amount_paypal = '';
+            $type_piece = '';
+        }
+
        return inertia::render('Pieces/TheRegisterInfoFounder', [
            'id' => $thefind->id,
            'fullName' => $thefind->fullName,
@@ -31,8 +43,26 @@ class TheFoundController extends Controller
            'details' => $thefind->details,
            'photos' => $thefind->photos,
            'amount_check' => money(order_amount($thefind->amount_check)),
-           'amount_piece' => money(amount_piece($thefind->piece_id))
+           'amount_piece' => money(amount_piece($thefind->piece_id)),
+           'amount_paypal' => $amount_paypal,
+           'type_piece' => $type_piece
        ]);
+    }
+
+    public function getAmountPaypal(): string
+    {
+        $user = \auth()->user();
+        $amountByUser = Thefound::query()
+            ->where('user_id', $user->id)
+            ->get();
+        $thefound = arrat_to_object($amountByUser);
+
+        return Currency::convert()
+            ->from('XAF')
+            ->to('EUR')
+            ->amount($thefound->amount)
+            ->round(2)
+            ->get();
     }
 
     public function search(): \Inertia\Response
@@ -43,8 +73,9 @@ class TheFoundController extends Controller
     /**
      * @return \Inertia\Response
      */
-    public function paiement(): \Inertia\Response
+    public function paiement(Request $request): \Inertia\Response
     {
+        dd($request);
         return inertia::render('Pieces/Paiement');
     }
 
@@ -106,9 +137,9 @@ class TheFoundController extends Controller
             'city' => $request->city,
         ]);
 
-        return redirect()->route('paiement')->with([
-            'amount' => $request->amount,
-        ]);
+        $request->session()->flash('success', 'Good! vos information personnelles sont bien enregistres avec succès!');
+
+        return redirect()->back();
     }
 
     public function multipleexplode ($delimiters,$string): array
