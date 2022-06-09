@@ -55,7 +55,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function (){
 //Paiment paypal
 Route::middleware(['auth', 'verified'])->group(function (){
     //Route::get('payment', [PaypalController::class, 'index'])->name('paypal.payment');
-    Route::post('/payment', [PaypalController::class, 'store'])->name('paypal.store');
+    Route::post('/payment/{id}', [PaypalController::class, 'store'])->name('paypal.store');
 //Route::get('paymentsuccess', 'PaymentController@payment_success');
 //Route::get('paymenterror', 'PaymentController@payment_error');
 });

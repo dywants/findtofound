@@ -23,7 +23,8 @@ return new class extends Migration
             $table->text('details')->nullable();
             $table->string('photos');
             $table->boolean('approval_status')->default(0);
-            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(User::class)->nullable()->constrained();
+            $table->text('geo_lieu')->nullable();
             $table->foreignIdFor(Piece::class)->constrained();
             $table->decimal('amount_check');
             $table->timestamps();

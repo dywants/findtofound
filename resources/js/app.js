@@ -12,8 +12,6 @@ configure({
     }),
 });
 // import VeeValidate, { ValidationProvider,localize,extend } from 'vee-validate';
-import "vue-loading-overlay/dist/vue-loading.css";
-import 'vue-step-progress/dist/main.css';
 import Layout from "@/Layouts/Layout";
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use AmrShawky\LaravelCurrency\Facade\Currency;
+use App\Models\Payment;
 use App\Models\Thefound;
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalCheckoutSdk\Core\ProductionEnvironment;
@@ -62,7 +63,7 @@ HTML;
      * @throws \PayPalHttp\IOException
      * @throws PaymentAmountMissmatchException
      */
-    public function handle(ServerRequestInterface $request, Thefound $cart): void
+    public function handle(ServerRequestInterface $request, $cart): void
     {
         if ($this->sandbox){
             $environment = new SandboxEnvironment($this->clientId, $this->clientSecret);
@@ -70,27 +71,17 @@ HTML;
             $environment = new ProductionEnvironment($this->clientId, $this->clientSecret);
         }
 
-        dd($request);
-
         $client = new PaypalHttpClient($environment);
-        dd($client);
+
         $authorizationId = $request->getParsedBody()['authorizationId']; // capture de l'authorisation
 //        $authorizationId = $request->getQueryParams()['authorizationId']; // capture de l'authorisation
+        $sourcePayment = $request->getParsedBody()['sourcePayment'];
+
         $request = new AuthorizationsGetRequest($authorizationId);
+
         $authorizationResponse = $client->execute($request);
 
         $amount_paypal = $authorizationResponse->result->amount->value;
-
-        $amount = Currency::convert()
-            ->from('EUR')
-            ->to('XAF')
-            ->amount($amount_paypal)
-            ->round(2)
-            ->get();
-
-        if($amount !==  $cart->amount){
-            throw new PaymentAmountMissmatchException($amount, $cart->amount);
-        }
 
         // On peut récupérer l'Order créé par le bouton
         $orderId = $authorizationResponse->result->supplementary_data->related_ids->order_id;
@@ -102,9 +93,19 @@ HTML;
         $response = $client->execute($request);
 
         // Sauvegarder les informations de l'utilisateur
-
-        if ($response->result->status() !== 'COMPLETED') {
+        if ($response->result->status !== 'COMPLETED') {
             throw new \Exception();
         }
+
+        Payment::create([
+            'orderId' => $orderId,
+            'user_payer_id' => $cart->user_id,
+            'thefind_id' => $cart->thefind_id,
+            'amount' => $amount_paypal,
+            'currency' => $orderResponse->result->purchase_units[0]->amount->currency_code,
+            'payment_status' => $response->result->status,
+            'type_piece' => $orderResponse->result->purchase_units[0]->items[0]->description,
+            'paymentSource' => $sourcePayment
+        ]);
     }
 }

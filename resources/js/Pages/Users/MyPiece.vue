@@ -4,7 +4,7 @@
         <div class="max-w-screen-xl p-4 mx-auto mt-8">
             <!-- component -->
                 <div class="container m-auto px-6 md:px-12 lg:px-20">
-                    <div class="m-auto -space-y-4 items-center justify-center md:flex md:space-y-0 md:-space-x-4 xl:w-10/12">
+                    <div v-if="status === 'COMPLETED'" class="m-auto -space-y-4 items-center justify-center md:flex md:space-y-0 md:-space-x-4 xl:w-10/12">
                         <div class="relative z-10 -mx-4 group md:w-6/12 md:mx-0 lg:w-5/12">
                             <div aria-hidden="true" class="absolute top-0 w-full h-full rounded-2xl bg-white shadow-xl transition duration-500 group-hover:scale-105 lg:group-hover:scale-110"></div>
                             <div class="relative p-6 space-y-6 lg:p-8">
@@ -65,6 +65,9 @@
                             </div>
                         </div>
                     </div>
+                    <div v-else class="text-xl">
+                        <p>Bien vouloir effectué le pairment afin d'acceder a ces informations</p>
+                    </div>
                 </div>
         </div>
     </Dashboard>
@@ -79,6 +82,7 @@ import {reactive} from 'vue';
 
 let props = defineProps({
     piece: Object,
+    status:Object,
 });
 
 const form = reactive({

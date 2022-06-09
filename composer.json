@@ -13,9 +13,12 @@
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.7",
+        "nyholm/psr7": "^1.5",
+        "nyholm/psr7-server": "^1.0",
         "paypal/paypal-checkout-sdk": "^1.0",
         "rackbeat/laravel-ui-avatars": "^1.0",
         "spatie/laravel-permission": "^5.5",
+        "symfony/psr-http-message-bridge": "^2.1",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {

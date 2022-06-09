@@ -100,6 +100,7 @@ import {Link, usePage} from '@inertiajs/inertia-vue3';
 import * as yup from 'yup';
 import {Inertia} from "@inertiajs/inertia";
 import ErrorsAndMessages from "@/Components/Elements/ErrorsAndMessages";
+import {reactive} from "vue";
 
 export default {
     name: "TheRegisterInfoFounder",
@@ -180,15 +181,18 @@ export default {
                 onApprove: async (data, actions) => {
                     const authorization = await actions.order.authorize()
                     const authorizationId = authorization.purchase_units[0].payments.authorizations[0].id
-                    console.log(authorization)
-                    await fetch('/paiement', {
-                        method: 'post',
-                        headers: {
-                            'content-type': 'application/json'
-                        },
-                        body: JSON.stringify({authorizationId})
+                    console.log(authorization, data)
+
+                    const form = reactive({
+                        authorizationId: authorizationId,
+                        sourcePayment: data.paymentSource
+                    });
+
+                    Inertia.post(route('paypal.store', {id: authorizationId}), form, {
+                        forceFormData: true
                     })
-                    alert('Votre paiement a bien été enregistré')
+
+                    // alert('Votre paiement a bien été enregistré')
                 }
             }).render('#paypal-button-container');
         }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\Piece;
 use App\Models\Thefind;
 use App\Models\Thefound;
@@ -84,10 +85,18 @@ class UserController extends Controller
             ->with('user.profile')
             ->get();
 
+        $payment = Payment::query()
+            ->where('user_payer_id', $user->id)
+            ->get();
+
+        $paymentArray= arrat_to_object($payment);
+
+        $paymentStatus = $paymentArray->payment_status;
         $thefind = arrat_to_object($piece);
 
         return Inertia::render('Users/MyPiece', [
-            'piece' => $thefind
+            'piece' => $thefind,
+            'status' => $paymentStatus
         ]);
     }
 

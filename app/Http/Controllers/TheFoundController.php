@@ -75,7 +75,6 @@ class TheFoundController extends Controller
      */
     public function paiement(Request $request): \Inertia\Response
     {
-        dd($request);
         return inertia::render('Pieces/Paiement');
     }
 

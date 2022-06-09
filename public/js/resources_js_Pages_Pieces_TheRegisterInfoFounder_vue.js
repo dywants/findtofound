@@ -31,12 +31,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
 /* harmony import */ var _Layouts_HeaderPage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/HeaderPage */ "./resources/js/Layouts/HeaderPage.vue");
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
 /* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! yup */ "./node_modules/yup/es/index.js");
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
 /* harmony import */ var _Components_Elements_ErrorsAndMessages__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/Elements/ErrorsAndMessages */ "./resources/js/Components/Elements/ErrorsAndMessages.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -49,13 +50,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "TheRegisterInfoFounder",
   components: {
     HeaderPage: _Layouts_HeaderPage__WEBPACK_IMPORTED_MODULE_1__["default"],
     Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_2__.Link,
-    Field: vee_validate__WEBPACK_IMPORTED_MODULE_6__.Field,
-    ErrorMessage: vee_validate__WEBPACK_IMPORTED_MODULE_6__.ErrorMessage,
+    Field: vee_validate__WEBPACK_IMPORTED_MODULE_7__.Field,
+    ErrorMessage: vee_validate__WEBPACK_IMPORTED_MODULE_7__.ErrorMessage,
     ErrorsAndMessages: _Components_Elements_ErrorsAndMessages__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   props: ['fullName', 'amount_check', 'id', 'validationSchema', 'amount_piece', 'amount_paypal', 'type_piece'],
@@ -76,7 +78,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   setup: function setup() {
-    var _useForm = (0,vee_validate__WEBPACK_IMPORTED_MODULE_6__.useForm)({
+    var _useForm = (0,vee_validate__WEBPACK_IMPORTED_MODULE_7__.useForm)({
       validationSchema: validationSchema
     }),
         handleSubmit = _useForm.handleSubmit,
@@ -131,7 +133,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         // Finalize the transaction after payer approval
         onApprove: function () {
           var _onApprove = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(data, actions) {
-            var authorization, authorizationId;
+            var authorization, authorizationId, form;
             return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
               while (1) {
                 switch (_context.prev = _context.next) {
@@ -142,22 +144,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   case 2:
                     authorization = _context.sent;
                     authorizationId = authorization.purchase_units[0].payments.authorizations[0].id;
-                    console.log(authorization);
-                    _context.next = 7;
-                    return fetch('/paiement', {
-                      method: 'post',
-                      headers: {
-                        'content-type': 'application/json'
-                      },
-                      body: JSON.stringify({
-                        authorizationId: authorizationId
-                      })
+                    console.log(authorization, data);
+                    form = (0,vue__WEBPACK_IMPORTED_MODULE_6__.reactive)({
+                      authorizationId: authorizationId,
+                      sourcePayment: data.paymentSource
                     });
+                    _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_4__.Inertia.post(route('paypal.store', {
+                      id: authorizationId
+                    }), form, {
+                      forceFormData: true
+                    }); // alert('Votre paiement a bien été enregistré')
 
                   case 7:
-                    alert('Votre paiement a bien été enregistré');
-
-                  case 8:
                   case "end":
                     return _context.stop();
                 }
