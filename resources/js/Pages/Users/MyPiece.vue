@@ -12,7 +12,7 @@
                                 <div>
                                     <div class="relative flex justify-around">
                                         <div class="flex items-end">
-                                            <img :src="showImage() + piece.thefind.photos"
+                                            <img :src="showImage(photos)"
                                                  class="w-44 h-44 object-cover" :alt=piece.thefind.fullName />
                                         </div>
                                     </div>
@@ -83,6 +83,7 @@ import {reactive} from 'vue';
 let props = defineProps({
     piece: Object,
     status:Object,
+    photos: String
 });
 
 const form = reactive({
@@ -98,8 +99,8 @@ function submitted(){
     })
 }
 
-function showImage() {
-    return "/storage/findImages/";
+function showImage(file) {
+    return "/storage/findImages/" + file
 }
 
 </script>

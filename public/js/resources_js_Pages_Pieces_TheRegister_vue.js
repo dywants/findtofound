@@ -437,12 +437,11 @@ __webpack_require__.r(__webpack_exports__);
   name: 'YourInformation',
   components: {
     Field: vee_validate__WEBPACK_IMPORTED_MODULE_1__.Field,
-    ErrorMessage: vee_validate__WEBPACK_IMPORTED_MODULE_1__.ErrorMessage,
-    AddressFields: _Components_Elements_AddressFields__WEBPACK_IMPORTED_MODULE_0__["default"]
+    ErrorMessage: vee_validate__WEBPACK_IMPORTED_MODULE_1__.ErrorMessage
   },
   data: function data() {
     return {
-      checkAnnonymary: false
+      checkAnnonymary: true
     };
   }
 });
@@ -549,27 +548,37 @@ __webpack_require__.r(__webpack_exports__);
     var validationSchema = [yup__WEBPACK_IMPORTED_MODULE_6__.object({
       fullName: yup__WEBPACK_IMPORTED_MODULE_6__.string().required('Le nom inscrit sur la pièce est une information importante'),
       findCity: yup__WEBPACK_IMPORTED_MODULE_6__.string().required("La ville où la pièces a été retrouvée est une information importante"),
-      piece_id: yup__WEBPACK_IMPORTED_MODULE_6__.number().required("Le choix du type de pièce est important"),
+      piece_id: yup__WEBPACK_IMPORTED_MODULE_6__.number().required("Le choix du type de pièce est important").positive().integer(),
       photos: yup__WEBPACK_IMPORTED_MODULE_6__.mixed().required("L'image est requise")
-    }), yup__WEBPACK_IMPORTED_MODULE_6__.object({
-      isAnnomined: yup__WEBPACK_IMPORTED_MODULE_6__.bool(),
-      name: yup__WEBPACK_IMPORTED_MODULE_6__.string().nullable().when('isAnnomined', {
-        is: false,
-        then: yup__WEBPACK_IMPORTED_MODULE_6__.string().required('Votre nom est requis')
-      }),
-      email: yup__WEBPACK_IMPORTED_MODULE_6__.string().nullable().when('isAnnomined', {
-        is: false,
-        then: yup__WEBPACK_IMPORTED_MODULE_6__.string().required('Votre email est requis')
-      }),
-      phone_number: yup__WEBPACK_IMPORTED_MODULE_6__.number().nullable().when('isAnnomined', {
-        is: false,
-        then: yup__WEBPACK_IMPORTED_MODULE_6__.number().required('Votre numero de téléphone nous permettra de vous contacter').positive()
-      }),
-      localisation: yup__WEBPACK_IMPORTED_MODULE_6__.string().nullable().when('isAnnomined', {
-        is: true,
-        then: yup__WEBPACK_IMPORTED_MODULE_6__.string().required('Votre email est requis')
-      })
-    }), yup__WEBPACK_IMPORTED_MODULE_6__.object({
+    }), // if( !checkAnnonymary()){
+    //     yup.object({
+    //         fullName: yup.string().required('Le nom inscrit sur la pièce est une information importante'),
+    //         findCity: yup.string().required("La ville où la pièces a été retrouvée est une information importante"),
+    //         piece_id: yup.number().required("Le choix du type de pièce est important"),
+    //         photos: yup.mixed().required("L'image est requise"),
+    //     })
+    // }
+    yup__WEBPACK_IMPORTED_MODULE_6__.object({
+      name: yup__WEBPACK_IMPORTED_MODULE_6__.string().required('Votre nom est requis'),
+      email: yup__WEBPACK_IMPORTED_MODULE_6__.string().email().required('Votre email est requis'),
+      phone_number: yup__WEBPACK_IMPORTED_MODULE_6__.number().required('Votre numero de téléphone nous permettra de vous contacter').positive().integer(),
+      localisation: yup__WEBPACK_IMPORTED_MODULE_6__.string().nullable().required("Cette adresse est important!")
+    }), // yup.object({
+    //     checkAnnonymary: yup.boolean(),
+    //     name: yup.string().when('checkAnnonymary', {
+    //         is: false,
+    //         then: (schema) => yup.string().required('Votre nom est requis')  }),
+    //     email: yup.string().when('checkAnnonymary', {
+    //         is: false,
+    //         then: (schema) => yup.string().required('Votre email est requis')  }),
+    //     phone_number: yup.number().when('checkAnnonymary', {
+    //         is: false,
+    //         then: (schema) => yup.number().required('Votre numero de téléphone nous permettra de vous contacter').positive()}),
+    //     localisation: yup.string().when('checkAnnonymary', {
+    //         is: true,
+    //         then: yup.string().required('Votre email est requis')  })
+    // }),
+    yup__WEBPACK_IMPORTED_MODULE_6__.object({
       amount_check: yup__WEBPACK_IMPORTED_MODULE_6__.string().required('La validation de la remuneration est importante')
     })];
     return {
@@ -1016,7 +1025,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     name: "ward",
     "class": "mt-2 text-sm text-red-600"
   })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
-    "class": "block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent",
+    "class": "block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer p-4 focus:outline-none focus:border-transparent",
     ref: "photos",
     name: "photos",
     type: "file",
@@ -1176,55 +1185,52 @@ var _hoisted_6 = {
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "message",
-  "class": "block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+  "class": "block mb-2 text-sm font-medium text-gray-900"
 }, "Entrez le lieu où vous laissez la pièce", -1
 /* HOISTED */
 );
 
 var _hoisted_8 = {
-  "class": "mt-4"
-};
-var _hoisted_9 = {
   key: 1
 };
-var _hoisted_10 = {
+var _hoisted_9 = {
   "class": "mb-6"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300",
   "for": "name"
 }, "Votre Nom", -1
 /* HOISTED */
 );
 
-var _hoisted_12 = {
+var _hoisted_11 = {
   "class": "mb-6"
 };
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300",
   "for": "email"
 }, "Votre email", -1
 /* HOISTED */
 );
 
-var _hoisted_14 = {
+var _hoisted_13 = {
   "class": "mb-6"
 };
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300",
   "for": "email"
 }, "Votre ville de residence", -1
 /* HOISTED */
 );
 
-var _hoisted_16 = {
+var _hoisted_15 = {
   "class": "mb-6"
 };
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300",
   "for": "email"
 }, "Votre numero de telephone", -1
@@ -1234,28 +1240,27 @@ var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Field = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Field");
 
-  var _component_AddressFields = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("AddressFields");
-
   var _component_ErrorMessage = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ErrorMessage");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
     type: "checkbox",
     id: "A3-yes",
-    name: "isAnnomined",
+    name: "checkAnnonymary",
+    modelValue: $data.checkAnnonymary,
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.checkAnnonymary = $event;
     }),
     "class": "opacity-0 absolute h-8 w-8"
-  }, null, 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.checkAnnonymary]]), _hoisted_2]), $data.checkAnnonymary ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("article", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
+  }, null, 8
+  /* PROPS */
+  , ["modelValue"]), _hoisted_2]), !$data.checkAnnonymary ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("article", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
     id: "message",
     name: "localisation",
     as: "textarea",
     rows: "4",
     "class": "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
     placeholder: "Your message..."
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_AddressFields)])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("article", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <div class=\"mt-4\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <AddressFields />"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        </div>")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("article", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
     type: "text",
     name: "name",
     id: "name",
@@ -1264,7 +1269,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ErrorMessage, {
     name: "name",
     "class": "mt-2 text-sm text-red-600"
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
     type: "email",
     name: "email",
     id: "email",
@@ -1273,7 +1278,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ErrorMessage, {
     name: "email",
     "class": "mt-2 text-sm text-red-600"
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
     type: "text",
     name: "city",
     id: "city",
@@ -1282,7 +1287,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ErrorMessage, {
     name: "city",
     "class": "mt-2 text-sm text-red-600"
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
     type: "number",
     name: "phone_number",
     id: "phone_number",

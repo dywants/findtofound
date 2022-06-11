@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use AmrShawky\LaravelCurrency\Facade\Currency;
+use App\Contracts\Meta;
 use App\Models\Profile;
 use App\Models\Thefind;
 use App\Models\Thefound;
@@ -96,6 +97,10 @@ class TheFoundController extends Controller
      */
     public function store(Request $request)
     {
+        Meta::addMeta('title', 'Chercher sa pièce!');
+        Meta::addMeta('description', "Cette page permet de faire une recherche de sa pièce dans notre base de données");
+        Meta::addMeta('robots', 'Index, follow');
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',

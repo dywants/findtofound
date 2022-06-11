@@ -78,32 +78,50 @@ export default {
             console.log(JSON.stringify(formData, null, 2));
             Inertia.post('/piece-enregistrer', formData);
         }
+
         const validationSchema = [
             yup.object({
                 fullName: yup.string().required('Le nom inscrit sur la pièce est une information importante'),
                 findCity: yup.string().required("La ville où la pièces a été retrouvée est une information importante"),
-                piece_id: yup.number().required("Le choix du type de pièce est important"),
+                piece_id: yup.number().required("Le choix du type de pièce est important").positive().integer(),
                 photos: yup.mixed().required("L'image est requise"),
             }),
+
+            // if( !checkAnnonymary()){
+            //     yup.object({
+            //         fullName: yup.string().required('Le nom inscrit sur la pièce est une information importante'),
+            //         findCity: yup.string().required("La ville où la pièces a été retrouvée est une information importante"),
+            //         piece_id: yup.number().required("Le choix du type de pièce est important"),
+            //         photos: yup.mixed().required("L'image est requise"),
+            //     })
+            // }
+
             yup.object({
-                isAnnomined: yup.bool(),
-                name: yup.string().nullable().when('isAnnomined', {
-                    is: false,
-                    then: yup.string().required('Votre nom est requis')  }),
-                email: yup.string().nullable().when('isAnnomined', {
-                    is: false,
-                    then: yup.string().required('Votre email est requis')  }),
-                phone_number: yup.number().nullable().when('isAnnomined', {
-                    is: false,
-                    then: yup.number().required('Votre numero de téléphone nous permettra de vous contacter').positive()}),
-                localisation: yup.string().nullable().when('isAnnomined', {
-                    is: true,
-                    then: yup.string().required('Votre email est requis')  })
+                name: yup.string().required('Votre nom est requis'),
+                email: yup.string().email().required('Votre email est requis'),
+                phone_number: yup.number().required('Votre numero de téléphone nous permettra de vous contacter').positive().integer(),
+                localisation: yup.string().nullable().required("Cette adresse est important!"),
             }),
+
+            // yup.object({
+            //     checkAnnonymary: yup.boolean(),
+            //     name: yup.string().when('checkAnnonymary', {
+            //         is: false,
+            //         then: (schema) => yup.string().required('Votre nom est requis')  }),
+            //     email: yup.string().when('checkAnnonymary', {
+            //         is: false,
+            //         then: (schema) => yup.string().required('Votre email est requis')  }),
+            //     phone_number: yup.number().when('checkAnnonymary', {
+            //         is: false,
+            //         then: (schema) => yup.number().required('Votre numero de téléphone nous permettra de vous contacter').positive()}),
+            //     localisation: yup.string().when('checkAnnonymary', {
+            //         is: true,
+            //         then: yup.string().required('Votre email est requis')  })
+            // }),
             yup.object({
                 amount_check: yup.string().required('La validation de la remuneration est importante'),
-            }),
-        ];
+            })
+        ]
         return {
             validationSchema,
             onSubmit,

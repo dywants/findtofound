@@ -94,8 +94,11 @@ class UserController extends Controller
         $paymentStatus = $paymentArray->payment_status;
         $thefind = arrat_to_object($piece);
 
+        $photos = arrat_to_object(json_decode($thefind->thefind->photos));
+
         return Inertia::render('Users/MyPiece', [
             'piece' => $thefind,
+            'photos' => $photos,
             'status' => $paymentStatus
         ]);
     }

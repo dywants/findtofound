@@ -1,7 +1,7 @@
 <template>
     <div class="flex items-center mb-2">
-        <input type="checkbox" id="A3-yes" name="isAnnomined" v-model="checkAnnonymary"
-               class="opacity-0 absolute h-8 w-8" >
+        <Field type="checkbox" id="A3-yes" name="checkAnnonymary" v-model="checkAnnonymary"
+               class="opacity-0 absolute h-8 w-8" />
         <div
             class="bg-white border-2 rounded-md border-blue-400 w-8 h-8 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-blue-500">
             <svg class="fill-current hidden w-3 h-3 text-blue-600 pointer-events-none" version="1.1"
@@ -16,16 +16,16 @@
         </div>
         <label for="A3-yes" class="select-none">Je veux etre Annonyme!</label>
     </div>
-    <article v-if="checkAnnonymary">
+    <article v-if="!checkAnnonymary">
         <p class="text-['17px'] leading-loose text-gray-800 pt-4 ">Pas de soucis, bien vouloir avec precision indiquer
             le lieu où vous avez laissez la pièce retrouvée afin que le propriètaire puisse facilement la retrouver</p>
         <div class="mt-4">
-            <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Entrez le lieu où vous laissez la pièce</label>
+            <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Entrez le lieu où vous laissez la pièce</label>
             <Field id="message" name="localisation" as="textarea" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..."></Field>
         </div>
-        <div class="mt-4">
-            <AddressFields />
-        </div>
+<!--        <div class="mt-4">-->
+<!--            <AddressFields />-->
+<!--        </div>-->
     </article>
     <article v-else>
         <div class="mb-6">
@@ -79,10 +79,10 @@ import { Field, ErrorMessage } from "vee-validate";
 import AddressFields from "@/Components/Elements/AddressFields"
 export default {
     name: 'YourInformation',
-    components: {Field, ErrorMessage,AddressFields},
+    components: {Field, ErrorMessage},
     data(){
         return {
-            checkAnnonymary: false
+            checkAnnonymary: true
         }
     },
 }

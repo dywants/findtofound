@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\Meta;
 use App\Http\Requests\FindRequest;
 use App\Models\Piece;
 use App\Models\Profile;
@@ -30,6 +31,9 @@ class TheFindController extends Controller
     public function index(): \Inertia\Response
     {
         $pieces = Piece::all();
+        Meta::addMeta('title', 'Enregistrer une pièce retrouvée!');
+        Meta::addMeta('description', "Cette page permet l'enregistrement des informations d'une pièce retrouvée ainsi que les informations de celui qui à retrouvée la pièce");
+        Meta::addMeta('robots', 'Index, follow');
 
         return inertia::render('Pieces/TheRegister', [
             'pieces' => $pieces,
