@@ -40,7 +40,6 @@
                                         Pièce retrouvée et recuperer
                                     </button>
                                 </form>
-
                             </div>
                         </div>
 
@@ -66,7 +65,14 @@
                         </div>
                     </div>
                     <div v-else class="text-xl">
-                        <p>Bien vouloir effectué le pairment afin d'acceder a ces informations</p>
+                        <p>Bien vouloir effectué le paiement afin d'acceder a ces informations</p>
+                        <div
+                            class="flex items-center flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 lg:space-x-8 mt-4 md:mt-8">
+                            <Link :href="route('found.info', {thefind: piece.thefind_id})"
+                                  class="w-full md:w-3/5 text-base text-center rounded-md font-medium leading-none text-white uppercase py-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-green-600 hover:bg-green-700 text-white ">
+                                Effectuer le paiement
+                            </Link>
+                        </div>
                     </div>
                 </div>
         </div>

@@ -26,6 +26,9 @@ class TheFoundController extends Controller
      */
     public function register(Thefind $thefind): \Inertia\Response
     {
+        Meta::addMeta('title', 'Chercher sa pièce!');
+        Meta::addMeta('description', "Cette page permet de faire une recherche de sa pièce dans notre base de données");
+        Meta::addMeta('robots', 'Index, follow');
 
         if (\auth()->user()){
 //            $payment = new PaypalPayment(env('PAYPAL_CLIENT_ID'), env('PAYPAL_CLIENT_SECRET'),true);
@@ -71,13 +74,6 @@ class TheFoundController extends Controller
         return inertia::render('Pieces/TheSearch');
     }
 
-    /**
-     * @return \Inertia\Response
-     */
-    public function paiement(Request $request): \Inertia\Response
-    {
-        return inertia::render('Pieces/Paiement');
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -97,10 +93,6 @@ class TheFoundController extends Controller
      */
     public function store(Request $request)
     {
-        Meta::addMeta('title', 'Chercher sa pièce!');
-        Meta::addMeta('description', "Cette page permet de faire une recherche de sa pièce dans notre base de données");
-        Meta::addMeta('robots', 'Index, follow');
-
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',

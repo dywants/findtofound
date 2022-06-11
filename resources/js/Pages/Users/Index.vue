@@ -2,6 +2,7 @@
     <Dashboard>
         <!-- component -->
         <div class="h-full bg-gradient-to-r from-neutral-400 via-neutral-200 to-white">
+            <ErrorsAndMessages :errors="errors" />
             <div class="grid grid-cols-12 gap-0">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xxl:col-span-8 px-6 py-6">
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -63,7 +64,7 @@
                                 <div class="relative w-full h-full px-4 sm:px-6 lg:px-4 flex items-center justify-center">
                                     <div>
                                         <h3 class="text-center text-lg">
-                                            Somme payée pour votre pièce
+                                            Somme {{ payment_status === "" ? 'à payée' : 'payée' }} pour votre pièce
                                         </h3>
                                         <h3  class="text-center text-3xl mt-2 font-bold">
                                             {{ amount.formatted }}
@@ -81,12 +82,17 @@
 
 <script setup>
 import Dashboard from '@/Pages/Dashboard'
+import ErrorsAndMessages from "@/Components/Elements/ErrorsAndMessages";
+import {ref} from "vue";
 
 let props = defineProps({
     total_amount: Object,
     total_presume_amount: Object,
     amount: Object,
+    payment_status: String
 });
+
+const errors = ref([]);
 </script>
 
 <style scoped>

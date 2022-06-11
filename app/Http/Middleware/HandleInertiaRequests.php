@@ -48,7 +48,9 @@ class HandleInertiaRequests extends Middleware
             'is_finder' => $request->user() && $request->user()->hasRole('finder'),
             'searchItems' => function () {
 //                return Cache::rememberForever('searchItems', function () {
-                    return Thefind::cursor()->map(function ($thefind) {
+                    return Thefind::where('approval_status', 0)
+                        ->cursor()
+                        ->map(function ($thefind) {
                         return [
                             'fullName' => $thefind->fullName,
                             'amount_check' =>money(order_amount($thefind->amount_check)),

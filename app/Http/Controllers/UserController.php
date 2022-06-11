@@ -39,6 +39,17 @@ class UserController extends Controller
             ->where('user_id', $user->id)
             ->get();
 
+        $payment = Payment::query()
+            ->where('user_payer_id', $user->id)
+            ->get();
+
+        if (!$payment->isEmpty()){
+            $paymentArray= arrat_to_object($payment);
+            $paymentStatus = $paymentArray->payment_status;
+        }else{
+            $paymentStatus = "";
+        }
+
         $thefind = arrat_to_object($amountByFinder);
         $amount_finder = arrat_to_object($amountByFinderStatus);
         $thefound = arrat_to_object($amountByUser);
@@ -54,7 +65,8 @@ class UserController extends Controller
         return Inertia::render('Users/Index', [
             'total_presume_amount' => money($thefind->finds_sum_amount_check),
             'total_amount' => money($amount_finder->finds_sum_amount_check),
-            'amount' => $amount
+            'amount' => $amount,
+            'payment_status' => $paymentStatus,
         ]);
     }
 
@@ -79,6 +91,7 @@ class UserController extends Controller
     public function myPiece(): \Inertia\Response
     {
         $user = auth()->user();
+
         $piece = Thefound::query()
             ->where('user_id', $user->id)
             ->with('thefind.user.profile')
@@ -89,11 +102,14 @@ class UserController extends Controller
             ->where('user_payer_id', $user->id)
             ->get();
 
-        $paymentArray= arrat_to_object($payment);
+        if (!$payment->isEmpty()){
+            $paymentArray= arrat_to_object($payment);
+            $paymentStatus = $paymentArray->payment_status;
+        }else{
+            $paymentStatus = "";
+        }
 
-        $paymentStatus = $paymentArray->payment_status;
         $thefind = arrat_to_object($piece);
-
         $photos = arrat_to_object(json_decode($thefind->thefind->photos));
 
         return Inertia::render('Users/MyPiece', [
