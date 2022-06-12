@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
+use App\Models\Thefind;
 use App\Models\User;
 use Inertia\Inertia;
 
@@ -54,10 +55,22 @@ class AdminController extends Controller
             ->with('thefind.user.profile')
             ->get();
 
-//        dd($payments);
-
         return Inertia::render('Admin/Users/Payment', [
             'payments' => $payments
+        ]);
+    }
+
+    /**
+     * @return \Inertia\Response
+     */
+    public function allFind(): \Inertia\Response
+    {
+        $finds = Thefind::latest()->with('piece')
+            ->with('user')
+            ->get();
+
+        return Inertia::render('Admin/Find', [
+            'finds' => $finds,
         ]);
     }
 

@@ -21,6 +21,17 @@
                 </li>
                 <li>
                     <Link class="text-white font-medium text-[16px] cursor-pointer"
+                          :href="route('admin.allFind')" :active="route().current('admin.allFind')">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </span>
+                        <span class="menu-item-label">Tous les Finds</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link class="text-white font-medium text-[16px] cursor-pointer"
                           :href="route('admin.payment')" :active="route().current('admin.payment')">
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

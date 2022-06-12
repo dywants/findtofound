@@ -32503,6 +32503,10 @@ var map = {
 		"./resources/js/Pages/Admin/Faqs/create.vue",
 		"resources_js_Pages_Admin_Faqs_create_vue"
 	],
+	"./Admin/Find.vue": [
+		"./resources/js/Pages/Admin/Find.vue",
+		"resources_js_Pages_Admin_Find_vue"
+	],
 	"./Admin/Index.vue": [
 		"./resources/js/Pages/Admin/Index.vue",
 		"resources_js_Pages_Admin_Index_vue"
@@ -32783,7 +32787,7 @@ module.exports = JSON.parse('{"code":"fr","messages":{"_default":"Le champ {fiel
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_Admin_Faqs_Edit_vue":1,"resources_js_Pages_Admin_Faqs_Index_vue":1,"resources_js_Pages_Admin_Faqs_create_vue":1,"resources_js_Pages_Admin_Index_vue":1,"resources_js_Pages_Admin_Payment_vue":1,"resources_js_Pages_Admin_Pieces_Create_vue":1,"resources_js_Pages_Admin_Pieces_Edit_vue":1,"resources_js_Pages_Admin_Pieces_Index_vue":1,"resources_js_Pages_Admin_Users_vue":1,"resources_js_Pages_Admin_Users_Create_vue":1,"resources_js_Pages_Admin_Users_Index_vue":1,"resources_js_Pages_Admin_Users_Payment_vue":1,"resources_js_Pages_Auth_ConfirmPassword_vue":1,"resources_js_Pages_Auth_ForgotPassword_vue":1,"resources_js_Pages_Auth_Login_vue":1,"resources_js_Pages_Auth_Register_vue":1,"resources_js_Pages_Auth_ResetPassword_vue":1,"resources_js_Pages_Auth_VerifyEmail_vue":1,"resources_js_Pages_Contact_vue":1,"resources_js_Pages_Dashboard_vue":1,"resources_js_Pages_Error_vue":1,"resources_js_Pages_Faqs_vue":1,"resources_js_Pages_Home_vue":1,"resources_js_Pages_Pieces_Paiement_vue":1,"resources_js_Pages_Pieces_TheRegister_vue":1,"resources_js_Pages_Pieces_TheRegisterInfoFounder_vue":1,"resources_js_Pages_Pieces_TheSearch_vue":1,"resources_js_Pages_Pieces_TheShowFind_vue":1,"resources_js_Pages_Users_Index_vue":1,"resources_js_Pages_Users_MyPiece_vue":1,"resources_js_Pages_Users_Profile_vue":1,"resources_js_Pages_Users_TheListingFind_vue":1,"resources_js_Pages_Welcome_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_Admin_Faqs_Edit_vue":1,"resources_js_Pages_Admin_Faqs_Index_vue":1,"resources_js_Pages_Admin_Faqs_create_vue":1,"resources_js_Pages_Admin_Find_vue":1,"resources_js_Pages_Admin_Index_vue":1,"resources_js_Pages_Admin_Payment_vue":1,"resources_js_Pages_Admin_Pieces_Create_vue":1,"resources_js_Pages_Admin_Pieces_Edit_vue":1,"resources_js_Pages_Admin_Pieces_Index_vue":1,"resources_js_Pages_Admin_Users_vue":1,"resources_js_Pages_Admin_Users_Create_vue":1,"resources_js_Pages_Admin_Users_Index_vue":1,"resources_js_Pages_Admin_Users_Payment_vue":1,"resources_js_Pages_Auth_ConfirmPassword_vue":1,"resources_js_Pages_Auth_ForgotPassword_vue":1,"resources_js_Pages_Auth_Login_vue":1,"resources_js_Pages_Auth_Register_vue":1,"resources_js_Pages_Auth_ResetPassword_vue":1,"resources_js_Pages_Auth_VerifyEmail_vue":1,"resources_js_Pages_Contact_vue":1,"resources_js_Pages_Dashboard_vue":1,"resources_js_Pages_Error_vue":1,"resources_js_Pages_Faqs_vue":1,"resources_js_Pages_Home_vue":1,"resources_js_Pages_Pieces_Paiement_vue":1,"resources_js_Pages_Pieces_TheRegister_vue":1,"resources_js_Pages_Pieces_TheRegisterInfoFounder_vue":1,"resources_js_Pages_Pieces_TheSearch_vue":1,"resources_js_Pages_Pieces_TheShowFind_vue":1,"resources_js_Pages_Users_Index_vue":1,"resources_js_Pages_Users_MyPiece_vue":1,"resources_js_Pages_Users_Profile_vue":1,"resources_js_Pages_Users_TheListingFind_vue":1,"resources_js_Pages_Welcome_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

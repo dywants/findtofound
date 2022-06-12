@@ -48,7 +48,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function (){
     Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
     Route::get('/new-user', [AdminController::class, 'create'])->name('admin.new.user');
     Route::get('/payment', [AdminController::class, 'listingPayment'])->name('admin.payment');
-    Route::get('/payment-finder', [AdminController::class, 'finderPayment'])->name('admin.payment.finder');
+    Route::get('/payment-finder', [AdminController::class, 'allFind'])->name('admin.allFind');
+    Route::get('/all-find', [AdminController::class, 'finderPayment'])->name('admin.payment.finder');
     Route::resource('faq', \App\Http\Controllers\Admin\FaqsController::class);
     Route::resource('piece', \App\Http\Controllers\Admin\PieceController::class);
 });
