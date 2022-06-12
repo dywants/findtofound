@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ContactIndexController;
 use App\Http\Controllers\FaqsIndexController;
 use App\Http\Controllers\HomeController;
@@ -8,9 +8,7 @@ use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\TheFindController;
 use App\Http\Controllers\TheFoundController;
 use App\Http\Controllers\UserController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +47,10 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function (){
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
     Route::get('/new-user', [AdminController::class, 'create'])->name('admin.new.user');
+    Route::get('/payment', [AdminController::class, 'listingPayment'])->name('admin.payment');
+    Route::get('/payment-finder', [AdminController::class, 'finderPayment'])->name('admin.payment.finder');
     Route::resource('faq', \App\Http\Controllers\Admin\FaqsController::class);
+    Route::resource('piece', \App\Http\Controllers\Admin\PieceController::class);
 });
 
 //Paiment paypal

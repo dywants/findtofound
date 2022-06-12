@@ -21,6 +21,17 @@
                 </li>
                 <li>
                     <Link class="text-white font-medium text-[16px] cursor-pointer"
+                          :href="route('admin.payment')" :active="route().current('admin.payment')">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                             </svg>
+                        </span>
+                        <span class="menu-item-label">Paiement</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link class="text-white font-medium text-[16px] cursor-pointer"
                                  :href="route('admin.users')" :active="route().current('admin.users')">
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -28,6 +39,28 @@
                             </svg>
                         </span>
                         <span class="menu-item-label">Users</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link class="text-white font-medium text-[16px] cursor-pointer"
+                          :href="route('admin.payment.finder')" :active="route().current('admin.payment.finder')">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </span>
+                        <span class="menu-item-label">Paiement finder</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link class="text-white font-medium text-[16px] cursor-pointer"
+                          :href="route('piece.index')" :active="route().current('piece.index')">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+</svg>
+                        </span>
+                        <span class="menu-item-label">Pieces</span>
                     </Link>
                 </li>
                 <li>

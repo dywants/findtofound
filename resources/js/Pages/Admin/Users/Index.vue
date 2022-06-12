@@ -101,8 +101,9 @@ import AdminLayout from "@/Layouts/AdminLayout";
 import HeaderAdmin from "@/Layouts/Admin/HeaderAdmin";
 export default {
     name: "Index",
-    components: {AdminLayout,HeaderAdmin, Link},
+    components: {HeaderAdmin, Link},
     props: ['users'],
+    layout: AdminLayout,
 
     setup(){
         function formatDateFR(date) {
