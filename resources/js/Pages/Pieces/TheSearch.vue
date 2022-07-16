@@ -54,7 +54,7 @@
 
         <div v-if="term" class="z-10 my-10 w-full flex flex-col rounded-b-lg bg-white space-y-3">
             <div v-for="(result, index) in results" :key="index">
-                <Link :href="result.item.link"  @mousedown.prevent>
+                <Link :href="result.item.link" @mousedown.prevent>
                     <div class="flex bg-white border border-gray-300 shadow-lg rounded-md overflow-hidden items-center justify-start cursor-pointer hover:bg-orange-50">
                         <div class="relative w-32 h-auto flex-shrink-0">
                             <div class="pl-4 w-full h-full flex items-center justify-center">

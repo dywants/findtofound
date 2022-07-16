@@ -561,8 +561,8 @@ __webpack_require__.r(__webpack_exports__);
     yup__WEBPACK_IMPORTED_MODULE_6__.object({
       name: yup__WEBPACK_IMPORTED_MODULE_6__.string().required('Votre nom est requis'),
       email: yup__WEBPACK_IMPORTED_MODULE_6__.string().email().required('Votre email est requis'),
-      phone_number: yup__WEBPACK_IMPORTED_MODULE_6__.number().required('Votre numero de téléphone nous permettra de vous contacter').positive().integer(),
-      localisation: yup__WEBPACK_IMPORTED_MODULE_6__.string().nullable().required("Cette adresse est important!")
+      phone_number: yup__WEBPACK_IMPORTED_MODULE_6__.number().required('Votre numero de téléphone nous permettra de vous contacter').positive().integer() // localisation: yup.string().nullable().required("Cette adresse est important!"),
+
     }), // yup.object({
     //     checkAnnonymary: yup.boolean(),
     //     name: yup.string().when('checkAnnonymary', {

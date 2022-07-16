@@ -19,7 +19,8 @@ class PaypalController extends Controller
         ]);
     }
 
-    public function store (Request $sessionRequest) {
+    public function store (Request $sessionRequest): \Illuminate\Http\RedirectResponse
+    {
         $user = auth()->user();
         $thefound =  Thefound::query()
             ->where('user_id', $user->id)

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\AfrikpayController;
 use App\Http\Controllers\ContactIndexController;
 use App\Http\Controllers\FaqsIndexController;
 use App\Http\Controllers\HomeController;
@@ -58,5 +59,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function (){
 Route::middleware(['auth', 'verified'])->group(function (){
     Route::post('/payment/{id}', [PaypalController::class, 'store'])->name('paypal.store');
 });
+//Paiement Afrikpay
+Route::get('/payment-afrikpay/{id}', [AfrikpayController::class, 'index'])->name('afrikpay.index');
+Route::post('/paiement-afrikpay', [AfrikpayController::class, 'store'])->name('afrikpay.store');
 
 require __DIR__.'/auth.php';

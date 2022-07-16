@@ -63,7 +63,7 @@ HTML;
      * @throws \PayPalHttp\IOException
      * @throws PaymentAmountMissmatchException
      */
-    public function handle(ServerRequestInterface $request, $cart): void
+    public function handle(ServerRequestInterface $request, $cart)
     {
         if ($this->sandbox){
             $environment = new SandboxEnvironment($this->clientId, $this->clientSecret);

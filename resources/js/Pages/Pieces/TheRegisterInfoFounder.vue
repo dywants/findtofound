@@ -8,7 +8,6 @@
         </template>
     </HeaderPage>
 
-
     <section class="text-blueGray-700 bg-white">
         <div class="container flex flex-col items-center px-5 py-16 mx-auto  md:flex-row lg:px-28">
             <ErrorsAndMessages :errors="errors" />
@@ -59,25 +58,41 @@
                 <div class="px-3">
                     <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-3 text-gray-800 font-light mb-6">
                        <h2 class="text-gray-800 font-semibold text-[22px] pv-2">Moyens de paiement</h2>
-                        <p class="leading-relaxed">Choissiez votre moyen de paiement securisé</p>
+                        <p class="leading-relaxed">Choissiez votre moyen de paiement sécurisé</p>
                     </div>
                     <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 text-gray-800 font-light mb-6">
                         <div class="w-full p-3 border-b border-gray-200">
                             <div class="mb-5">
                                 <label for="type1" class="flex items-center cursor-pointer">
-                                    <input type="radio" @click="toggleAccordion()" class="form-radio h-5 w-5 text-indigo-500" name="type" id="type1" checked>
-                                    <img src="https://leadershipmemphis.org/wp-content/uploads/2020/08/780370.png" class="h-6 ml-3">
+                                    <input type="radio" @click="toggleAccordion()" class="form-radio h-5 w-5 text-indigo-500" name="type" id="type1">
+                                    <span class="ml-4">Mobile paiement</span>
                                 </label>
                             </div>
                             <div v-show="isOpen">
-                                Lien
+                               <div v-if="$page.props.auth.user">
+                                   <IconMobilePayment v-for="(provider, index) in providers"
+                                                      :key="index"
+                                                      :id="index"
+                                                      :image="provider.image"
+                                                      :name="provider.name"
+                                                      :provider="provider.provider"
+                                                      @providerValue="sendProviderValue"
+                                                      @providerName="sendProviderName" />
+
+                                   <form v-show="inputProvider" method="post" @submit.prevent="afrikpayPaiement">
+                                       <input type="text" ref="input" hidden>
+                                       <Button type="submit" class="p-2 rounded bg-green-600">Paiement {{providerName}}</Button>
+                                   </form>
+                               </div>
+
+                                <p v-else>Bien vouloir en premier lieu enregistrer vos informations de base</p>
                             </div>
                         </div>
                         <div class="w-full p-3">
                            <div class="mb-5">
                                <label for="type2" class="flex items-center cursor-pointer">
-                                   <input type="radio" @click="togglePaypal()"  class="form-radio h-5 w-5 text-indigo-500" name="type" id="type2">
-                                   <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" width="80" class="ml-3"/>
+                                   <input type="radio" @click="togglePaypal()" class="form-radio h-5 w-5 text-indigo-500" name="type" id="type2">
+                                   <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" width="80" class="ml-3" alt=""/>
                                </label>
                            </div>
                             <div v-show="isOpenCheck">
@@ -100,17 +115,39 @@ import {Link, usePage} from '@inertiajs/inertia-vue3';
 import * as yup from 'yup';
 import {Inertia} from "@inertiajs/inertia";
 import ErrorsAndMessages from "@/Components/Elements/ErrorsAndMessages";
-import {reactive} from "vue";
+import Button from "@/Components/Button";
+import {onMounted, reactive, ref} from "vue";
+import IconMobilePayment from "@/Components/IconMobilePayment";
 
 export default {
     name: "TheRegisterInfoFounder",
-    components: {HeaderPage, Link, Field, ErrorMessage,ErrorsAndMessages},
+    components: {IconMobilePayment, HeaderPage, Link, Field, ErrorMessage,ErrorsAndMessages, Button},
     props: ['fullName', 'amount_check', 'id' ,'validationSchema','amount_piece', 'amount_paypal','type_piece'],
     data() {
         return {
             errors: [],
             isOpen: false,
             isOpenCheck: false,
+            checkedPaiement: '',
+            providerValue: '',
+            providerName: '',
+            providers: [
+                {
+                    name: 'Orange money',
+                    provider: 'orange_money_cm',
+                    image: '/images/paiement/Orange_Money-Logo.svg',
+                },
+                {
+                    name: 'Mtn momo',
+                    provider: 'mtn_mobilemoney_cm',
+                    image: '/images/paiement/MTN_Group-Logo.svg'
+                },
+                {
+                    name: 'Afrikpay',
+                    provider: 'afrikpay',
+                    image: '/images/paiement/afrikpay.png'
+                }
+            ]
         }
     },
 
@@ -122,16 +159,35 @@ export default {
             this.isOpenCheck = !this.isOpenCheck;
             this.mountPaypalButton()
         },
+        sendProviderName(provider) {
+            this.providerName = provider;
+        },
+        // sendProviderValue(provider) {
+        //     this.providerValue = provider;
+        // },
     },
 
     setup() {
+        let inputProvider = ref('');
         const { handleSubmit, isSubmitting } = useForm({
             validationSchema: validationSchema,
         });
 
         const onSubmit = handleSubmit(values => {
-            Inertia.post('/piece/enregistrer', values);
+            Inertia.post(route('found.store'), values);
         });
+
+        const sendProviderValue = (provider) =>{
+            inputProvider.value =  provider
+        }
+
+        const form = reactive({
+            data: inputProvider
+        });
+
+        const afrikpayPaiement = () => {
+            Inertia.post(route('afrikpay.store'), form)
+        }
 
         const validationSchema = [
             yup.object({
@@ -201,7 +257,10 @@ export default {
             validationSchema,
             onSubmit,
             isSubmitting,
-            mountPaypalButton
+            mountPaypalButton,
+            afrikpayPaiement,
+            sendProviderValue,
+            inputProvider
         };
     },
 }

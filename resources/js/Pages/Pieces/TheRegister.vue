@@ -9,7 +9,6 @@ import * as yup from "yup";
 import {Inertia} from '@inertiajs/inertia';
 import ProgressBar from '@/Components/Elements/ProgressBar'
 
-
 export default {
     name: "TheRegister",
     components: {
@@ -100,7 +99,7 @@ export default {
                 name: yup.string().required('Votre nom est requis'),
                 email: yup.string().email().required('Votre email est requis'),
                 phone_number: yup.number().required('Votre numero de téléphone nous permettra de vous contacter').positive().integer(),
-                localisation: yup.string().nullable().required("Cette adresse est important!"),
+                // localisation: yup.string().nullable().required("Cette adresse est important!"),
             }),
 
             // yup.object({
