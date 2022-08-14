@@ -21087,7 +21087,7 @@ var _hoisted_3 = {
 };
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
-  "class": "mb-8 text-2xl font-black tracking-tighter text-black md:text-5xl title-font"
+  "class": "mb-8 text-2xl font-black tracking-tighter text-[#1FBDEB] md:text-5xl title-font"
 }, "Retrouvez vos pièces grâce aux autres", -1
 /* HOISTED */
 );
@@ -21107,11 +21107,11 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Rechercher une pièce ");
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "w-full lg:w-5/6 lg:max-w-lg md:w-1/2"
+  "class": "w-full lg:w-5/6 lg:max-w-lg md:w-1/2 bg-hero-pattern bg-cover py-10"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   "class": "object-cover object-center rounded-lg",
   alt: "hero",
-  src: "images/hero.svg"
+  src: "images/header_img.png"
 })], -1
 /* HOISTED */
 );
@@ -21120,7 +21120,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_NavLink = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("NavLink");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NavLink, {
-    "class": "block w-full px-5 pt-2.5 pb-2 text-sm font-medium text-white cursor-pointer rounded shadow bg-blue-600 sm:w-auto active:bg-blue-500 hover:bg-blue-700 hover:text-white focus:outline-none focus:ring",
+    "class": "block w-full px-5 pt-2.5 pb-2 text-sm font-medium text-white cursor-pointer rounded shadow bg-[#1FBDEB] sm:w-auto active:bg-blue-500 hover:bg-blue-700 hover:text-white focus:outline-none focus:ring",
     href: _ctx.route('find.register')
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -21132,7 +21132,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, 8
   /* PROPS */
   , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NavLink, {
-    "class": "block w-full px-5 pt-2.5 pb-2 text-sm font-medium bg-white cursor-pointer rounded shadow text-blue-600 sm:w-auto hover:text-blue-700 active:text-blue-500 focus:outline-none focus:ring",
+    "class": "block w-full px-5 pt-2.5 pb-2 text-sm font-medium bg-white cursor-pointer rounded shadow text-[#1FBDEB] sm:w-auto hover:text-blue-700 active:text-blue-500 focus:outline-none focus:ring",
     href: _ctx.route('found.search')
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -21385,7 +21385,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   })])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["NavLink"], {
-    "class": "px-5 pt-2 pb-1.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:text-white",
+    "class": "px-5 pt-2 pb-1.5 text-sm font-medium text-white bg-[#1FBDEB] rounded-lg hover:text-white",
     href: "/login"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -21726,7 +21726,7 @@ var appName = ((_window$document$getE = window.document.getElementsByTagName('ti
   }
 });
 _inertiajs_progress__WEBPACK_IMPORTED_MODULE_3__.InertiaProgress.init({
-  color: '#ff5470'
+  color: '#1FBDEB'
 });
 
 /***/ }),

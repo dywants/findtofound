@@ -2,7 +2,7 @@
 
 return [
     'sandboxUrl' => 'https://sandbox.api.afrikpay.com/api/ecommerce/collect/v3/',
-    'productionUrl' => 'https://sandbox.api.afrikpay.',
+    'productionUrl' => 'https://api.afrikpay.com',
     'references' => '237677777777',
     'store' => 'AFC9160',
     'providers' => [

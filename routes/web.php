@@ -55,12 +55,14 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function (){
     Route::resource('piece', \App\Http\Controllers\Admin\PieceController::class);
 });
 
-//Paiment paypal
 Route::middleware(['auth', 'verified'])->group(function (){
+    //Paiment paypal
     Route::post('/payment/{id}', [PaypalController::class, 'store'])->name('paypal.store');
+    //Paiement Afrikpay
+    Route::post('/paiement-afrikpay', [AfrikpayController::class, 'store'])->name('afrikpay.store');
 });
-//Paiement Afrikpay
+
 Route::get('/payment-afrikpay/{id}', [AfrikpayController::class, 'index'])->name('afrikpay.index');
-Route::post('/paiement-afrikpay', [AfrikpayController::class, 'store'])->name('afrikpay.store');
+
 
 require __DIR__.'/auth.php';

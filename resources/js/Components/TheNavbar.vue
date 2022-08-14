@@ -48,7 +48,7 @@
                        </template>
                        <template v-else>
                            <div class="items-center justify-end flex-1 hidden space-x-4 ml-4 sm:flex">
-                               <NavLink class="px-5 pt-2 pb-1.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:text-white" href="/login">Se connecter</NavLink>
+                               <NavLink class="px-5 pt-2 pb-1.5 text-sm font-medium text-white bg-[#1FBDEB] rounded-lg hover:text-white" href="/login">Se connecter</NavLink>
                            </div>
                        </template>
 

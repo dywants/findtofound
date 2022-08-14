@@ -35,7 +35,7 @@ class AfrikpayController extends Controller
 
         $thefoundCollect = arrat_to_object($thefound);
 
-        $afrikpay_payment = new AfrikPayPayment(env('AFRIKPAY_ACCOUNT_ID'), env('AFRIKPAY_CLIENT_SECRET'),true);
+        $afrikpay_payment = new AfrikPayPayment(env('AFRIKPAY_MERCHANTID'), env('AFRIKPAY_CLIENT_SECRET'),false);
 
         $afrikpay_payment->handle($request, $thefoundCollect, $provider);
 

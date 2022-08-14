@@ -26,13 +26,13 @@ class AfrikPayPayment
         }
 
         $reference = config('afrikpay.references');
-        $store = config('afrikpay.store');
+        $store = env('AFRIKPAY_STORE');
         $code = "";
         $purchaseref = "";
         $amount = $cart->amount;
         $phone = $cart->user->profile->phone_number;
 
-        $hash = hash_hmac("sha256", "AFC9160" . $provider .$reference . $amount . $purchaseref . $code , $this->clientSecret, false);
+        $hash = hash_hmac("sha256", $store . $provider .$phone . $amount . $purchaseref . $code , $this->clientSecret, false);
 
         $curl = curl_init();
 
@@ -47,7 +47,7 @@ class AfrikPayPayment
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS =>'{
               "provider": "'.$provider.'",
-              "reference": "'.$reference.'",
+              "reference": "'.$phone.'",
               "amount": '.$amount.',
               "purchaseref": "",
               "store": "'.$store.'",
@@ -61,7 +61,7 @@ class AfrikPayPayment
             }',
             CURLOPT_HTTPHEADER => array(
                 "accountId: $this->accountId",
-                'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NTc5MDUzNzEsImV4cCI6MTY1NzkwODk3MSwicm9sZXMiOiJST0xFX0RFViIsInVzZXJuYW1lIjoiSm9obiBuYW1lIn0.iYlUeRKXxCgcNzodbRbVOiKdbcgG5zL7sjRsqE7S3OPtTXm0f0qJa-paGHcLmgkLMRt66MdWDkeOB-i9wMYIuiNqmPPyGCnzDq5cg7om21aF6s8xk7UbK5Q0JWETj60aoOeoeNx8rYCiD2V7gLjhWOXQIM1o9Z4OJoBaoQ7Whi5HVlZ3R2iJ6_lMifFUCi2x0nzfmYndtXEFAJ-eHpsDLwjtuWYUAftcD6cVrDFvNxso-FQAT8E1YSsyPuoSfPbLqKxvVcCSMLddnNxtkUoTLNzZmf5_tDhJTy6iF2RxgU3OprQcA56RSWdI2nYnSr3GaNfkJtEeMpJ_x5Kn28zDaA',
+                'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NTgyMjMzMDIsImV4cCI6MTY1ODIyNjkwMiwicm9sZXMiOiJST0xFX0RFViIsInVzZXJuYW1lIjoiSm9obiBuYW1lIn0.vyEDRp1ROktNvloWSL0iMuKhTnuhn_V3LlqQC4fJSx0Q1MtOUfayVNklzs9-ijeEJcLhVQoMdcEFj142nsRmAtcpUDGwyaDzdk5RN-hFZM0qx3nBPNGZzBxzDuL5WGVooSC-C2HS-28sjJQe3M3Bb5j3OuxOPegjg-R2g6EfSHBzgss2uQ0PqRQytUGgbYsyn7FOvxaCbXoWYP9IHwpX3zDNwdGXfGeLJMcgQbUBNrRGa7itkGl9G2YFmT3ISxzIHbGZ2t2vae_rQYsDHJ1pmJrTlxWndmYGr8lQxb9U1WVSJ4gCty0obyFD2JFZjVDQnbX3JTmsmPdnuk0poiqdVg',
                 'Content-Type: application/json'
             ),
         ));
@@ -76,7 +76,7 @@ class AfrikPayPayment
 
         if ($reponsePayment['message'] === "success"){
             Payment::create([
-                'orderId' => $reponsePayment['result']['transactionid'],
+                'order_id' => $reponsePayment['result']['paymentref'],
                 'user_payer_id' => $cart->user_id,
                 'thefind_id' => $cart->thefind_id,
                 'amount' => $reponsePayment['result']['amount'],

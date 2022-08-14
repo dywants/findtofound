@@ -19,6 +19,9 @@ module.exports = {
             },
             flexGrow: {
                 '5' : '5'
+            },
+            backgroundImage: {
+                'hero-pattern': "url('/images/header_ellipse.png')",
             }
         },
     },
