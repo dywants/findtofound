@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Services;
+use App\Models\AfrikpayToken;
 use App\Models\Payment;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use JetBrains\PhpStorm\NoReturn;
 
 class AfrikPayPayment
 {
@@ -27,10 +30,15 @@ class AfrikPayPayment
 
         $reference = config('afrikpay.references');
         $store = env('AFRIKPAY_STORE');
+
         $code = "";
         $purchaseref = "";
-        $amount = $cart->amount;
+//        $amount = $cart->amount;
+        $amount = "100";
         $phone = $cart->user->profile->phone_number;
+        $queryToken = AfrikpayToken::latest('created_at')->first();
+
+        $token = $queryToken->token_key;
 
         $hash = hash_hmac("sha256", $store . $provider .$phone . $amount . $purchaseref . $code , $this->clientSecret, false);
 
@@ -61,8 +69,8 @@ class AfrikPayPayment
             }',
             CURLOPT_HTTPHEADER => array(
                 "accountId: $this->accountId",
-                'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NTgyMjMzMDIsImV4cCI6MTY1ODIyNjkwMiwicm9sZXMiOiJST0xFX0RFViIsInVzZXJuYW1lIjoiSm9obiBuYW1lIn0.vyEDRp1ROktNvloWSL0iMuKhTnuhn_V3LlqQC4fJSx0Q1MtOUfayVNklzs9-ijeEJcLhVQoMdcEFj142nsRmAtcpUDGwyaDzdk5RN-hFZM0qx3nBPNGZzBxzDuL5WGVooSC-C2HS-28sjJQe3M3Bb5j3OuxOPegjg-R2g6EfSHBzgss2uQ0PqRQytUGgbYsyn7FOvxaCbXoWYP9IHwpX3zDNwdGXfGeLJMcgQbUBNrRGa7itkGl9G2YFmT3ISxzIHbGZ2t2vae_rQYsDHJ1pmJrTlxWndmYGr8lQxb9U1WVSJ4gCty0obyFD2JFZjVDQnbX3JTmsmPdnuk0poiqdVg',
-                'Content-Type: application/json'
+                "Authorization: Bearer $token",
+                "Content-Type: application/json"
             ),
         ));
 
@@ -71,6 +79,8 @@ class AfrikPayPayment
         curl_close($curl);
 
         $array = json_decode($response, true);
+
+        dd($array);
 
         $reponsePayment = collect($array);
 
@@ -89,5 +99,53 @@ class AfrikPayPayment
             throw new \Exception("Oouf, erreur de paiement veuillez recommencer plutard!");
         }
 //        echo $response;
+    }
+
+
+    public function generateKeySecret(): bool|string
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.afrikpay.com/account/generate/keys',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS =>'{
+            "hash": "{{hash}}"
+            }',
+            CURLOPT_HTTPHEADER => array(
+                'accountId: 8qsxr77nat072xp64w2615bq3h0wme00',
+                'Authorization: Bearer your_token',
+                'Content-Type: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        return $response;
+    }
+
+    public function setToken(): void
+    {
+        $client = new Client();
+        $headers = [
+            'accountId' => '8qsxr77nat072xp64w2615bq3h0wme00',
+            'Content-Type' => 'application/json'
+        ];
+        $body = '{
+          "username": "dywants",
+          "password": "Y7Pm6mV3"
+        }';
+        $request = new Request((array)'POST', (array)'https://api.afrikpay.com/account/generate/token', $headers, (array)$body);
+        $res = $client->sendAsync($request)->wait();
+        echo $res->getBody();
+
     }
 }

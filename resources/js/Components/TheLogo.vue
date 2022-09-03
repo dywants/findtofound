@@ -1,7 +1,7 @@
 <template>
     <a href="/" class="flex items-center">
         <img src="/images/icons/logo.svg" class="mr-3 h-6 sm:h-9" alt="findtofound Logo">
-        <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">FindTofound</span>
+        <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">TosearchFind</span>
     </a>
 </template>
 

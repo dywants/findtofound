@@ -62,6 +62,8 @@ Route::middleware(['auth', 'verified'])->group(function (){
     Route::post('/paiement-afrikpay', [AfrikpayController::class, 'store'])->name('afrikpay.store');
 });
 
+Route::post('/generate-token', [AfrikpayController::class, 'generateToken'])->name('afrikpay.token');
+
 Route::get('/payment-afrikpay/{id}', [AfrikpayController::class, 'index'])->name('afrikpay.index');
 
 
