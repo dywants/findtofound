@@ -2,7 +2,7 @@
    <section>
        <div class="max-w-screen-xl mx-auto"
             :class="{'p-0': showingNavigationDropdown, 'p-4': ! showingNavigationDropdown, 'border-b border-gray-200' : route().current('home')  }">
-           <nav class="bg-white border-gray-200 py-2.5"
+           <nav class="border-gray-200 py-2.5 bg-tahiti-dark"
                 :class="{'px-0': showingNavigationDropdown, 'px-2': ! showingNavigationDropdown} ">
                <div class="container flex flex-wrap justify-between items-center mx-auto">
                    <TheLogo/>
@@ -48,7 +48,7 @@
                        </template>
                        <template v-else>
                            <div class="items-center justify-end flex-1 hidden space-x-4 ml-4 sm:flex">
-                               <NavLink class="px-5 pt-2 pb-1.5 text-sm font-medium text-white bg-[#1FBDEB] rounded-lg hover:text-white" href="/login">Se connecter</NavLink>
+                               <NavLink class="px-5 pt-2 pb-1.5 text-sm font-medium text-white bg-tahiti-primary text-tahiti-dark rounded-lg hover:text-white" href="/login">Se connecter</NavLink>
                            </div>
                        </template>
 

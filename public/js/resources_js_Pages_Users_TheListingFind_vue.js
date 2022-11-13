@@ -19,6 +19,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Dashboard',
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
@@ -57,6 +58,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'TheListingFind',
   props: {
     listing: Object,
     filters: Object

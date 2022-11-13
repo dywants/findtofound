@@ -28,6 +28,7 @@
         "vue-loader": "^17.0.0"
     },
     "dependencies": {
+        "@splidejs/vue-splide": "^0.6.10",
         "@vee-validate/i18n": "^4.5.11",
         "currency.js": "^2.0.4",
         "fuse.js": "^6.5.3",

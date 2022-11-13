@@ -4,6 +4,38 @@
         <meta type="description" content="Plate-forme de recherche de pièce officiel ">
     </Head>
     <!-- component -->
+    <div>
+        <div class="container m-auto px-6 space-y-8 text-gray-500 md:px-12">
+            <div class="flex flex-wrap gap-8 items-center py-10">
+                <div class="w-full md:flex-1">
+                   <p class="text-tahiti-primary text-sm">----- Nous avons besoin l'un l'autre.</p>
+                    <h2 class="font-extrabold text-3xl leading-7 my-4">Plus rien ne se perd si nous mettons tous la main</h2>
+                    <p>
+                        <span class="text-semibold">Tosearch<span class="text-tahiti-primary">Find</span> </span> est une plateforme d’entraide. Tout le monde peux changer la vie d’une autre personne, pas besoin d’être un super heros.
+                    </p>
+                    <p class="mt-1">
+                        Il suffit juste de faire un petit geste de solidarité: Signalez une pièce retrouvée.
+                        Une pièce trouvée? Enregistrez-la et sauver une vie.
+                        Une pièce égarée? Retrouvez-la maintenant.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mt-8 text-center">
+                        <NavLink class="block w-full px-5 pt-2.5 pb-2 text-sm font-medium text-tahiti-dark cursor-pointer rounded shadow bg-tahiti-primary sm:w-auto hover:bg-tahiti-primary hover:opacity-75 focus:outline-none focus:ring"
+                                 :href="route('find.register')">
+                            Enregistrer une pièce trouvée
+                        </NavLink>
+
+                        <NavLink class="block w-full px-5 pt-2.5 pb-2 text-sm font-medium bg-transparent border-black cursor-pointer rounded shadow text-black sm:w-auto focus:outline-none focus:ring"
+                                 :href="route('found.search')">
+                            Rechercher ma pièce perdue
+                        </NavLink>
+                    </div>
+                </div>
+                <div class="w-full md:flex-1">
+                    <img class="object-cover object-center rounded-lg" alt="hero" src="images/pieces.png">
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="py-16 bg-gray-50 overflow-hidden bg-[#1FBDEB21]">
         <div class="container m-auto px-6 space-y-8 text-gray-500 md:px-12">
             <div>
@@ -70,6 +102,7 @@
 </template>
 
 <script setup>
+import NavLink from "@/Components/NavLink";
 </script>
 
 <style scoped>

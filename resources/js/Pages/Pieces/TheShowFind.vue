@@ -32,41 +32,15 @@
             </ol>
         </nav>
 
-        <div class="2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4">
-            <div id="viewerBox" class="lg:p-10 md:p-6 p-4 bg-white dark:bg-gray-900">
+        <div class="container mx-auto md:py-12 py-9 px-4">
                 <div class="mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8">
-                    <div
-                        class="lg:w-1/2 flex justify-between items-strech bg-gray-50  px-2 py-20 md:py-6 md:px-6 lg:py-24">
-                        <div class="flex items-center">
-                            <button @click="prev()" aria-label="slide back"
-                                    class="focus:outline-none focus:ring-2 focus:ring-gray-800 hover:bg-gray-100">
-                                <svg class="w-10 h-10 lg:w-16 lg:h-16" viewBox="0 0 64 64" fill="none"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M40 16L24 32L40 48" stroke="#1F2937" stroke-width="1.5"
-                                          stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <transition-group name='slide-fade' tag='div'>
-                            <div v-for="i in [currentIndex]" :key="i" class="slider">
-                                <div class="flex justify-center items-center">
-                                    <div class="w-full h-full flex justify-center items-center">
-                                        <img :alt=fullName
-                                             :src="showImage(currentImg)" class="object-cover">
-                                    </div>
-                                </div>
-                            </div>
-                        </transition-group>
-                        <div class="flex items-center">
-                            <button @click="next()" aria-label="slide forward"
-                                    class="focus:outline-none focus:ring-2 focus:ring-gray-800 hover:bg-gray-100">
-                                <svg class="w-10 h-10 lg:w-16 lg:h-16" viewBox="0 0 64 64" fill="none"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 16L40 32L24 48" stroke="#1F2937" stroke-width="1.5"
-                                          stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                        </div>
+                    <div class="md:w-1/2 bg-gray-50 border shadow-lg p-4">
+                        <Splide :options="{ rewind: true }">
+                            <SplideSlide>
+                                <img :alt=fullName :src="showImage(currentImg)" class="object-cover">
+                            </SplideSlide>
+                        </Splide>
+                        <div class="splide__arrows" />
                     </div>
                     <div class="lg:w-1/2 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0">
                         <h1 class="text-3xl lg:text-4xl font-semibold text-gray-800 dark:text-white">{{ fullName }}</h1>
@@ -88,7 +62,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </template>
@@ -96,10 +69,12 @@
 <script>
 import HeaderPage from "@/Layouts/HeaderPage";
 import {Link, usePage} from '@inertiajs/inertia-vue3';
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import '@splidejs/vue-splide/css';
 
 export default {
     name: "TheShowFind",
-    components: {Link, HeaderPage},
+    components: {Link, HeaderPage, Splide, SplideSlide,},
     props: ['fullName', 'findCity','details', 'amount_check', 'id', 'photos', 'amount_piece'],
     data() {
         return {
@@ -136,24 +111,7 @@ export default {
 </script>
 
 <style scoped>
-.slider {
-    width: 280px;
-    position: relative;
-    overflow: hidden;
-}
-
-.slide-fade-enter-active {
-    transition: all 0.3s ease-out;
-}
-
-.slide-fade-leave-active {
-    opacity: 0;
-    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-    transform: translateX(20px);
-    opacity: 0;
+.splide__arrow {
+    background: #1a202c !important;
 }
 </style>

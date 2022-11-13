@@ -28,13 +28,12 @@ class AfrikPayPayment
             $url = config('afrikpay.productionUrl');
         }
 
-        $reference = config('afrikpay.references');
         $store = env('AFRIKPAY_STORE');
 
         $code = "";
         $purchaseref = "";
 //        $amount = $cart->amount;
-        $amount = "100";
+        $amount = 100;
         $phone = $cart->user->profile->phone_number;
         $queryToken = AfrikpayToken::latest('created_at')->first();
 
@@ -80,8 +79,6 @@ class AfrikPayPayment
 
         $array = json_decode($response, true);
 
-        dd($array);
-
         $reponsePayment = collect($array);
 
         if ($reponsePayment['message'] === "success"){
@@ -98,39 +95,8 @@ class AfrikPayPayment
         }else{
             throw new \Exception("Oouf, erreur de paiement veuillez recommencer plutard!");
         }
-//        echo $response;
     }
 
-
-    public function generateKeySecret(): bool|string
-    {
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.afrikpay.com/account/generate/keys',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS =>'{
-            "hash": "{{hash}}"
-            }',
-            CURLOPT_HTTPHEADER => array(
-                'accountId: 8qsxr77nat072xp64w2615bq3h0wme00',
-                'Authorization: Bearer your_token',
-                'Content-Type: application/json'
-            ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-
-        return $response;
-    }
 
     public function setToken(): void
     {

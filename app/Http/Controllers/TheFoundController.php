@@ -56,6 +56,7 @@ class TheFoundController extends Controller
     public function getAmountPaypal(): string
     {
         $user = \auth()->user();
+
         $amountByUser = Thefound::query()
             ->where('user_id', $user->id)
             ->get();

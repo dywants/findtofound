@@ -34,7 +34,7 @@
                    ref="photos" name="photos"
                    type="file" enctype="multipart/form-data"
                    multiple
-                   accept="image/jpeg"
+                   accept="image/*"
                    @change="onFileChange"
             />
             <div class="flex items-center gap-4">

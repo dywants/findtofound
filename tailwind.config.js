@@ -22,7 +22,13 @@ module.exports = {
             },
             backgroundImage: {
                 'hero-pattern': "url('/images/header_ellipse.png')",
-            }
+            },
+            colors: {
+                'tahiti': {
+                    dark: '#242424',
+                    primary: '#EFA02F'
+                },
+            },
         },
     },
 

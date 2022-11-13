@@ -12,6 +12,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Button',
   props: {
     type: {
       type: String,
@@ -62,6 +63,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Input',
   props: ['modelValue'],
   emits: ['update:modelValue'],
   setup: function setup(__props, _ref) {
@@ -99,6 +101,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'InputError',
   props: ['message'],
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
@@ -127,6 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Aside',
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
@@ -175,6 +179,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'TheNavAdmin',
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();

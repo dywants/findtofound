@@ -1,9 +1,7 @@
 <template>
-    <header class="bg-white shadow" v-if="$slots.headerPage">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto my-4" v-if="$slots.headerPage">
             <slot name="headerPage"/>
         </div>
-    </header>
 </template>
 
 <script setup>

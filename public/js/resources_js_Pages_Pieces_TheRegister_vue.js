@@ -12,6 +12,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Button',
   props: {
     type: {
       type: String,
@@ -43,11 +44,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _Composables_googlePlaces__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Composables/googlePlaces */ "./resources/js/Composables/googlePlaces.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _Composables_googlePlaces__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Composables/googlePlaces */ "./resources/js/Composables/googlePlaces.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return generator._invoke = function (innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; }(innerFn, self, context), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; this._invoke = function (method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); }; } function maybeInvokeDelegate(delegate, context) { var method = delegate.iterator[context.method]; if (undefined === method) { if (context.delegate = null, "throw" === context.method) { if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel; context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method"); } return ContinueSentinel; } var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (object) { var keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -57,16 +58,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var addressInput = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
+    var addressInput = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     console.log(addressInput);
     var link = "https://maps.googleapis.com/maps/api/js?key=AIzaSyC63GBpeKtK2Jv18FyWiqms9hHyHwLdd34&libraries=places";
-    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return (0,_Composables_googlePlaces__WEBPACK_IMPORTED_MODULE_2__["default"])(link);
+              return (0,_Composables_googlePlaces__WEBPACK_IMPORTED_MODULE_1__["default"])(link);
 
             case 2:
               new google.maps.places.Autocomplete(addressInput.value);
@@ -1031,7 +1032,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "file",
     enctype: "multipart/form-data",
     multiple: "",
-    accept: "image/jpeg",
+    accept: "image/*",
     onChange: $options.onFileChange
   }, null, 8
   /* PROPS */
@@ -7336,48 +7337,49 @@ function _interopRequireDefault(obj) {
 }
 let HEX = /^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})?$/i;
 let SHORT_HEX = /^#([a-f\d])([a-f\d])([a-f\d])([a-f\d])?$/i;
-let VALUE = `(?:\\d+|\\d*\\.\\d+)%?`;
-let SEP = `(?:\\s*,\\s*|\\s+)`;
-let ALPHA_SEP = `\\s*[,/]\\s*`;
-let RGB = new RegExp(`^rgba?\\(\\s*(${VALUE})${SEP}(${VALUE})${SEP}(${VALUE})(?:${ALPHA_SEP}(${VALUE}))?\\s*\\)$`);
-let HSL = new RegExp(`^hsla?\\(\\s*((?:${VALUE})(?:deg|rad|grad|turn)?)${SEP}(${VALUE})${SEP}(${VALUE})(?:${ALPHA_SEP}(${VALUE}))?\\s*\\)$`);
+let VALUE = /(?:\d+|\d*\.\d+)%?/;
+let SEP = /(?:\s*,\s*|\s+)/;
+let ALPHA_SEP = /\s*[,/]\s*/;
+let CUSTOM_PROPERTY = /var\(--(?:[^ )]*?)\)/;
+let RGB = new RegExp(`^rgba?\\(\\s*(${VALUE.source}|${CUSTOM_PROPERTY.source})${SEP.source}(${VALUE.source}|${CUSTOM_PROPERTY.source})${SEP.source}(${VALUE.source}|${CUSTOM_PROPERTY.source})(?:${ALPHA_SEP.source}(${VALUE.source}|${CUSTOM_PROPERTY.source}))?\\s*\\)$`);
+let HSL = new RegExp(`^hsla?\\(\\s*((?:${VALUE.source})(?:deg|rad|grad|turn)?|${CUSTOM_PROPERTY.source})${SEP.source}(${VALUE.source}|${CUSTOM_PROPERTY.source})${SEP.source}(${VALUE.source}|${CUSTOM_PROPERTY.source})(?:${ALPHA_SEP.source}(${VALUE.source}|${CUSTOM_PROPERTY.source}))?\\s*\\)$`);
 function parseColor(value) {
-    if (typeof value !== 'string') {
+    if (typeof value !== "string") {
         return null;
     }
     value = value.trim();
-    if (value === 'transparent') {
+    if (value === "transparent") {
         return {
-            mode: 'rgb',
+            mode: "rgb",
             color: [
-                '0',
-                '0',
-                '0'
+                "0",
+                "0",
+                "0"
             ],
-            alpha: '0'
+            alpha: "0"
         };
     }
     if (value in _colorName.default) {
         return {
-            mode: 'rgb',
+            mode: "rgb",
             color: _colorName.default[value].map((v)=>v.toString()
             )
         };
     }
     let hex = value.replace(SHORT_HEX, (_, r, g, b, a)=>[
-            '#',
+            "#",
             r,
             r,
             g,
             g,
             b,
             b,
-            a ? a + a : ''
-        ].join('')
+            a ? a + a : ""
+        ].join("")
     ).match(HEX);
     if (hex !== null) {
         return {
-            mode: 'rgb',
+            mode: "rgb",
             color: [
                 parseInt(hex[1], 16),
                 parseInt(hex[2], 16),
@@ -7391,7 +7393,7 @@ function parseColor(value) {
     if (rgbMatch !== null) {
         var ref, ref1;
         return {
-            mode: 'rgb',
+            mode: "rgb",
             color: [
                 rgbMatch[1],
                 rgbMatch[2],
@@ -7405,7 +7407,7 @@ function parseColor(value) {
     if (hslMatch !== null) {
         var ref2, ref3;
         return {
-            mode: 'hsl',
+            mode: "hsl",
             color: [
                 hslMatch[1],
                 hslMatch[2],
@@ -7419,7 +7421,7 @@ function parseColor(value) {
 }
 function formatColor({ mode , color , alpha  }) {
     let hasAlpha = alpha !== undefined;
-    return `${mode}(${color.join(' ')}${hasAlpha ? ` / ${alpha}` : ''})`;
+    return `${mode}(${color.join(" ")}${hasAlpha ? ` / ${alpha}` : ""})`;
 }
 
 
@@ -7454,10 +7456,10 @@ exports.relativeSize = relativeSize;
 var _color = __webpack_require__(/*! ./color */ "./node_modules/tailwindcss/lib/util/color.js");
 var _parseBoxShadowValue = __webpack_require__(/*! ./parseBoxShadowValue */ "./node_modules/tailwindcss/lib/util/parseBoxShadowValue.js");
 let cssFunctions = [
-    'min',
-    'max',
-    'clamp',
-    'calc'
+    "min",
+    "max",
+    "clamp",
+    "calc"
 ];
 // Ref: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Types
 let COMMA = /,(?![^(]*\))/g // Comma separator that is not located between brackets. E.g.: `cubiz-bezier(a, b, c)` these don't count.
@@ -7466,65 +7468,67 @@ let UNDERSCORE = /_(?![^(]*\))/g // Underscore separator that is not located bet
 ;
 function normalize(value, isRoot = true) {
     // Keep raw strings if it starts with `url(`
-    if (value.includes('url(')) {
+    if (value.includes("url(")) {
         return value.split(/(url\(.*?\))/g).filter(Boolean).map((part)=>{
             if (/^url\(.*?\)$/.test(part)) {
                 return part;
             }
             return normalize(part, false);
-        }).join('');
+        }).join("");
     }
     // Convert `_` to ` `, except for escaped underscores `\_`
-    value = value.replace(/([^\\])_+/g, (fullMatch, characterBefore)=>characterBefore + ' '.repeat(fullMatch.length - 1)
-    ).replace(/^_/g, ' ').replace(/\\_/g, '_');
+    value = value.replace(/([^\\])_+/g, (fullMatch, characterBefore)=>characterBefore + " ".repeat(fullMatch.length - 1)
+    ).replace(/^_/g, " ").replace(/\\_/g, "_");
     // Remove leftover whitespace
     if (isRoot) {
         value = value.trim();
     }
     // Add spaces around operators inside calc() that do not follow an operator
     // or '('.
-    return value.replace(/(-?\d*\.?\d(?!\b-.+[,)](?![^+\-/*])\D)(?:%|[a-z]+)?|\))([+\-/*])/g, '$1 $2 ');
+    return value.replace(/(-?\d*\.?\d(?!\b-.+[,)](?![^+\-/*])\D)(?:%|[a-z]+)?|\))([+\-/*])/g, "$1 $2 ");
 }
 function url(value) {
-    return value.startsWith('url(');
+    return value.startsWith("url(");
 }
 function number(value) {
     return !isNaN(Number(value)) || cssFunctions.some((fn)=>new RegExp(`^${fn}\\(.+?`).test(value)
     );
 }
 function percentage(value) {
-    return /%$/g.test(value) || cssFunctions.some((fn)=>new RegExp(`^${fn}\\(.+?%`).test(value)
-    );
+    return value.split(UNDERSCORE).every((part)=>{
+        return /%$/g.test(part) || cssFunctions.some((fn)=>new RegExp(`^${fn}\\(.+?%`).test(part)
+        );
+    });
 }
 let lengthUnits = [
-    'cm',
-    'mm',
-    'Q',
-    'in',
-    'pc',
-    'pt',
-    'px',
-    'em',
-    'ex',
-    'ch',
-    'rem',
-    'lh',
-    'vw',
-    'vh',
-    'vmin',
-    'vmax', 
+    "cm",
+    "mm",
+    "Q",
+    "in",
+    "pc",
+    "pt",
+    "px",
+    "em",
+    "ex",
+    "ch",
+    "rem",
+    "lh",
+    "vw",
+    "vh",
+    "vmin",
+    "vmax", 
 ];
-let lengthUnitsPattern = `(?:${lengthUnits.join('|')})`;
+let lengthUnitsPattern = `(?:${lengthUnits.join("|")})`;
 function length(value) {
     return value.split(UNDERSCORE).every((part)=>{
-        return part === '0' || new RegExp(`${lengthUnitsPattern}$`).test(part) || cssFunctions.some((fn)=>new RegExp(`^${fn}\\(.+?${lengthUnitsPattern}`).test(part)
+        return part === "0" || new RegExp(`${lengthUnitsPattern}$`).test(part) || cssFunctions.some((fn)=>new RegExp(`^${fn}\\(.+?${lengthUnitsPattern}`).test(part)
         );
     });
 }
 let lineWidths = new Set([
-    'thin',
-    'medium',
-    'thick'
+    "thin",
+    "medium",
+    "thick"
 ]);
 function lineWidth(value) {
     return lineWidths.has(value);
@@ -7542,7 +7546,7 @@ function color(value) {
     let colors = 0;
     let result = value.split(UNDERSCORE).every((part)=>{
         part = normalize(part);
-        if (part.startsWith('var(')) return true;
+        if (part.startsWith("var(")) return true;
         if ((0, _color).parseColor(part) !== null) return colors++, true;
         return false;
     });
@@ -7553,12 +7557,12 @@ function image(value) {
     let images = 0;
     let result = value.split(COMMA).every((part)=>{
         part = normalize(part);
-        if (part.startsWith('var(')) return true;
+        if (part.startsWith("var(")) return true;
         if (url(part) || gradient(part) || [
-            'element(',
-            'image(',
-            'cross-fade(',
-            'image-set('
+            "element(",
+            "image(",
+            "cross-fade(",
+            "image-set("
         ].some((fn)=>part.startsWith(fn)
         )) {
             images++;
@@ -7570,11 +7574,11 @@ function image(value) {
     return images > 0;
 }
 let gradientTypes = new Set([
-    'linear-gradient',
-    'radial-gradient',
-    'repeating-linear-gradient',
-    'repeating-radial-gradient',
-    'conic-gradient', 
+    "linear-gradient",
+    "radial-gradient",
+    "repeating-linear-gradient",
+    "repeating-radial-gradient",
+    "conic-gradient", 
 ]);
 function gradient(value) {
     value = normalize(value);
@@ -7586,17 +7590,17 @@ function gradient(value) {
     return false;
 }
 let validPositions = new Set([
-    'center',
-    'top',
-    'right',
-    'bottom',
-    'left'
+    "center",
+    "top",
+    "right",
+    "bottom",
+    "left"
 ]);
 function position(value) {
     let positions = 0;
     let result = value.split(UNDERSCORE).every((part)=>{
         part = normalize(part);
-        if (part.startsWith('var(')) return true;
+        if (part.startsWith("var(")) return true;
         if (validPositions.has(part) || length(part) || percentage(part)) {
             positions++;
             return true;
@@ -7610,9 +7614,9 @@ function familyName(value) {
     let fonts = 0;
     let result = value.split(COMMA).every((part)=>{
         part = normalize(part);
-        if (part.startsWith('var(')) return true;
+        if (part.startsWith("var(")) return true;
         // If it contains spaces, then it should be quoted
-        if (part.includes(' ')) {
+        if (part.includes(" ")) {
             if (!/(['"])([^"']+)\1/g.test(part)) {
                 return false;
             }
@@ -7628,39 +7632,39 @@ function familyName(value) {
     return fonts > 0;
 }
 let genericNames = new Set([
-    'serif',
-    'sans-serif',
-    'monospace',
-    'cursive',
-    'fantasy',
-    'system-ui',
-    'ui-serif',
-    'ui-sans-serif',
-    'ui-monospace',
-    'ui-rounded',
-    'math',
-    'emoji',
-    'fangsong', 
+    "serif",
+    "sans-serif",
+    "monospace",
+    "cursive",
+    "fantasy",
+    "system-ui",
+    "ui-serif",
+    "ui-sans-serif",
+    "ui-monospace",
+    "ui-rounded",
+    "math",
+    "emoji",
+    "fangsong", 
 ]);
 function genericName(value) {
     return genericNames.has(value);
 }
 let absoluteSizes = new Set([
-    'xx-small',
-    'x-small',
-    'small',
-    'medium',
-    'large',
-    'x-large',
-    'x-large',
-    'xxx-large', 
+    "xx-small",
+    "x-small",
+    "small",
+    "medium",
+    "large",
+    "x-large",
+    "x-large",
+    "xxx-large", 
 ]);
 function absoluteSize(value) {
     return absoluteSizes.has(value);
 }
 let relativeSizes = new Set([
-    'larger',
-    'smaller'
+    "larger",
+    "smaller"
 ]);
 function relativeSize(value) {
     return relativeSizes.has(value);
@@ -7683,19 +7687,59 @@ Object.defineProperty(exports, "__esModule", ({
 exports.parseBoxShadowValue = parseBoxShadowValue;
 exports.formatBoxShadowValue = formatBoxShadowValue;
 let KEYWORDS = new Set([
-    'inset',
-    'inherit',
-    'initial',
-    'revert',
-    'unset'
+    "inset",
+    "inherit",
+    "initial",
+    "revert",
+    "unset"
 ]);
-let COMMA = /\,(?![^(]*\))/g // Comma separator that is not located between brackets. E.g.: `cubiz-bezier(a, b, c)` these don't count.
-;
 let SPACE = /\ +(?![^(]*\))/g // Similar to the one above, but with spaces instead.
 ;
 let LENGTH = /^-?(\d+|\.\d+)(.*?)$/g;
+let SPECIALS = /[(),]/g;
+/**
+ * This splits a string on top-level commas.
+ *
+ * Regex doesn't support recursion (at least not the JS-flavored version).
+ * So we have to use a tiny state machine to keep track of paren vs comma
+ * placement. Before we'd only exclude commas from the inner-most nested
+ * set of parens rather than any commas that were not contained in parens
+ * at all which is the intended behavior here.
+ *
+ * Expected behavior:
+ * var(--a, 0 0 1px rgb(0, 0, 0)), 0 0 1px rgb(0, 0, 0)
+ *       ─┬─             ┬  ┬    ┬
+ *        x              x  x    ╰──────── Split because top-level
+ *        ╰──────────────┴──┴───────────── Ignored b/c inside >= 1 levels of parens
+ *
+ * @param {string} input
+ */ function* splitByTopLevelCommas(input) {
+    SPECIALS.lastIndex = -1;
+    let depth = 0;
+    let lastIndex = 0;
+    let found = false;
+    // Find all parens & commas
+    // And only split on commas if they're top-level
+    for (let match of input.matchAll(SPECIALS)){
+        if (match[0] === "(") depth++;
+        if (match[0] === ")") depth--;
+        if (match[0] === "," && depth === 0) {
+            found = true;
+            yield input.substring(lastIndex, match.index);
+            lastIndex = match.index + match[0].length;
+        }
+    }
+    // Provide the last segment of the string if available
+    // Otherwise the whole string since no commas were found
+    // This mirrors the behavior of string.split()
+    if (found) {
+        yield input.substring(lastIndex);
+    } else {
+        yield input;
+    }
+}
 function parseBoxShadowValue(input) {
-    let shadows = input.split(COMMA);
+    let shadows = Array.from(splitByTopLevelCommas(input));
     return shadows.map((shadow)=>{
         let value = shadow.trim();
         let result = {
@@ -7707,22 +7751,22 @@ function parseBoxShadowValue(input) {
             // Reset index, since the regex is stateful.
             LENGTH.lastIndex = 0;
             // Keyword
-            if (!seen.has('KEYWORD') && KEYWORDS.has(part)) {
+            if (!seen.has("KEYWORD") && KEYWORDS.has(part)) {
                 result.keyword = part;
-                seen.add('KEYWORD');
+                seen.add("KEYWORD");
             } else if (LENGTH.test(part)) {
-                if (!seen.has('X')) {
+                if (!seen.has("X")) {
                     result.x = part;
-                    seen.add('X');
-                } else if (!seen.has('Y')) {
+                    seen.add("X");
+                } else if (!seen.has("Y")) {
                     result.y = part;
-                    seen.add('Y');
-                } else if (!seen.has('BLUR')) {
+                    seen.add("Y");
+                } else if (!seen.has("BLUR")) {
                     result.blur = part;
-                    seen.add('BLUR');
-                } else if (!seen.has('SPREAD')) {
+                    seen.add("BLUR");
+                } else if (!seen.has("SPREAD")) {
                     result.spread = part;
-                    seen.add('SPREAD');
+                    seen.add("SPREAD");
                 }
             } else {
                 if (!result.color) {
@@ -7750,8 +7794,8 @@ function formatBoxShadowValue(shadows) {
             shadow.blur,
             shadow.spread,
             shadow.color
-        ].filter(Boolean).join(' ');
-    }).join(', ');
+        ].filter(Boolean).join(" ");
+    }).join(", ");
 }
 
 

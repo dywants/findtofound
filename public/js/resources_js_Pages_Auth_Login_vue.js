@@ -12,6 +12,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Button',
   props: {
     type: {
       type: String,
@@ -45,6 +46,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Checkbox',
   props: {
     checked: {
       type: [Array, Boolean],
@@ -97,6 +99,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Input',
   props: ['modelValue'],
   emits: ['update:modelValue'],
   setup: function setup(__props, _ref) {
@@ -134,6 +137,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Label',
   props: ['value'],
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
@@ -164,6 +168,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'ValidationErrors',
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
@@ -204,6 +209,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Guest',
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
@@ -246,6 +252,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Login',
   props: {
     canResetPassword: Boolean,
     status: String

@@ -96,7 +96,7 @@ class TheFindController extends Controller
             'ward' => $request->ward,
             'details' => $request->details,
             'amount_check' => $request->amount_check,
-            'photos' => json_encode($imgData, true),
+            'photos' => json_encode($imgData),
             'user_id' => $user->id,
             'piece_id' => $request->piece_id,
         ]);

@@ -4,7 +4,7 @@
         <meta type="description" content="Plate-forme de recherche de pièce officiel " head-key="description">
     </Head>
     <div class="flex flex-col min-h-screen">
-        <header>
+        <header class="bg-tahiti-dark">
             <TheNavbar />
             <!-- Page Heading -->
             <HeaderPage/>

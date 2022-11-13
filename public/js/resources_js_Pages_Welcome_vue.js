@@ -23,6 +23,7 @@ var __default__ = {
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/*#__PURE__*/Object.assign(__default__, {
+  name: 'Welcome',
   props: {
     canLogin: Boolean,
     canRegister: Boolean,

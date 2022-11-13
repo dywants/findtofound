@@ -33,7 +33,7 @@ class FindRequest extends FormRequest
             'city' => 'bail|required|max:100',
             'phone_number' => 'bail|required|regex:/^([0-9\s\-\+\(\)]*)$/|max:9',
             'amount_check' => 'bail|required',
-//            'photos' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+//            'photos' => 'required|image|mimes:jpg,png,jpeg,bmp|max:2048',
         ];
     }
 }

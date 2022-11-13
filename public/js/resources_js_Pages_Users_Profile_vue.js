@@ -39,6 +39,7 @@ __webpack_require__.r(__webpack_exports__);
 // import Tab from "@/Components/Elements/Tab";
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Profile',
   props: {
     user: Object,
     errors: Object

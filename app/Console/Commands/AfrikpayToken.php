@@ -58,7 +58,6 @@ class AfrikpayToken extends Command
 
         $array = json_decode($response, true);
 
-
         if ($array['message'] === "success" && $array['code'] === 200){
             $token = \App\Models\AfrikpayToken::latest('created_at')->first();
 
