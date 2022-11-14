@@ -24,8 +24,11 @@
                                 </div>
                             </div>
                             <div class="bottom-0 left-0 absolute">
-                                <p class="text mb-4">Elements pris en charge</p>
-                                <div class="items-elements">
+                                <p class="text mb-4 hidden md:block">Elements pris en charge</p>
+                                <div class="items-elements md:hidden overflow-hidden bg-[#2E2E2E]">
+                                    <p class="item">passport --- carte d'identité --- acte de naissance ---</p>
+                                </div>
+                                <div class="items-elements bg-items hidden md:block">
                                     <p class="item">sport --- carte d'identité --- acte de naissance --- permis de conduire ---Dip</p>
                                 </div>
                             </div>
@@ -101,11 +104,14 @@ export default defineComponent( {
 }
 
 .items-elements{
-    background: rgba(238, 238, 238, 0.05);
     backdrop-filter: blur(2px);
     border-radius: 0px 8px 0px 0px;
     padding: 10px 0 ;
     position: relative;
+}
+
+.bg-items{
+    background: rgba(238, 238, 238, 0.05);
 }
 
 .items-elements:after{

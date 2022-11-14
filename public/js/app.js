@@ -23223,9 +23223,13 @@ var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "bottom-0 left-0 absolute"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-    "class": "text mb-4"
+    "class": "text mb-4 hidden md:block"
   }, "Elements pris en charge"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "items-elements"
+    "class": "items-elements md:hidden overflow-hidden bg-[#2E2E2E]"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "item"
+  }, "passport --- carte d'identité --- acte de naissance ---")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "items-elements bg-items hidden md:block"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "item"
   }, "sport --- carte d'identité --- acte de naissance --- permis de conduire ---Dip")])], -1
@@ -23523,11 +23527,11 @@ var _hoisted_17 = {
   "class": "flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium"
 };
 
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Accueil");
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Accueil ");
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Enregister pièce");
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Enregister pièce");
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Rechercher pièce");
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Rechercher pièce");
 
 var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Contact");
 
@@ -23537,11 +23541,11 @@ var _hoisted_23 = {
   "class": "space-y-6 text-center w-full block"
 };
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Accueil");
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Accueil ");
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Enregister pièce");
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Enregister pièce");
 
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Rechercher pièce");
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Rechercher pièce");
 
 var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Blog");
 
@@ -23634,7 +23638,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   })])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["NavLink"], {
-    "class": "px-5 pt-2 pb-1.5 text-sm font-medium text-white bg-tahiti-primary text-tahiti-dark rounded-lg hover:text-white",
+    "class": "px-5 pt-2 pb-1.5 text-sm font-medium bg-tahiti-primary text-tahiti-dark rounded-lg hover:text-white",
     href: "/login"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -24105,7 +24109,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.text[data-v-7c5f79a2]{\n    font-style: normal;\n    font-weight: 500;\n    font-size: 20px;\n    line-height: 27px;\n    color: #FFFFFF;\n}\n.items-elements[data-v-7c5f79a2]{\n    background: rgba(238, 238, 238, 0.05);\n    -webkit-backdrop-filter: blur(2px);\n            backdrop-filter: blur(2px);\n    border-radius: 0px 8px 0px 0px;\n    padding: 10px 0 ;\n    position: relative;\n}\n.items-elements[data-v-7c5f79a2]:after{\n    position: absolute;\n    left: 5.73%;\n    right: 6.32%;\n    top: 53%;\n    bottom: 47%;\n    border: 1px dashed #B1B1B1;\n}\n.item[data-v-7c5f79a2] {\n    font-style: normal;\n    font-weight: 400;\n    font-size: 17px;\n    line-height: 31px;\n    color: #B1B1B1;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.text[data-v-7c5f79a2]{\n    font-style: normal;\n    font-weight: 500;\n    font-size: 20px;\n    line-height: 27px;\n    color: #FFFFFF;\n}\n.items-elements[data-v-7c5f79a2]{\n    -webkit-backdrop-filter: blur(2px);\n            backdrop-filter: blur(2px);\n    border-radius: 0px 8px 0px 0px;\n    padding: 10px 0 ;\n    position: relative;\n}\n.bg-items[data-v-7c5f79a2]{\n    background: rgba(238, 238, 238, 0.05);\n}\n.items-elements[data-v-7c5f79a2]:after{\n    position: absolute;\n    left: 5.73%;\n    right: 6.32%;\n    top: 53%;\n    bottom: 47%;\n    border: 1px dashed #B1B1B1;\n}\n.item[data-v-7c5f79a2] {\n    font-style: normal;\n    font-weight: 400;\n    font-size: 17px;\n    line-height: 31px;\n    color: #B1B1B1;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
