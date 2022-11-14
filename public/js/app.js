@@ -23182,7 +23182,7 @@ var _hoisted_4 = {
   "class": "flex flex-col items-start w-full pt-0 mb-16 text-left lg:flex-grow md:flex-1 xl:mr-20 md:pr-8 md:mb-0"
 };
 var _hoisted_5 = {
-  "class": "px-10 md:px-0 mx-auto"
+  "class": "px-8 md:px-0 mx-auto"
 };
 
 var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
@@ -23255,8 +23255,11 @@ var _hoisted_14 = {
 var _hoisted_15 = {
   "class": "flex flex-col items-start w-full pt-0 mb-16 text-left lg:flex-grow md:flex-1 xl:mr-20 md:pr-8 md:mb-0"
 };
+var _hoisted_16 = {
+  "class": "px-8 md:px-0 mx-auto"
+};
 
-var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "text"
   }, "Aidez les autres à retrouver leurs pièces", -1
@@ -23264,7 +23267,7 @@ var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
     "class": "mb-8 mt-4 text-2xl font-black tracking-tighter text-white md:text-5xl title-font"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Une pièce "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
@@ -23274,7 +23277,7 @@ var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "text"
   }, "Lorem ipsum dolor sit amet consectetur. Luctus laoreet pretium est eget nunc. Eget eget bibendum eget mus. Non posuere luctus sed pharetra nisi quis. Egestas dolor quam pellentesque.", -1
@@ -23282,15 +23285,15 @@ var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_19 = {
+var _hoisted_20 = {
   "class": "flex flex-wrap gap-4 mt-8 text-center"
 };
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Enregistrer une pièce trouvée ");
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Enregistrer une pièce trouvée ");
 
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Rechercher ma pièce perdue ");
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Rechercher ma pièce perdue ");
 
-var _hoisted_22 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_23 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "bottom-0 left-0 absolute"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
@@ -23304,7 +23307,7 @@ var _hoisted_22 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_23 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_24 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "w-full lg:w-5/6 lg:max-w-lg md:flex-1 bg-cover py-10"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
@@ -23360,12 +23363,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SplideSlide, null, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_16, _hoisted_17, _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <p class=\"mb-8 text-base leading-relaxed text-left text-blueGray-600\"> N'oublier pas que vous pourriez etre dans la même situation!. </p>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NavLink, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, _hoisted_18, _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <p class=\"mb-8 text-base leading-relaxed text-left text-blueGray-600\"> N'oublier pas que vous pourriez etre dans la même situation!. </p>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NavLink, {
             "class": "block w-full px-5 pt-2.5 pb-2 text-sm font-medium text-tahiti-dark cursor-pointer rounded shadow bg-tahiti-primary sm:w-auto hover:bg-tahiti-primary hover:opacity-75 focus:outline-none focus:ring",
             href: _ctx.route('find.register')
           }, {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [_hoisted_20];
+              return [_hoisted_21];
             }),
             _: 1
             /* STABLE */
@@ -23377,14 +23380,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             href: _ctx.route('found.search')
           }, {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [_hoisted_21];
+              return [_hoisted_22];
             }),
             _: 1
             /* STABLE */
 
           }, 8
           /* PROPS */
-          , ["href"])])]), _hoisted_22]), _hoisted_23])];
+          , ["href"])])]), _hoisted_23]), _hoisted_24])];
         }),
         _: 1
         /* STABLE */

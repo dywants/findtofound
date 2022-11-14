@@ -5,7 +5,7 @@
                 <SplideSlide>
                     <div class="flex flex-col items-center md:flex-row lg:px-28 relative">
                         <div class="flex flex-col items-start w-full pt-0 mb-16 text-left lg:flex-grow md:flex-1 xl:mr-20 md:pr-8 md:mb-0">
-                            <div class="px-10 md:px-0 mx-auto" >
+                            <div class="px-8 md:px-0 mx-auto" >
                                 <p class="text">Retrouvez vos pièces grâce aux autres</p>
                                 <h1 class="mb-8 mt-4 text-2xl font-black tracking-tighter text-white md:text-5xl title-font">Une pièce <span class="text-tahiti-primary">égarées</span> </h1>
                                 <p class="text">Lorem ipsum dolor sit amet consectetur. Luctus laoreet pretium est eget nunc.
@@ -41,7 +41,7 @@
                 <SplideSlide>
                     <div class="flex flex-col items-center md:flex-row lg:px-28 relative">
                         <div class="flex flex-col items-start w-full pt-0 mb-16 text-left lg:flex-grow md:flex-1 xl:mr-20 md:pr-8 md:mb-0">
-                            <div>
+                            <div class="px-8 md:px-0 mx-auto">
                                 <p class="text">Aidez les autres à retrouver leurs pièces</p>
                                 <h1 class="mb-8 mt-4 text-2xl font-black tracking-tighter text-white md:text-5xl title-font">Une pièce <span class="text-tahiti-primary">égarées</span> </h1>
                                 <p class="text">Lorem ipsum dolor sit amet consectetur. Luctus laoreet pretium est eget nunc.
