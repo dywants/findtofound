@@ -23198,7 +23198,7 @@ var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
     "class": "mb-8 mt-4 text-2xl font-black tracking-tighter text-white md:text-5xl title-font"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Une pièce "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "text-tahiti-primary"
-  }, "égarées")], -1
+  }, "égarées?")], -1
   /* HOISTED */
   );
 });
@@ -23206,7 +23206,7 @@ var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "text"
-  }, "Lorem ipsum dolor sit amet consectetur. Luctus laoreet pretium est eget nunc. Eget eget bibendum eget mus. Non posuere luctus sed pharetra nisi quis. Egestas dolor quam pellentesque.", -1
+  }, "Ne panique pas ! Cherche-la ici. Il y a des chances d'une personne l'ai déjà retrouvée.", -1
   /* HOISTED */
   );
 });
@@ -23272,7 +23272,7 @@ var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
     "class": "mb-8 mt-4 text-2xl font-black tracking-tighter text-white md:text-5xl title-font"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Une pièce "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "text-tahiti-primary"
-  }, "égarées")], -1
+  }, "trouvées?")], -1
   /* HOISTED */
   );
 });
@@ -23280,7 +23280,7 @@ var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "text"
-  }, "Lorem ipsum dolor sit amet consectetur. Luctus laoreet pretium est eget nunc. Eget eget bibendum eget mus. Non posuere luctus sed pharetra nisi quis. Egestas dolor quam pellentesque.", -1
+  }, "Je l'enregistre ici afin de donner une chance au propriétaire de la pièce de la retrouver", -1
   /* HOISTED */
   );
 });

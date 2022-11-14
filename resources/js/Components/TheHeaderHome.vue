@@ -7,9 +7,8 @@
                         <div class="flex flex-col items-start w-full pt-0 mb-16 text-left lg:flex-grow md:flex-1 xl:mr-20 md:pr-8 md:mb-0">
                             <div class="px-8 md:px-0 mx-auto" >
                                 <p class="text">Retrouvez vos pièces grâce aux autres</p>
-                                <h1 class="mb-8 mt-4 text-2xl font-black tracking-tighter text-white md:text-5xl title-font">Une pièce <span class="text-tahiti-primary">égarées</span> </h1>
-                                <p class="text">Lorem ipsum dolor sit amet consectetur. Luctus laoreet pretium est eget nunc.
-                                    Eget eget bibendum eget mus. Non posuere luctus sed pharetra nisi quis. Egestas dolor quam pellentesque.</p>
+                                <h1 class="mb-8 mt-4 text-2xl font-black tracking-tighter text-white md:text-5xl title-font">Une pièce <span class="text-tahiti-primary">égarées?</span> </h1>
+                                <p class="text">Ne panique pas ! Cherche-la ici. Il y a des chances d'une personne l'ai déjà retrouvée.</p>
                                 <!--                <p class="mb-8 text-base leading-relaxed text-left text-blueGray-600"> N'oublier pas que vous pourriez etre dans la même situation!. </p>-->
                                 <div class="flex flex-wrap gap-4 mt-8 text-center">
                                     <NavLink class="block w-full px-5 pt-2.5 pb-2 text-sm font-medium text-tahiti-dark cursor-pointer rounded shadow bg-tahiti-primary sm:w-auto hover:bg-tahiti-primary hover:opacity-75 focus:outline-none focus:ring"
@@ -43,9 +42,8 @@
                         <div class="flex flex-col items-start w-full pt-0 mb-16 text-left lg:flex-grow md:flex-1 xl:mr-20 md:pr-8 md:mb-0">
                             <div class="px-8 md:px-0 mx-auto">
                                 <p class="text">Aidez les autres à retrouver leurs pièces</p>
-                                <h1 class="mb-8 mt-4 text-2xl font-black tracking-tighter text-white md:text-5xl title-font">Une pièce <span class="text-tahiti-primary">égarées</span> </h1>
-                                <p class="text">Lorem ipsum dolor sit amet consectetur. Luctus laoreet pretium est eget nunc.
-                                    Eget eget bibendum eget mus. Non posuere luctus sed pharetra nisi quis. Egestas dolor quam pellentesque.</p>
+                                <h1 class="mb-8 mt-4 text-2xl font-black tracking-tighter text-white md:text-5xl title-font">Une pièce <span class="text-tahiti-primary">trouvées?</span> </h1>
+                                <p class="text">Je l'enregistre ici afin de donner une chance au propriétaire de la pièce de la retrouver</p>
                                 <!--                <p class="mb-8 text-base leading-relaxed text-left text-blueGray-600"> N'oublier pas que vous pourriez etre dans la même situation!. </p>-->
                                 <div class="flex flex-wrap gap-4 mt-8 text-center">
                                     <NavLink class="block w-full px-5 pt-2.5 pb-2 text-sm font-medium text-tahiti-dark cursor-pointer rounded shadow bg-tahiti-primary sm:w-auto hover:bg-tahiti-primary hover:opacity-75 focus:outline-none focus:ring"
