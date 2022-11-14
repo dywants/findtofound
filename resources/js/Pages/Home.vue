@@ -4,8 +4,7 @@
         <meta type="description" content="Plate-forme de recherche de pièce officiel ">
     </Head>
     <!-- component -->
-    <div>
-        <div class="container m-auto px-6 space-y-8 text-gray-500 md:px-12">
+    <div class="container m-auto px-6 space-y-8 text-gray-500 md:px-12">
             <div class="flex flex-wrap gap-8 items-center py-10">
                 <div class="w-full md:flex-1">
                    <p class="text-tahiti-primary text-sm">----- Nous avons besoin l'un l'autre.</p>
@@ -34,8 +33,8 @@
                     <img class="object-cover object-center rounded-lg" alt="hero" src="images/pieces.png">
                 </div>
             </div>
-        </div>
     </div>
+    
     <div class="py-16 bg-gray-50 overflow-hidden bg-[#1FBDEB21]">
         <div class="container m-auto px-6 space-y-8 text-gray-500 md:px-12">
             <div>
