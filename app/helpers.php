@@ -51,6 +51,20 @@ if (!function_exists('order_amount')){
     }
 }
 
+if (!function_exists('money')) {
+    /**
+     * Format a number as money
+     *
+     * @param float|int|string $amount
+     * @param string $currency
+     * @return string
+     */
+    function money($amount, $currency = 'EUR'): string
+    {
+        return number_format(floatval($amount), 2, ',', ' ') . ' ' . $currency;
+    }
+}
+
 if (!function_exists('amount_piece')){
     /**
      * @param $id

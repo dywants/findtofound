@@ -118,9 +118,9 @@ class TheFoundController extends Controller
             $generatedPassword = $user->password;
         }
 
-        $user->notify(new WelcomeEmailNotification($user,$generatedPassword));
+//        $user->notify(new WelcomeEmailNotification($user,$generatedPassword));
 
-        $user->assignRole('user');
+        $user->assignRole('User');
 
         Thefound::create([
             'user_id' => $user->id,

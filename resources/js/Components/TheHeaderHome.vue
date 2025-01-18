@@ -1,7 +1,7 @@
 <template>
     <section class="text-blueGray-700 bg-tahiti-dark">
         <div class="container py-4 mx-auto">
-            <Splide options="options">
+            <Splide :options="splideOptions">
                 <SplideSlide>
                     <div class="flex flex-col items-center md:flex-row lg:px-28 relative">
                         <div class="flex flex-col items-start w-full pt-0 mb-16 text-left lg:flex-grow md:flex-1 xl:mr-20 md:pr-8 md:mb-0">
@@ -74,22 +74,19 @@
     </section>
 </template>
 
-<script>
+<script setup>
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import '@splidejs/vue-splide/css';
-import { defineComponent } from 'vue';
 import NavLink from "@/Components/NavLink";
-export default defineComponent( {
-    components: {NavLink, Splide, SplideSlide},
-    setup() {
-        const options = {
-            rewind: true,
-            gap   : '1rem',
-        };
 
-        return { options };
-    },
-})
+const splideOptions = {
+    type: 'loop',
+    perPage: 1,
+    autoplay: true,
+    interval: 5000,
+    arrows: false,
+    pagination: false
+};
 </script>
 
 <style scoped>
@@ -128,5 +125,4 @@ export default defineComponent( {
     line-height: 31px;
     color: #B1B1B1;
 }
-
 </style>

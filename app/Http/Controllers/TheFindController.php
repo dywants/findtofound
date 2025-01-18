@@ -66,7 +66,6 @@ class TheFindController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($generatedPassword),
-                'role_id' => '2',
             ]);
 
             Auth::guard()->login($user);
@@ -75,9 +74,9 @@ class TheFindController extends Controller
             $generatedPassword = $user->password;
         }
 
-        $user->notify(new WelcomeEmailNotification($user,$generatedPassword));
+//        $user->notify(new WelcomeEmailNotification($user,$generatedPassword));
 
-        $user->assignRole('finder');
+        $user->assignRole('Founds');
 
         if ($request->hasFile('photos')){
             $arrayImage = $request->photos;

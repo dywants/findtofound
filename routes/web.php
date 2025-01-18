@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\AfrikpayController;
 use App\Http\Controllers\ContactIndexController;
+use App\Http\Controllers\DocumentProtectionController;
 use App\Http\Controllers\FaqsIndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaypalController;
@@ -66,5 +67,12 @@ Route::post('/generate-token', [AfrikpayController::class, 'generateToken'])->na
 
 Route::get('/payment-afrikpay/{id}', [AfrikpayController::class, 'index'])->name('afrikpay.index');
 
+// Routes pour la protection des documents
+Route::middleware(['auth'])->group(function () {
+    Route::get('/documents/protect', [DocumentProtectionController::class, 'index'])->name('documents.protect');
+    Route::post('/documents/protect', [DocumentProtectionController::class, 'protect']);
+    Route::get('/documents/{document}/download', [DocumentProtectionController::class, 'download'])->name('documents.download');
+    Route::delete('/documents/{document}', [DocumentProtectionController::class, 'destroy'])->name('documents.destroy');
+});
 
 require __DIR__.'/auth.php';

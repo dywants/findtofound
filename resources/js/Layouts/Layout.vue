@@ -1,13 +1,14 @@
 <template>
+
     <Head>
-        <title>FindTofound</title>
+        <title>DocuTrace</title>
         <meta type="description" content="Plate-forme de recherche de pièce officiel " head-key="description">
     </Head>
     <div class="flex flex-col min-h-screen">
         <header class="bg-tahiti-dark">
             <TheNavbar />
             <!-- Page Heading -->
-            <HeaderPage/>
+            <HeaderPage />
         </header>
         <main class="flex-grow">
             <slot />
@@ -23,6 +24,4 @@ import HeaderPage from "@/Layouts/HeaderPage";
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

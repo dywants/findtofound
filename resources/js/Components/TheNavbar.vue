@@ -1,9 +1,13 @@
 <template>
     <section>
         <div class="max-w-screen-xl mx-auto"
-            :class="{'p-0': showingNavigationDropdown, 'p-4': ! showingNavigationDropdown, 'border-b border-gray-200' : route().current('home')  }">
+            :class="{
+                'p-0': showingNavigationDropdown,
+                'p-4': !showingNavigationDropdown,
+                'border-b border-gray-200': $page.url === '/'
+            }">
             <nav class="border-gray-200 py-2.5 bg-tahiti-dark"
-                :class="{'px-0': showingNavigationDropdown, 'px-2': ! showingNavigationDropdown} ">
+                :class="{'px-0': showingNavigationDropdown, 'px-2': !showingNavigationDropdown}">
                 <div class="container flex flex-wrap justify-between items-center mx-auto">
                     <TheLogo />
                     <div class="flex items-center md:order-2">
@@ -57,7 +61,7 @@
 
                         <!-- Hamburger -->
                         <div class="flex items-center md:hidden">
-                            <button @click="showingNavigationDropdown = ! showingNavigationDropdown"
+                            <button @click="toggleNavigation"
                                 class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                                 <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                     <path
@@ -75,22 +79,26 @@
                     <div class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1">
                         <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
                             <li>
-                                <NavLink href="/" aria-current="page" :active="route().current('home')">Accueil
+                                <NavLink href="/" aria-current="page" :active="$page.url === '/'">Accueil
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink :href="route('find.register')" :active="route().current('find.register')">
+                                <NavLink :href="route('find.register')" :active="$page.url === route('find.register')">
                                     Enregister pièce</NavLink>
                             </li>
                             <li>
-                                <NavLink :href="route('found.search')" :active="route().current('found.search')">
+                                <NavLink :href="route('found.search')" :active="$page.url === route('found.search')">
                                     Rechercher pièce</NavLink>
                             </li>
                             <li>
-                                <NavLink :href="route('contact')" :active="route().current('contact')">Contact</NavLink>
+                                <NavLink :href="route('documents.protect')" :active="$page.url === route('documents.protect')">
+                                    Protection Documents</NavLink>
                             </li>
                             <li>
-                                <NavLink :href="route('faqs')" :active="route().current('faqs')">Faqs</NavLink>
+                                <NavLink :href="route('contact')" :active="$page.url === route('contact')">Contact</NavLink>
+                            </li>
+                            <li>
+                                <NavLink :href="route('faqs')" :active="$page.url === route('faqs')">Faqs</NavLink>
                             </li>
                         </ul>
                     </div>
@@ -102,22 +110,23 @@
                     <div>
                         <ul class="space-y-6 text-center w-full block">
                             <li>
-                                <NavLink href="/" aria-current="page" :active="route().current('home')">Accueil
+                                <NavLink href="/" aria-current="page" :active="$page.url === '/'">Accueil
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink :href="route('find.register')" :active="route().current('find.register')">
+                                <NavLink :href="route('find.register')" :active="$page.url === route('find.register')">
                                     Enregister pièce</NavLink>
                             </li>
                             <li>
-                                <NavLink :href="route('found.search')" :active="route().current('found.search')">
+                                <NavLink :href="route('found.search')" :active="$page.url === route('found.search')">
                                     Rechercher pièce</NavLink>
                             </li>
                             <li>
-                                <NavLink>Blog</NavLink>
+                                <NavLink :href="route('documents.protect')" :active="$page.url === route('documents.protect')">
+                                    Protection Documents</NavLink>
                             </li>
                             <li>
-                                <NavLink>Contact</NavLink>
+                                <NavLink>Blog</NavLink>
                             </li>
                             <li v-if="!$page.props.auth.user">
                                 <NavLink
@@ -136,16 +145,25 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
 import BreezeDropdown from '@/Components/Dropdown.vue';
 import BreezeDropdownLink from '@/Components/DropdownLink.vue';
-import TheLogo from "@/Components/TheLogo";
-import NavLink from "@/Components/NavLink";
-import TheHeaderHome from "@/Components/TheHeaderHome";
-import { ref } from "vue";
+import NavLink from '@/Components/NavLink.vue';
+import TheLogo from '@/Components/TheLogo.vue';
+import TheHeaderHome from '@/Components/TheHeaderHome.vue';
 
 const showingNavigationDropdown = ref(false);
+
+const toggleNavigation = () => {
+    showingNavigationDropdown.value = !showingNavigationDropdown.value;
+};
+
+const page = usePage();
 </script>
 
 <style scoped>
-
+.router-link-active {
+    @apply text-blue-700;
+}
 </style>

@@ -25,9 +25,8 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' =>  Hash::make('dywantscm'),
             'remember_token' => Str::random(10),
-            'role_id' => 3
         ]);
 
-//        $user->assignRole('admin');
+        $user->assignRole('admin');
     }
 }

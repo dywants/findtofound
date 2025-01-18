@@ -1,38 +1,37 @@
 import { createApp, h } from 'vue';
-import { createInertiaApp, Link, Head } from '@inertiajs/inertia-vue3';
-import { InertiaProgress } from '@inertiajs/progress';
+import { createInertiaApp, Head, Link } from '@inertiajs/vue3';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { defineRule, configure } from 'vee-validate';
 import { localize } from '@vee-validate/i18n';
 import fr from '@vee-validate/i18n/dist/locale/fr.json';
+import Layout from "@/Layouts/Layout";
 
-// defineRule('required', required);
 configure({
     generateMessage: localize({
         fr
     }),
 });
-// import VeeValidate, { ValidationProvider,localize,extend } from 'vee-validate';
-import Layout from "@/Layouts/Layout";
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: async (name) => { //global layout into all page website
-        let page = ( await import(`./Pages/${name}.vue`)).default;
-
+    resolve: async (name) => {
+        const page = (await import(`./Pages/${name}.vue`)).default;
         page.layout ??= Layout;
-
         return page;
     },
-    setup({ el, app, props, plugin }) {
-        return createApp({ render: () => h(app, props) })
-            .use(plugin)
-            .component("Link", Link)
-            .component("Head", Head)
-            .mixin({ methods: { route } })
-            .mount(el);
+    setup({ el, App, props, plugin }) {
+        const app = createApp({ render: () => h(App, props) });
+        
+        app.use(plugin);
+        app.component('Head', Head);
+        app.component('Link', Link);
+        app.mixin({ methods: { route } });
+        
+        app.mount(el);
+    },
+    progress: {
+        color: '#1FBDEB',
     },
 });
-
-InertiaProgress.init({ color: '#1FBDEB' });

@@ -44,6 +44,13 @@ return [
             'throw' => false,
         ],
 
+        'protected_docs' => [
+            'driver' => 'local',
+            'root' => storage_path('app/protected_docs'),
+            'throw' => false,
+            'visibility' => 'private',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
