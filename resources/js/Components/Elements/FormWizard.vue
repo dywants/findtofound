@@ -19,14 +19,14 @@
 
 <script>
 import { useForm } from "vee-validate";
-import { ref, computed, provide } from "vue";
+import { ref, computed, provide, watch } from "vue";
 import TheCard from "@/Components/Elements/TheCard";
 import Button from "@/Components/Button";
 
 export default {
     name: "FormWizard",
-    components: {Button, TheCard},
-    emits: ["next", "submit", "currentId"],
+    components: { Button, TheCard },
+    emits: ["next", "submit", "CURRENT_STEP"],
     props: {
         validationSchema: {
             type: Array,
@@ -44,11 +44,14 @@ export default {
         // will be used to toggle each form-step visibility
         provide("CURRENT_STEP_INDEX", currentStepIdx);
 
+        // Émettre l'événement à chaque changement d'étape
+        watch(currentStepIdx, (newVal) => {
+            emit('CURRENT_STEP', newVal);
+        }, { immediate: true });
+
         const currentIdx = computed(() => {
             return currentStepIdx.value;
         });
-
-        emit('CURRENT_STEP', currentIdx)
 
         // if this is the last step
         const isLastStep = computed(() => {
@@ -205,4 +208,3 @@ export default {
 }
 
 </style>
-
