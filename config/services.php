@@ -31,4 +31,12 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'paypal' => [
+        'client_id' => env('PAYPAL_CLIENT_ID'),
+        'secret' => env('PAYPAL_SECRET'),
+        'currency' => env('PAYPAL_CURRENCY', 'EUR'),
+        'mode' => env('PAYPAL_MODE', 'sandbox'),
+        'sandbox' => env('PAYPAL_MODE', 'sandbox') === 'sandbox',
+    ],
+
 ];

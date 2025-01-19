@@ -18,17 +18,21 @@
 
         <!-- Scripts -->
         @routes
-{{--        <script src="{{ mix('js/manifest.js') }}" defer></script>--}}
-{{--        <script src="{{ mix('js/vendor.js') }}" defer></script>--}}
         <script src="{{ mix('js/app.js') }}" defer></script>
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
         @inertia
-        @php
-            $clientId = env('PAYPAL_CLIENT_ID');
-            $currency = env('PAYPAL_CURRENCY');
-        @endphp
-        <script src="https://www.paypal.com/sdk/js?client-id={{$clientId}}&currency={{$currency}}&intent=authorize"></script>
+
+        @if(config('services.paypal.client_id'))
+            <script>
+                window.paypalConfig = {
+                    'clientId': '{{ config('services.paypal.client_id') }}',
+                    'currency': '{{ config('services.paypal.currency') }}',
+                    'mode': '{{ config('services.paypal.mode') }}'
+                };
+            </script>
+            <script src="https://www.paypal.com/sdk/js?client-id={{ config('services.paypal.client_id') }}&currency={{ config('services.paypal.currency') }}&intent=capture&components=buttons"></script>
+        @endif
     </body>
 </html>

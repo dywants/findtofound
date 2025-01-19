@@ -13,7 +13,9 @@ use App\Services\PaypalPayment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -31,7 +33,7 @@ class TheFoundController extends Controller
         Meta::addMeta('robots', 'Index, follow');
 
         if (\auth()->user()){
-//            $payment = new PaypalPayment(env('PAYPAL_CLIENT_ID'), env('PAYPAL_CLIENT_SECRET'),true);
+           $payment = new PaypalPayment(env('PAYPAL_CLIENT_ID'), env('PAYPAL_CLIENT_SECRET'),true);
             $amount_paypal = $this->getAmountPaypal();
             $type_piece = $thefind->piece->name;
         }else{
@@ -55,19 +57,21 @@ class TheFoundController extends Controller
 
     public function getAmountPaypal(): string
     {
-        $user = \auth()->user();
+        $user = auth()->user();
 
         $amountByUser = Thefound::query()
             ->where('user_id', $user->id)
-            ->get();
-        $thefound = arrat_to_object($amountByUser);
+            ->first();
 
-        return Currency::convert()
-            ->from('XAF')
-            ->to('EUR')
-            ->amount($thefound->amount)
-            ->round(2)
-            ->get();
+        if (!$amountByUser) {
+            return '0';
+        }
+
+        // Taux de conversion fixe XAF vers EUR (1 EUR = 655.957 XAF)
+        $rate = 655.957;
+        $amountEUR = round($amountByUser->amount / $rate, 2);
+
+        return (string) $amountEUR;
     }
 
     public function search(): \Inertia\Response

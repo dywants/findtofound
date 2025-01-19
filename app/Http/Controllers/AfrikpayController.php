@@ -27,21 +27,30 @@ class AfrikpayController extends Controller
         $provider = $request->data;
 
         $user = auth()->user();
-        $thefound =  Thefound::query()
-            ->with('thefind.piece')
+        $thefound = Thefound::query()
+            ->with(['thefind.piece', 'user.profile'])
             ->where('user_id', $user->id)
-            ->with('user.profile')
-            ->get();
+            ->first();  
 
-        $thefoundCollect = arrat_to_object($thefound);
+        if (!$thefound) {
+            return redirect()->back()->with('error', 'Aucun enregistrement trouvé.');
+        }
 
-        $afrikpay_payment = new AfrikPayPayment(env('AFRIKPAY_ACCOUNT_ID'), env('AFRIKPAY_CLIENT_SECRET'),false);
+        try {
+            $afrikpay_payment = new AfrikPayPayment(
+                env('AFRIKPAY_ACCOUNT_ID'), 
+                env('AFRIKPAY_CLIENT_SECRET'),
+                false
+            );
 
-        $afrikpay_payment->handle($request, $thefoundCollect, $provider);
+            $afrikpay_payment->handle($request, $thefound, $provider);
 
-        $request->session()->flash('success', 'Super! votre paiement à bien été effectué avec succès');
-
-        return redirect()->route('dashboard');
+            return redirect()->route('dashboard')
+                ->with('success', 'Super! votre paiement à bien été effectué avec succès');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Erreur lors du paiement : ' . $e->getMessage());
+        }
     }
 
     public function generateToken(){

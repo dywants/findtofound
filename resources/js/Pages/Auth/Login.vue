@@ -7,9 +7,10 @@ import BreezeLabel from '@/Components/Label.vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 
-defineProps({
+const props = defineProps({
     canResetPassword: Boolean,
     status: String,
+    errors: Object,
 });
 
 const form = useForm({
@@ -32,7 +33,7 @@ const submit = () => {
       <div class="min-h-screen bg-no-repeat bg-contain" style="background-image: url('images/login.svg')">
           <div class="flex justify-center items-center md:justify-end relative">
               <div class="absolute top-12 right-10">
-                  <BreezeValidationErrors class="mb-4" />
+                  <BreezeValidationErrors :errors="errors" class="mb-4" />
 
                   <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
                       {{ status }}

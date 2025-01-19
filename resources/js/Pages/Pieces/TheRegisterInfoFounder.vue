@@ -1,271 +1,422 @@
 <template>
-    <Head title="Recherche pièce"/>
-    <HeaderPage>
-        <template #headerPage>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Enregistrer Vos infomations
-            </h2>
-        </template>
-    </HeaderPage>
 
-    <section class="text-blueGray-700 bg-white">
-        <div class="container flex flex-col items-center px-5 py-16 mx-auto  md:flex-row lg:px-28">
-            <ErrorsAndMessages :errors="errors" />
-            <div class="flex flex-col items-start w-full pt-0 mb-16 text-left lg:flex-grow md:w-1/2 xl:mr-20 md:pr-24 md:mb-0">
-                <div v-if="!$page.props.auth.user">
-                    <h1 class="mb-8 text-2xl font-black tracking-tighter text-black  md:text-5xl title-font"> {{ fullName }} </h1>
-                    <p class="mb-8 text-base leading-relaxed text-left text-blueGray-600">Complétez ce formulaire, validez et effectuer le paiement via nos moyens de paiement après quoi nous vous mettrons en contact avec le <em class="font-semibold">finder</em> qui à retrouvée votre pièce </p>
-                    <form @submit="onSubmit" :validation-schema="validationSchema" class="w-full">
-                        <Field type="text" name="name" :value=fullName class="w-full" hidden />
-                        <Field type="number" name="thefind_id" :value=id class="w-full" hidden />
+    <Head :title="'Récupération - ' + fullName" />
 
-                        <div class="mb-6">
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Votre email</label>
-                            <Field type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
-                        focus:border-blue-500 block w-full p-2.5 " placeholder="name@flowbite.com" />
-                            <ErrorMessage class="mt-2 text-sm text-red-600" name="email" />
-                        </div>
-                        <div class="mb-6">
-                            <label for="phone_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Votre numero de téléphone</label>
-                            <Field type="number" id="phone_number" name="phone_number"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  />
-                            <ErrorMessage class="mt-2 text-sm text-red-600" name="phone_number" />
-                        </div>
-                        <div class="mb-6">
-                            <label for="city" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Votre ville</label>
-                            <Field type="text" id="city" name="city" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  />
-                            <ErrorMessage class="mt-2 text-sm text-red-600" name="city" />
-                        </div>
-                        <div class="mb-6">
-                            <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Montant à payer (FCFA)</label>
-                            <Field type="text" id="amount" name="amount" :value="amount_check.amount == 0 ? amount_piece.amount : amount_check.amount"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  disabled />
-                        </div>
-
-                        <button type="submit" :disabled="isSubmitting"
-                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
-                            focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Valider</button>
-                    </form>
+    <!-- En-tête avec progression -->
+    <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Validation et Contact</h1>
+                    <p class="mt-1 text-sm text-gray-600">Finalisez la procédure pour entrer en contact avec le finder
+                    </p>
                 </div>
-                <div v-else class="relative flex flex-col">
-                    <h1 class="mb-8 text-2xl font-black tracking-tighter text-black  md:text-5xl title-font"> {{ fullName }} </h1>
-                    <p class="z-40 leading-tight">Félicitation, encore d'une étape, choissez votre mode de paiement et effectuer le paiement pour
-                        enfin avoir les informations sur votre pièce perdue</p>
-                    <img src="/images/icons/icon-p.svg" alt="" class="self-end object-contain w-64 h-64 lg:w-72 lg:h-72 ">
-                </div>
-
-            </div>
-            <div class="w-full lg:w-5/6 lg:max-w-lg md:w-1/2">
-                <div class="px-3">
-                    <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-3 text-gray-800 font-light mb-6">
-                       <h2 class="text-gray-800 font-semibold text-[22px] pv-2">Moyens de paiement</h2>
-                        <p class="leading-relaxed">Choissiez votre moyen de paiement sécurisé</p>
+                <!-- Indicateur de progression -->
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center"
+                            :class="[currentStep >= 1 ? 'bg-blue-600 text-white' : 'bg-gray-200']">
+                            1
+                        </div>
+                        <div class="ml-2">
+                            <p class="text-sm font-medium">Informations</p>
+                        </div>
                     </div>
-                    <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 text-gray-800 font-light mb-6">
-                        <div class="w-full p-3 border-b border-gray-200">
-                            <div class="mb-5">
-                                <label for="type1" class="flex items-center cursor-pointer">
-                                    <input type="radio" @click="toggleAccordion()" class="form-radio h-5 w-5 text-indigo-500" name="type" id="type1">
-                                    <span class="ml-4">Mobile paiement</span>
-                                </label>
-                            </div>
-                            <div v-show="isOpen">
-                               <div v-if="$page.props.auth.user">
-                                   <IconMobilePayment v-for="(provider, index) in providers"
-                                                      :key="index"
-                                                      :id="index"
-                                                      :image="provider.image"
-                                                      :name="provider.name"
-                                                      :provider="provider.provider"
-                                                      @providerValue="sendProviderValue"
-                                                      @providerName="sendProviderName" />
-
-                                   <form v-show="inputProvider" method="post" @submit.prevent="afrikpayPaiement">
-                                       <input type="text" ref="input" hidden>
-                                       <Button type="submit" class="p-2 rounded bg-green-600">Paiement {{providerName}}</Button>
-                                   </form>
-                               </div>
-
-                                <p v-else>Bien vouloir en premier lieu enregistrer vos informations de base</p>
-                            </div>
+                    <div class="w-12 h-0.5" :class="[currentStep >= 2 ? 'bg-blue-600' : 'bg-gray-200']"></div>
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center"
+                            :class="[currentStep >= 2 ? 'bg-blue-600 text-white' : 'bg-gray-200']">
+                            2
                         </div>
-                        <div class="w-full p-3">
-                           <div class="mb-5">
-                               <label for="type2" class="flex items-center cursor-pointer">
-                                   <input type="radio" @click="togglePaypal()" class="form-radio h-5 w-5 text-indigo-500" name="type" id="type2">
-                                   <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" width="80" class="ml-3" alt=""/>
-                               </label>
-                           </div>
-                            <div v-show="isOpenCheck">
-                                <div v-if="$page.props.auth.user" id="paypal-button-container"></div>
-                                <p v-else>Bien vouloir en premier lieu enregistrer vos informations de base</p>
-                            </div>
+                        <div class="ml-2">
+                            <p class="text-sm font-medium">Paiement</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </header>
 
+    <!-- Contenu principal -->
+    <main class="max-w-7xl mx-auto py-6 px-4">
+        <!-- Étape 1 : Informations -->
+        <div v-if="currentStep === 1" class="bg-white rounded-lg shadow p-6">
+            <form @submit.prevent="handleSubmitInfo" class="space-y-6">
+                <!-- Nom -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
+                    <input id="name" type="text" v-model="form.name" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+                    <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
+                </div>
+                <!-- Email -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" v-model="form.email"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+                    <p v-if="errors.email" class="mt-1 text-sm text-red-600">{{ errors.email }}</p>
+                </div>
+
+                <!-- Téléphone -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Téléphone</label>
+                    <input type="tel" v-model="form.phone"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+                    <p v-if="errors.phone" class="mt-1 text-sm text-red-600">{{ errors.phone }}</p>
+                </div>
+
+                <!-- Ville -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Ville</label>
+                    <input type="text" v-model="form.city"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+                    <p v-if="errors.city" class="mt-1 text-sm text-red-600">{{ errors.city }}</p>
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="submit"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Continuer vers le paiement
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Étape 2 : Paiement -->
+        <div v-else-if="currentStep === 2" class="bg-white rounded-lg shadow">
+            <!-- Résumé des informations -->
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-lg font-medium text-gray-900">Résumé de vos informations</h2>
+                <dl class="mt-4 space-y-4">
+                    <div class="flex justify-between">
+                        <dt class="text-sm text-gray-600">Nom</dt>
+                        <dd class="text-sm font-medium text-gray-900">{{ fullName }}</dd>
+                    </div>
+                    <div class="flex justify-between">
+                        <dt class="text-sm text-gray-600">Email</dt>
+                        <dd class="text-sm font-medium text-gray-900">{{ form.email }}</dd>
+                    </div>
+                    <div class="flex justify-between">
+                        <dt class="text-sm text-gray-600">Téléphone</dt>
+                        <dd class="text-sm font-medium text-gray-900">{{ form.phone }}</dd>
+                    </div>
+                    <div class="flex justify-between">
+                        <dt class="text-sm text-gray-600">Ville</dt>
+                        <dd class="text-sm font-medium text-gray-900">{{ form.city }}</dd>
+                    </div>
+                </dl>
+            </div>
+
+            <!-- Options de paiement -->
+            <div class="p-6">
+                <h2 class="text-lg font-medium text-gray-900">Choisissez votre mode de paiement</h2>
+
+                <div class="mt-4 space-y-4">
+                    <!-- Mobile Money -->
+                    <div class="relative border rounded-lg p-4 hover:border-blue-500 cursor-pointer"
+                        :class="{ 'border-blue-500 bg-blue-50': selectedPayment === 'mobile' }"
+                        @click="selectPayment('mobile')">
+                        <div class="flex items-center space-x-4">
+                            <div class="flex space-x-2">
+                                <img src="/images/paiement/MTN_Group-Logo.svg" alt="MTN Money" class="w-12 h-12" />
+                                <img src="/images/paiement/Orange_Money-Logo.svg" alt="Orange Money"
+                                    class="w-12 h-12" />
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900">Paiement Mobile</h3>
+                                <p class="text-sm text-gray-500">Orange Money, MTN Mobile Money</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PayPal -->
+                    <div class="relative border rounded-lg p-4 hover:border-blue-500 cursor-pointer"
+                        :class="{ 'border-blue-500 bg-blue-50': selectedPayment === 'paypal' }"
+                        @click="selectPayment('paypal')">
+                        <div class="flex items-center space-x-4">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal"
+                                class="w-24" />
+                            <div>
+                                <h3 class="font-medium text-gray-900">PayPal</h3>
+                                <p class="text-sm text-gray-500">Paiement sécurisé par PayPal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Montant à payer -->
+                <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-gray-900">Montant à payer</span>
+                        <span class="text-lg font-bold text-gray-900">
+                            {{ formattedAmount }} FCFA
+                            <span class="text-sm text-gray-500">({{ formattedAmountEUR }} EUR)</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Conteneur PayPal -->
+                <div v-if="selectedPayment === 'paypal'" class="mt-6">
+                    <div id="paypal-button-container"></div>
+                </div>
+
+                <!-- Mobile Money Providers -->
+                <div v-if="selectedPayment === 'mobile'" class="mt-6 space-y-4">
+                    <div v-for="provider in providers" :key="provider.name"
+                        class="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer"
+                        @click="selectMobileProvider(provider)">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <img :src="provider.image" :alt="provider.name" class="w-8 h-8" />
+                                <span class="font-medium">{{ provider.name }}</span>
+                            </div>
+                            <svg v-if="selectedProvider === provider.provider" class="w-5 h-5 text-green-500"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <button v-if="selectedProvider" @click="processMobilePayment"
+                        class="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        Payer avec {{ selectedProviderName }}
+                    </button>
+                </div>
+
+                <!-- Boutons de navigation -->
+                <div class="mt-6 flex justify-between">
+                    <button @click="currentStep = 1"
+                        class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                        Modifier mes informations
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
 </template>
 
-<script>
-import { Field, ErrorMessage, useForm } from "vee-validate";
-import HeaderPage from "@/Layouts/HeaderPage";
-import {Link, usePage} from '@inertiajs/inertia-vue3';
-import * as yup from 'yup';
-import {Inertia} from "@inertiajs/inertia";
-import ErrorsAndMessages from "@/Components/Elements/ErrorsAndMessages";
-import Button from "@/Components/Button";
-import {onMounted, reactive, ref} from "vue";
-import IconMobilePayment from "@/Components/IconMobilePayment";
+<script setup>
+import { ref, computed } from 'vue'
+import { Head, useForm } from '@inertiajs/inertia-vue3'
+import { Inertia } from '@inertiajs/inertia'
 
-export default {
-    name: "TheRegisterInfoFounder",
-    components: {IconMobilePayment, HeaderPage, Link, Field, ErrorMessage,ErrorsAndMessages, Button},
-    props: ['fullName', 'amount_check', 'id' ,'validationSchema','amount_piece', 'amount_paypal','type_piece'],
-    data() {
-        return {
-            errors: [],
-            isOpen: false,
-            isOpenCheck: false,
-            checkedPaiement: '',
-            providerValue: '',
-            providerName: '',
-            providers: [
-                {
-                    name: 'Orange money',
-                    provider: 'orange_money_cm',
-                    image: '/images/paiement/Orange_Money-Logo.svg',
-                },
-                {
-                    name: 'Mtn momo',
-                    provider: 'mtn_mobilemoney_cm',
-                    image: '/images/paiement/MTN_Group-Logo.svg'
-                },
-                {
-                    name: 'Afrikpay',
-                    provider: 'afrikpay',
-                    image: '/images/paiement/afrikpay.png'
-                }
-            ]
-        }
+// Props
+const props = defineProps({
+    fullName: {
+        type: String,
+        required: true
     },
-
-    methods: {
-        toggleAccordion() {
-            this.isOpen = !this.isOpen;
-        },
-        togglePaypal() {
-            this.isOpenCheck = !this.isOpenCheck;
-            this.mountPaypalButton()
-        },
-        sendProviderName(provider) {
-            this.providerName = provider;
-        },
-        // sendProviderValue(provider) {
-        //     this.providerValue = provider;
-        // },
+    amount_check: {
+        type: [Object, String],
+        default: '0 EUR'
     },
+    amount_piece: {
+        type: [Object, String],
+        default: '0 EUR'
+    },
+    id: {
+        type: Number,
+        required: true
+    },
+    type_piece: {
+        type: String,
+        default: 'Pièce retrouvée'
+    }
+})
 
-    setup() {
-        let inputProvider = ref('');
-        const { handleSubmit, isSubmitting } = useForm({
-            validationSchema: validationSchema,
-        });
+// Fonction pour extraire le montant d'une chaîne "X XXX,XX EUR"
+const extractAmount = (amountStr) => {
+    if (typeof amountStr === 'object' && amountStr?.amount) {
+        return amountStr.amount;
+    }
+    if (typeof amountStr !== 'string') return 0;
 
-        const onSubmit = handleSubmit(values => {
-            Inertia.post(route('found.store'), values);
-        });
+    // Enlever "EUR" et les espaces, remplacer la virgule par un point
+    const cleanStr = amountStr.replace(' EUR', '').replace(/\s/g, '').replace(',', '.');
+    const amount = parseFloat(cleanStr);
+    return isNaN(amount) ? 0 : amount;
+}
 
-        const sendProviderValue = (provider) =>{
-            inputProvider.value =  provider
-        }
+// État
+const currentStep = ref(1)
+const selectedPayment = ref(null)
+const selectedProvider = ref(null)
+const selectedProviderName = ref('')
+const errors = ref({})
+const form = ref({
+    name: '',
+    email: '',
+    phone: '',
+    city: '',
+})
 
-        const form = reactive({
-            data: inputProvider
-        });
+// Providers de paiement mobile
+const providers = [
+    {
+        name: 'Orange Money',
+        provider: 'orange',
+        image: '/images/paiement/Orange_Money-Logo.svg'
+    },
+    {
+        name: 'MTN Mobile Money',
+        provider: 'mtn',
+        image: '/images/paiement/MTN_Group-Logo.svg'
+    },
+    {
+        name: 'Afrikpay',
+        provider: 'afrikpay',
+        image: '/images/paiement/afrikpay.png'
+    }
+]
 
-        const afrikpayPaiement = () => {
-            Inertia.post(route('afrikpay.store'), form)
-        }
+// Calcul des montants
+const amount = computed(() => {
+    const checkAmount = extractAmount(props.amount_check);
+    const pieceAmount = extractAmount(props.amount_piece);
 
-        const validationSchema = [
-            yup.object({
-                email: yup.string().required('Votre email est requis'),
-                phone_number: yup.number().required('Votre numero de téléphone nous permettra de vous contacter'),
-                city: yup.string().required("Votre ville est une information importante"),
-            })
-        ];
+    return checkAmount === 0 ? pieceAmount : checkAmount;
+})
 
-        const mountPaypalButton = () => {
-            // retrieve post prop
-            const amount = usePage().props.value.amount_paypal;
-            const name = usePage().props.value.fullName;
-            const type = usePage().props.value.type_piece;
+const formattedAmount = computed(() => {
+    if (!amount.value) return '0';
+    return new Intl.NumberFormat('fr-FR').format(amount.value);
+})
 
-            paypal.Buttons({
-                // Sets up the transaction when a payment button is clicked
-                createOrder: (data, actions) => {
-                    return actions.order.create({
-                        "purchase_units": [{
-                            "amount": {
-                                "currency_code": "EUR",
-                                "value": amount,
-                                "breakdown": {
-                                    "item_total": {  /* Required when including the `items` array */
-                                        "currency_code": "EUR",
-                                        "value": amount
-                                    }
-                                }
+const formattedAmountEUR = computed(() => {
+    if (!amount.value) return '0';
+    return new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(amount.value / 655.957);
+})
+
+// Méthodes
+const validateForm = () => {
+    errors.value = {}
+
+    if (!form.value.email) {
+        errors.value.email = 'L\'email est requis'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email)) {
+        errors.value.email = 'L\'email n\'est pas valide'
+    }
+
+    if (!form.value.phone) {
+        errors.value.phone = 'Le numéro de téléphone est requis'
+    }
+
+    if (!form.value.city) {
+        errors.value.city = 'La ville est requise'
+    }
+
+    return Object.keys(errors.value).length === 0
+}
+
+const handleSubmitInfo = () => {
+    if (validateForm()) {
+        currentStep.value = 2
+    }
+}
+
+const selectPayment = (method) => {
+    selectedPayment.value = method
+    selectedProvider.value = null
+    selectedProviderName.value = ''
+
+    if (method === 'paypal') {
+        mountPaypalButton()
+    }
+}
+
+const selectMobileProvider = (provider) => {
+    selectedProvider.value = provider.provider
+    selectedProviderName.value = provider.name
+}
+
+const processMobilePayment = () => {
+    Inertia.post(route('afrikpay.store'), {
+        ...form.value,
+        provider: selectedProvider.value,
+        amount: amount.value,
+        thefind_id: props.id
+    })
+}
+
+const mountPaypalButton = () => {
+    const amountEUR = (amount.value / 655.957).toFixed(2)
+
+    paypal.Buttons({
+        createOrder: (data, actions) => {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        currency_code: "EUR",
+                        value: amountEUR,
+                        breakdown: {
+                            item_total: {
+                                currency_code: "EUR",
+                                value: amountEUR
+                            }
+                        }
+                    },
+                    items: [
+                        {
+                            name: props.fullName,
+                            description: props.type_piece,
+                            unit_amount: {
+                                currency_code: "EUR",
+                                value: amountEUR
                             },
-                            "items": [
-                                {
-                                    "name": name, /* Shows within upper-right dropdown during payment approval */
-                                    "description": type, /* Item details will also be in the completed paypal.com transaction view */
-                                    "unit_amount": {
-                                        "currency_code": "EUR",
-                                        "value": amount
-                                    },
-                                    "quantity": "1"
-                                },
-                            ]
-                        }]
-                    });
-                },
-                // Finalize the transaction after payer approval
+                            quantity: "1"
+                        },
+                    ]
+                }]
+            })
+        },
+        onApprove: async (data, actions) => {
+            try {
+                const authorization = await actions.order.authorize()
+                const authorizationId = authorization.purchase_units[0].payments.authorizations[0].id
 
-                onApprove: async (data, actions) => {
-                    const authorization = await actions.order.authorize()
-                    const authorizationId = authorization.purchase_units[0].payments.authorizations[0].id
-                    console.log(authorization, data)
-
-                    const form = reactive({
-                        authorizationId: authorizationId,
-                        sourcePayment: data.paymentSource
-                    });
-
-                    Inertia.post(route('paypal.store', {id: authorizationId}), form, {
-                        forceFormData: true
-                    })
-
-                    // alert('Votre paiement a bien été enregistré')
-                }
-            }).render('#paypal-button-container');
+                Inertia.post(route('paypal.store', { id: authorizationId }), {
+                    ...form.value,
+                    authorization_id: authorizationId,
+                    amount: amountEUR,
+                    currency: 'EUR',
+                    sourcePayment: data.paymentSource,
+                    thefind_id: props.id
+                })
+            } catch (error) {
+                console.error('Erreur lors du traitement du paiement:', error)
+            }
+        },
+        onError: (err) => {
+            console.error('Erreur PayPal:', err)
         }
-
-        return {
-            validationSchema,
-            onSubmit,
-            isSubmitting,
-            mountPaypalButton,
-            afrikpayPaiement,
-            sendProviderValue,
-            inputProvider
-        };
-    },
+    }).render('#paypal-button-container')
 }
 </script>
 
-<style scoped>
+<style>
+.payment-option {
+    @apply transition-all duration-200;
+}
 
+.payment-option:hover {
+    @apply bg-gray-50;
+}
+
+.payment-provider {
+    @apply flex items-center p-3 rounded-lg border border-gray-200 cursor-pointer;
+}
+
+.payment-provider.selected {
+    @apply border-blue-500 bg-blue-50;
+}
+
+.payment-provider img {
+    @apply h-8 w-auto;
+}
 </style>
