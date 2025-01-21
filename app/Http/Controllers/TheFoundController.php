@@ -22,9 +22,7 @@ use Inertia\Inertia;
 class TheFoundController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Inertia\Response
+     * Afficher le formulaire d'inscription pour une annonce trouvée
      */
     public function register(Thefind $thefind): \Inertia\Response
     {
@@ -32,46 +30,159 @@ class TheFoundController extends Controller
         Meta::addMeta('description', "Cette page permet de faire une recherche de sa pièce dans notre base de données");
         Meta::addMeta('robots', 'Index, follow');
 
-        if (\auth()->user()){
-           $payment = new PaypalPayment(env('PAYPAL_CLIENT_ID'), env('PAYPAL_CLIENT_SECRET'),true);
-            $amount_paypal = $this->getAmountPaypal();
-            $type_piece = $thefind->piece->name;
-        }else{
-            $amount_paypal = '';
-            $type_piece = '';
+        $existingThefound = null;
+        $userInfo = [];
+        
+        if (Auth::check()) {
+            $existingThefound = Thefound::where('user_id', Auth::id())
+                ->where('thefind_id', $thefind->id)
+                ->first();
+                
+            $user = Auth::user();
+            $profile = $user->profile;
+            
+            $userInfo = [
+                'email' => $user->email,
+                'phone_number' => $profile->phone_number ?? '',
+                'city' => $profile->city ?? '',
+            ];
         }
 
-       return inertia::render('Pieces/TheRegisterInfoFounder', [
-           'id' => $thefind->id,
-           'fullName' => $thefind->fullName,
-           'findCity' => $thefind->findCity,
-           'ward' => $thefind->ward,
-           'details' => $thefind->details,
-           'photos' => $thefind->photos,
-           'amount_check' => money(order_amount($thefind->amount_check)),
-           'amount_piece' => money(amount_piece($thefind->piece_id)),
-           'amount_paypal' => $amount_paypal,
-           'type_piece' => $type_piece
-       ]);
+        $amount = $this->calculateAmount($thefind);
+
+       
+        $amountEUR = $this->convertToEUR($amount);
+
+        return Inertia::render('Pieces/TheRegisterInfoFounder', [
+            'id' => $thefind->id,
+            'fullName' => $thefind->fullName,
+            'findCity' => $thefind->findCity,
+            'ward' => $thefind->ward,
+            'details' => $thefind->details,
+            'photos' => $thefind->photos,
+            'amount' => $amount,
+            'amount_formatted' => money($amount),
+            'amount_eur' => $amountEUR,
+            'amount_eur_formatted' => number_format($amountEUR, 2) . ' EUR',
+            'type_piece' => $thefind->piece->name ?? '',
+            'hasExistingRegistration' => !is_null($existingThefound),
+            'userInfo' => $userInfo
+        ]);
     }
 
-    public function getAmountPaypal(): string
+    /**
+     * Calculer le montant total (frais de service + montant de la pièce)
+     */
+    private function calculateAmount(Thefind $thefind): float
     {
-        $user = auth()->user();
+        // Récupérer le montant de base pour ce type de pièce
+        $pieceAmount = amount_piece($thefind->piece_id);
+        
+        // Récupérer le montant de récompense spécifié
+        $serviceAmount = order_amount($thefind->amount_check);
+        
+        // Le montant total est la somme des frais spécifiques à la pièce et de la récompense
+        return $serviceAmount + $pieceAmount;
+    }
 
-        $amountByUser = Thefound::query()
-            ->where('user_id', $user->id)
-            ->first();
-
-        if (!$amountByUser) {
-            return '0';
-        }
-
+    /**
+     * Convertir le montant en EUR
+     */
+    private function convertToEUR(float $amount): float
+    {
         // Taux de conversion fixe XAF vers EUR (1 EUR = 655.957 XAF)
         $rate = 655.957;
-        $amountEUR = round($amountByUser->amount / $rate, 2);
+        return round($amount / $rate, 2);
+    }
 
-        return (string) $amountEUR;
+    /**
+     * Enregistrer un nouveau founder
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'city' => 'required|string|max:255',
+            'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|max:9',
+            'thefind_id' => 'required|exists:thefinds,id',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            // Vérifier si l'enregistrement existe déjà
+            if (Auth::check()) {
+                $existingThefound = Thefound::where('user_id', Auth::id())
+                    ->where('thefind_id', $request->thefind_id)
+                    ->first();
+
+                if ($existingThefound) {
+                    DB::commit();
+                    return redirect()->back()->with('success', 'Vous pouvez maintenant procéder au paiement.');
+                }
+            }
+
+            // Créer ou récupérer l'utilisateur
+            if (!Auth::check()) {
+                $generatedPassword = Str::random(10);
+                
+                // Créer l'utilisateur
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($generatedPassword),
+                ]);
+
+                // Assigner le rôle
+                $user->assignRole('User');
+
+                // Connecter l'utilisateur directement avec ses identifiants
+                Auth::attempt([
+                    'email' => $request->email,
+                    'password' => $generatedPassword
+                ]);
+
+                // Envoyer l'email avec les identifiants
+                $user->notify(new WelcomeEmailNotification($user, $generatedPassword));
+
+                // Régénérer la session pour la sécurité
+                $request->session()->regenerate();
+            } else {
+                $user = auth()->user();
+            }
+
+            // Récupérer l'annonce
+            $thefind = Thefind::findOrFail($request->thefind_id);
+            $amount = $this->calculateAmount($thefind);
+
+            // Créer l'enregistrement Thefound
+            Thefound::create([
+                'user_id' => $user->id,
+                'thefind_id' => $thefind->id,
+                'amount' => $amount,
+                'payment_status' => 'pending'
+            ]);
+
+            // Créer ou mettre à jour le profil
+            Profile::updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'phone_number' => $request->phone_number,
+                    'city' => $request->city,
+                ]
+            );
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Vos informations ont été enregistrées avec succès. Vous pouvez maintenant procéder au paiement.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Erreur lors de l\'enregistrement : ' . $e->getMessage());
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Une erreur est survenue lors de l\'enregistrement. Veuillez réessayer.');
+        }
     }
 
     public function search(): \Inertia\Response
@@ -79,11 +190,10 @@ class TheFoundController extends Controller
         return inertia::render('Pieces/TheSearch');
     }
 
-
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
-     * @return Response
+     * @return \Inertia\Response
      */
     public function create()
     {
@@ -95,88 +205,6 @@ class TheFoundController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'city' => 'required|string|max:255',
-            'phone_number' => 'bail|required|regex:/^([0-9\s\-\+\(\)]*)$/|max:9',
-        ]);
-
-        if (!Auth::check()) {
-
-            $generatedPassword = Str::random(10);
-
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($generatedPassword),
-                'role_id' => '1',
-            ]);
-
-            Auth::guard()->login($user);
-        }else{
-            $user = \auth()->user();
-            $generatedPassword = $user->password;
-        }
-
-//        $user->notify(new WelcomeEmailNotification($user,$generatedPassword));
-
-        $user->assignRole('User');
-
-        Thefound::create([
-            'user_id' => $user->id,
-            'thefind_id' => $request->thefind_id,
-            'amount' => $request->amount,
-        ]);
-
-        Profile::create([
-            'user_id' => $user->id,
-            'phone_number' => $request->phone_number,
-            'city' => $request->city,
-        ]);
-
-        $request->session()->flash('success', 'Good! vos information personnelles sont bien enregistres avec succès!');
-
-        return redirect()->back();
-    }
-
-    public function multipleexplode ($delimiters,$string): array
-    {
-        $phase = str_replace($delimiters, $delimiters[0], $string);
-        return explode($delimiters[0], $phase);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Thefind $theFound
-     * @return Response
-     */
-    public function show(Thefind $theFound)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param TheFound $theFound
-     * @return Response
-     */
-    public function edit(Thefind $theFound)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param Thefind $theFound
-     * @return Response
      */
     public function update(Request $request, Thefind $theFound)
     {
@@ -192,5 +220,11 @@ class TheFoundController extends Controller
     public function destroy(Thefind $theFound)
     {
         //
+    }
+
+    public function multipleexplode ($delimiters,$string): array
+    {
+        $phase = str_replace($delimiters, $delimiters[0], $string);
+        return explode($delimiters[0], $phase);
     }
 }

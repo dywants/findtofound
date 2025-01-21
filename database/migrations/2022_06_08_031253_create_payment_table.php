@@ -16,14 +16,22 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type_piece')->nullable();
-            $table->unsignedBigInteger('user_payer_id');
-            $table->string('order_id')->nullable();
-            $table->unsignedBigInteger('thefind_id');
-            $table->double('amount', 10, 2);
+            $table->foreignId('user_payer_id')->constrained('users')->onDelete('cascade');
+            $table->string('order_id')->unique()->nullable();
+            $table->foreignId('thefind_id')->constrained('thefinds')->onDelete('cascade');
+            $table->decimal('amount', 10, 2);
             $table->string('currency');
-            $table->string('paymentSource');
+            $table->string('payment_source');  
             $table->string('payment_status');
+            $table->string('transaction_id')->nullable();  
+            $table->json('payment_details')->nullable();   
+            $table->timestamp('paid_at')->nullable();
             $table->timestamps();
+
+            // Ajout des index
+            $table->index('payment_status');
+            $table->index('payment_source');
+            $table->index(['user_payer_id', 'payment_status']);
         });
     }
 
@@ -34,6 +42,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment');
+        Schema::dropIfExists('payments');  
     }
 };

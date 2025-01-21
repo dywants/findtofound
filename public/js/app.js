@@ -23146,24 +23146,20 @@ var _hoisted_3 = {
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<ul class=\"flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400\"><li><a href=\"#\" class=\"mr-4 hover:underline md:mr-6\">About</a></li><li><a href=\"#\" class=\"mr-4 hover:underline md:mr-6\">Privacy Policy</a></li><li><a href=\"#\" class=\"mr-4 hover:underline md:mr-6\">Licensing</a></li><li><a href=\"#\" class=\"hover:underline\">Contact</a></li></ul>", 1);
 
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
-  "class": "my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"
+  "class": "my-6 border-gray-200 sm:mx-auto lg:my-8"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "block text-sm text-gray-500 sm:text-center dark:text-gray-400"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("© 2022 "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "/",
-  "class": "hover:underline"
-}, "ToseachFind"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(". All Rights Reserved. ")], -1
-/* HOISTED */
-);
-
+var _hoisted_6 = {
+  "class": "block text-sm text-gray-500 sm:text-center"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_TheLogo = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TheLogo");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("footer", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TheLogo), _hoisted_4])]), _hoisted_5, _hoisted_6]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("footer", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TheLogo), _hoisted_4])]), _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "© " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(new Date().getFullYear()) + " DocuTrace . Tous droits réservés.", 1
+  /* TEXT */
+  )])]);
 }
 
 /***/ }),

@@ -19,7 +19,7 @@
                             1
                         </div>
                         <div class="ml-2">
-                            <p class="text-sm font-medium">Informations</p>
+                            <p class="text-sm font-medium">{{ auth?.user ? 'Connecté' : 'Informations' }}</p>
                         </div>
                     </div>
                     <div class="w-12 h-0.5" :class="[currentStep >= 2 ? 'bg-blue-600' : 'bg-gray-200']"></div>
@@ -39,8 +39,8 @@
 
     <!-- Contenu principal -->
     <main class="max-w-7xl mx-auto py-6 px-4">
-        <!-- Étape 1 : Informations -->
-        <div v-if="currentStep === 1" class="bg-white rounded-lg shadow p-6">
+        <!-- Étape 1 : Informations (seulement si non connecté) -->
+        <div v-if="currentStep === 1 && !auth?.user" class="bg-white rounded-lg shadow p-6">
             <form @submit.prevent="handleSubmitInfo" class="space-y-6">
                 <!-- Nom -->
                 <div>
@@ -60,9 +60,9 @@
                 <!-- Téléphone -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Téléphone</label>
-                    <input type="tel" v-model="form.phone"
+                    <input type="tel" v-model="form.phone_number"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
-                    <p v-if="errors.phone" class="mt-1 text-sm text-red-600">{{ errors.phone }}</p>
+                    <p v-if="errors.phone_number" class="mt-1 text-sm text-red-600">{{ errors.phone_number }}</p>
                 </div>
 
                 <!-- Ville -->
@@ -94,15 +94,15 @@
                     </div>
                     <div class="flex justify-between">
                         <dt class="text-sm text-gray-600">Email</dt>
-                        <dd class="text-sm font-medium text-gray-900">{{ form.email }}</dd>
+                        <dd class="text-sm font-medium text-gray-900">{{ email }}</dd>
                     </div>
                     <div class="flex justify-between">
                         <dt class="text-sm text-gray-600">Téléphone</dt>
-                        <dd class="text-sm font-medium text-gray-900">{{ form.phone }}</dd>
+                        <dd class="text-sm font-medium text-gray-900">{{ phone_number }}</dd>
                     </div>
                     <div class="flex justify-between">
                         <dt class="text-sm text-gray-600">Ville</dt>
-                        <dd class="text-sm font-medium text-gray-900">{{ form.city }}</dd>
+                        <dd class="text-sm font-medium text-gray-900">{{ city }}</dd>
                     </div>
                 </dl>
             </div>
@@ -207,48 +207,73 @@ const props = defineProps({
         type: String,
         required: true
     },
-    amount_check: {
-        type: [Object, String],
-        default: '0 EUR'
+    amount: {
+        type: [String, Number],
+        default: 0
     },
-    amount_piece: {
-        type: [Object, String],
-        default: '0 EUR'
+    amount_check: {
+        type: [String, Number, Object],
+        default: 0
+    },
+    amount_eur: {
+        type: [String, Number],
+        default: 0
     },
     id: {
-        type: Number,
+        type: [String, Number],
         required: true
     },
-    type_piece: {
-        type: String,
-        default: 'Pièce retrouvée'
+    auth: {
+        type: Object,
+        required: true
+    },
+    hasExistingRegistration: {
+        type: Boolean,
+        default: false
+    },
+    userInfo: {
+        type: Object,
+        default: () => ({
+            email: '',
+            phone_number: '',
+            city: ''
+        })
     }
 })
 
-// Fonction pour extraire le montant d'une chaîne "X XXX,XX EUR"
-const extractAmount = (amountStr) => {
-    if (typeof amountStr === 'object' && amountStr?.amount) {
-        return amountStr.amount;
-    }
-    if (typeof amountStr !== 'string') return 0;
-
-    // Enlever "EUR" et les espaces, remplacer la virgule par un point
-    const cleanStr = amountStr.replace(' EUR', '').replace(/\s/g, '').replace(',', '.');
-    const amount = parseFloat(cleanStr);
-    return isNaN(amount) ? 0 : amount;
-}
-
 // État
-const currentStep = ref(1)
+const currentStep = ref(props.auth?.user && props.hasExistingRegistration ? 2 : 1)
 const selectedPayment = ref(null)
 const selectedProvider = ref(null)
 const selectedProviderName = ref('')
 const errors = ref({})
+
+// Informations utilisateur
+const { email, phone_number, city } = props.userInfo
+
 const form = ref({
-    name: '',
-    email: '',
-    phone: '',
-    city: '',
+    name: props.fullName || '',
+    email: email || '',
+    phone_number: phone_number || '',
+    city: city || '',
+    amount: props.amount || 0,
+    thefind_id: props.id,
+})
+
+// Formatage des montants
+const formattedAmount = computed(() => {
+    const amount = parseFloat(props.amount);
+    return new Intl.NumberFormat('fr-FR').format(amount);
+})
+
+const formattedAmountEUR = computed(() => {
+    const amount = parseFloat(props.amount_eur);
+    return new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(amount);
 })
 
 // Providers de paiement mobile
@@ -270,56 +295,56 @@ const providers = [
     }
 ]
 
-// Calcul des montants
-const amount = computed(() => {
-    const checkAmount = extractAmount(props.amount_check);
-    const pieceAmount = extractAmount(props.amount_piece);
-
-    return checkAmount === 0 ? pieceAmount : checkAmount;
-})
-
-const formattedAmount = computed(() => {
-    if (!amount.value) return '0';
-    return new Intl.NumberFormat('fr-FR').format(amount.value);
-})
-
-const formattedAmountEUR = computed(() => {
-    if (!amount.value) return '0';
-    return new Intl.NumberFormat('fr-FR', {
-        style: 'currency',
-        currency: 'EUR',
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    }).format(amount.value / 655.957);
-})
-
-// Méthodes
+// Validation du formulaire
 const validateForm = () => {
     errors.value = {}
+    let isValid = true
+
+    if (!form.value.name) {
+        errors.value.name = 'Le nom est requis'
+        isValid = false
+    }
 
     if (!form.value.email) {
         errors.value.email = 'L\'email est requis'
+        isValid = false
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email)) {
         errors.value.email = 'L\'email n\'est pas valide'
+        isValid = false
     }
 
-    if (!form.value.phone) {
-        errors.value.phone = 'Le numéro de téléphone est requis'
+    if (!form.value.phone_number) {
+        errors.value.phone_number = 'Le téléphone est requis'
+        isValid = false
+    } else if (!/^[0-9]{9}$/.test(form.value.phone_number)) {
+        errors.value.phone_number = 'Le numéro de téléphone doit contenir 9 chiffres'
+        isValid = false
     }
 
     if (!form.value.city) {
         errors.value.city = 'La ville est requise'
+        isValid = false
     }
 
-    return Object.keys(errors.value).length === 0
+    return isValid
 }
 
+// Gestion de la soumission du formulaire
 const handleSubmitInfo = () => {
     if (validateForm()) {
-        currentStep.value = 2
+        Inertia.post(route('found.store'), form.value, {
+            preserveScroll: true,
+            onSuccess: () => {
+                currentStep.value = 2
+            },
+            onError: (errors) => {
+                errors.value = errors
+            }
+        })
     }
 }
 
+// Méthodes
 const selectPayment = (method) => {
     selectedPayment.value = method
     selectedProvider.value = null
@@ -339,13 +364,13 @@ const processMobilePayment = () => {
     Inertia.post(route('afrikpay.store'), {
         ...form.value,
         provider: selectedProvider.value,
-        amount: amount.value,
+        amount: props.amount,
         thefind_id: props.id
     })
 }
 
 const mountPaypalButton = () => {
-    const amountEUR = (amount.value / 655.957).toFixed(2)
+    const amountEUR = (props.amount / 655.957).toFixed(2)
 
     paypal.Buttons({
         createOrder: (data, actions) => {

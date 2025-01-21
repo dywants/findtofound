@@ -2,28 +2,67 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Payment extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'user_payer_id',
+        'thefind_id',
+        'amount',
+        'currency',
+        'payment_source',
+        'payment_status',
+        'order_id',
+        'transaction_id',
+        'payment_details',
+        'paid_at',
+    ];
 
-    protected $fillable = ['type_piece', 'user_payer_id', 'order_id','thefind_id', 'amount','currency','paymentSource','payment_status'];
+    protected $casts = [
+        'amount' => 'decimal:2',
+        'payment_details' => 'array',
+        'paid_at' => 'datetime',
+    ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Get the user who made the payment
      */
-    public function userPayer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_payer_id');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Get the thefind associated with the payment
      */
-    public function thefind(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function thefind(): BelongsTo
     {
         return $this->belongsTo(Thefind::class);
+    }
+
+    /**
+     * Scope a query to only include pending payments
+     */
+    public function scopePending($query)
+    {
+        return $query->where('payment_status', 'pending');
+    }
+
+    /**
+     * Scope a query to only include completed payments
+     */
+    public function scopePaid($query)
+    {
+        return $query->where('payment_status', 'paid');
+    }
+
+    /**
+     * Scope a query to only include failed payments
+     */
+    public function scopeFailed($query)
+    {
+        return $query->where('payment_status', 'failed');
     }
 }

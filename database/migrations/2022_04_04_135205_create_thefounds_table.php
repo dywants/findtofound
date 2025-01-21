@@ -17,8 +17,12 @@ return new class extends Migration
     {
         Schema::create('thefounds', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained();
-            $table->foreignIdFor(Thefind::class)->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('thefind_id')->constrained()->onDelete('cascade');
+            $table->decimal('amount', 10, 2)->default(0);
+            $table->string('payment_status')->default('pending');
+            $table->string('payment_id')->nullable();
+            $table->timestamp('paid_at')->nullable();
             $table->timestamps();
         });
     }
