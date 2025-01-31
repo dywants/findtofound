@@ -52,6 +52,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function (){
     Route::get('/payment', [AdminController::class, 'listingPayment'])->name('admin.payment');
     Route::get('/payment-finder', [AdminController::class, 'allFind'])->name('admin.allFind');
     Route::get('/all-find', [AdminController::class, 'finderPayment'])->name('admin.payment.finder');
+    // Nouvelles routes pour la gestion des pièces
+    Route::get('/find/{id}', [AdminController::class, 'show'])->name('admin.find.show');
+    Route::get('/find/{id}/edit', [AdminController::class, 'edit'])->name('admin.find.edit');
+    Route::put('/find/{id}', [AdminController::class, 'update'])->name('admin.find.update');
+    Route::delete('/find/{id}', [AdminController::class, 'destroy'])->name('admin.find.destroy');
     Route::resource('faq', \App\Http\Controllers\Admin\FaqsController::class);
     Route::resource('piece', \App\Http\Controllers\Admin\PieceController::class);
 });

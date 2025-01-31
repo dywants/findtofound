@@ -1,5 +1,6 @@
 <template>
-    <Head title="Admin - Create pièce"/>
+
+    <Head title="Admin - Create pièce" />
 
     <HeaderAdmin>
         <template #HeaderAdmin>
@@ -21,14 +22,14 @@
         <form @submit.prevent="submit">
             <div class="mb-4">
                 <Label for="">Nom</Label>
-                <Input type="text" name="name" v-model="form.name"/>
-                <InputError/>
+                <Input type="text" name="name" v-model="form.name" />
+                <InputError />
             </div>
 
             <div class="mb-4">
                 <Label for="">Montant</Label>
-                <Input type="number" name="amount" v-model="form.amount"/>
-                <InputError/>
+                <Input type="number" name="amount" v-model="form.amount" />
+                <InputError />
             </div>
 
             <Button>Enregistrer</Button>
@@ -38,7 +39,7 @@
 
 <script>
 import HeaderAdmin from "@/Layouts/Admin/HeaderAdmin";
-import {Link, useForm} from "@inertiajs/inertia-vue3";
+import { Link, useForm } from "@inertiajs/inertia-vue3";
 import AdminLayout from "@/Layouts/AdminLayout";
 import Input from "@/Components/Input";
 import Button from "@/Components/Button";
@@ -46,10 +47,10 @@ import InputError from "@/Components/InputError";
 
 export default {
     name: "create",
-    components: {InputError, HeaderAdmin , Link, Input, Button},
+    components: { InputError, HeaderAdmin, Link, Input, Button },
     layout: AdminLayout,
 
-    setup(){
+    setup() {
         const form = useForm({
             name: '',
             amount: '',
@@ -69,6 +70,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

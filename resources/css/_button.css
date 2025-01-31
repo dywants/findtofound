@@ -22,35 +22,45 @@
 }
 
 .button.active {
-  @apply border-gray-300 hover:border-gray-500;
+  @apply bg-gray-100 border-gray-300 cursor-default;
 }
 
 .button.green {
-  @apply bg-green-500 border-green-500 text-white hover:bg-green-600;
+  @apply bg-emerald-500 text-white border-emerald-500;
+  @apply hover:bg-emerald-600;
+  @apply hover:border-emerald-600;
 }
 
 .button.red {
-  @apply bg-red-500 border-red-500 text-white hover:bg-red-600;
+  @apply bg-red-500 text-white border-red-500;
+  @apply hover:bg-red-600;
+  @apply hover:border-red-600;
 }
 
 .button.blue {
-  @apply bg-blue-500 border-blue-500 text-white hover:bg-blue-600;
+  @apply bg-blue-500 text-white border-blue-500;
+  @apply hover:bg-blue-600;
+  @apply hover:border-blue-600;
 }
 
 .button.light {
-  @apply bg-gray-100 border-gray-100 hover:bg-gray-200;
+  @apply bg-gray-100 border-gray-100;
+  @apply hover:bg-gray-200;
+  @apply hover:border-gray-200;
+}
+
+.button.dark {
+  @apply bg-gray-800 text-white border-gray-800;
+  @apply hover:bg-gray-900;
+  @apply hover:border-gray-900;
 }
 
 .buttons {
-  @apply flex items-center flex-wrap justify-start;
-}
-
-.button.disabled{
-    @apply bg-gray-100 cursor-none rounded-md
+  @apply flex items-center flex-wrap -mb-2;
 }
 
 .buttons.nowrap {
-  @apply flex-nowrap;
+  @apply flex-nowrap mb-0;
 }
 
 .buttons.right {
@@ -58,5 +68,13 @@
 }
 
 .buttons .button {
-  @apply mx-1;
+  @apply mb-2 mr-3 last:mr-0;
+}
+
+.buttons.nowrap .button {
+  @apply mb-0;
+}
+
+.buttons.small .button {
+  @apply text-xs p-1;
 }

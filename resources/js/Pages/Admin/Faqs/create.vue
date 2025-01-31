@@ -1,4 +1,5 @@
 <template>
+
     <Head title="Admin - Faq create" />
 
     <HeaderAdmin>
@@ -22,14 +23,18 @@
                 <div class="space-y-4">
                     <div>
                         <label for="title" class="text-lx mb-2 font-serif">Titre:</label>
-                        <input type="text" placeholder="title" name="title" v-model="form.title" id="title" class="outline-none py-1 px-2 text-md border-2 rounded-md w-full" />
+                        <input type="text" placeholder="title" name="title" v-model="form.title" id="title"
+                            class="outline-none py-1 px-2 text-md border-2 rounded-md w-full" />
                     </div>
                     <div>
                         <label for="description" class="block mb-2 text-lg font-serif">Description:</label>
-                        <textarea id="description" cols="30" rows="10" name="body" v-model="form.body" placeholder="whrite here.." class="w-full font-serif p-4 text-gray-600 bg-indigo-50 outline-none rounded-md"></textarea>
+                        <textarea id="description" cols="30" rows="10" name="body" v-model="form.body"
+                            placeholder="whrite here.."
+                            class="w-full font-serif p-4 text-gray-600 bg-indigo-50 outline-none rounded-md"></textarea>
                     </div>
 
-                    <button type="submit" class="text-left px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-indigo-100 bg-indigo-600">Save</button>
+                    <button type="submit"
+                        class="text-left px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-indigo-100 bg-indigo-600">Save</button>
                 </div>
             </div>
         </div>
@@ -38,19 +43,19 @@
 
 <script>
 import HeaderAdmin from "@/Layouts/Admin/HeaderAdmin";
-import {Link, usePage} from "@inertiajs/inertia-vue3";
+import { Link, usePage } from "@inertiajs/inertia-vue3";
 import AdminLayout from "@/Layouts/AdminLayout";
 import ErrorsAndMessages from "@/Components/Elements/ErrorsAndMessages";
-import {reactive} from "vue";
-import {Inertia} from "@inertiajs/inertia";
+import { reactive } from "vue";
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
     name: "create",
-    components: {ErrorsAndMessages,HeaderAdmin, Link},
+    components: { ErrorsAndMessages, HeaderAdmin, Link },
     layout: AdminLayout,
     props: ['errors'],
 
-    setup(){
+    setup() {
         const form = reactive({
             title: null,
             body: null,
@@ -69,6 +74,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

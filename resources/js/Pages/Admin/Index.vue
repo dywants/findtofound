@@ -1,458 +1,283 @@
 <template>
+
     <Head title="Admin - Dashboard" />
 
     <HeaderAdmin>
         <template #HeaderAdmin>
-            <ul>
-                <li>Admin</li>
-                <li>Dashboard</li>
-            </ul>
+            <div class="flex items-center space-x-2 text-gray-500">
+                <span>Admin</span>
+                <span>/</span>
+                <span class="text-gray-900 font-medium">Dashboard</span>
+            </div>
         </template>
     </HeaderAdmin>
-    <div class="grid gap-6 grid-cols-1 md:grid-cols-3 mb-6">
-        <div class="card">
-            <div class="card-content">
+
+    <!-- Stats Overview -->
+    <div class="grid gap-6 grid-cols-1 md:grid-cols-4 mb-8">
+        <div class="bg-white rounded-lg shadow-sm p-6 transition-transform hover:scale-105">
+            <div class="flex flex-col p-6">
+                <div class="text-sm text-gray-600">Paypal Payments</div>
                 <div class="flex items-center justify-between">
-                    <div class="widget-label">
-                        <h3>
-                            Paypal Payments
-                        </h3>
-                        <h1>
-                            {{ paypalPayment }} €
-                        </h1>
+                    <div>
+                        <div class="text-2xl font-semibold text-gray-900">{{ props.paypalPayment }} FCFA</div>
+                        <p class="text-xs text-green-600 mt-2">+2.5% from last month</p>
                     </div>
-                    <span class="icon widget-icon text-green-500"><i class="mdi mdi-account-multiple mdi-48px"></i></span>
+                    <div class="bg-blue-50 p-3 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-content">
+
+        <div class="bg-white rounded-lg shadow-sm p-6 transition-transform hover:scale-105">
+            <div class="flex flex-col p-6">
+                <div class="text-sm text-gray-600">Orange Money</div>
                 <div class="flex items-center justify-between">
-                    <div class="widget-label">
-                        <h3>
-                            Orange Payments
-                        </h3>
-                        <h1>
-                            {{ orangePayment }} FCFA
-                        </h1>
+                    <div>
+                        <div class="text-2xl font-semibold text-gray-900">{{ props.orangePayment }} FCFA</div>
+                        <p class="text-xs text-green-600 mt-2">+4.2% from last month</p>
                     </div>
-                    <span class="icon widget-icon text-blue-500"><i class="mdi mdi-cart-outline mdi-48px"></i></span>
+                    <div class="bg-orange-50 p-3 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-orange-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-content">
+
+        <div class="bg-white rounded-lg shadow-sm p-6 transition-transform hover:scale-105">
+            <div class="flex flex-col p-6">
+                <div class="text-sm text-gray-600">MTN Mobile Money</div>
                 <div class="flex items-center justify-between">
-                    <div class="widget-label">
-                        <h3>
-                            MTN Payments
-                        </h3>
-                        <h1>
-                            {{ mtnPayment }} FCFA
-                        </h1>
+                    <div>
+                        <div class="text-2xl font-semibold text-gray-900">{{ props.mtnPayment }} FCFA</div>
+                        <p class="text-xs text-green-600 mt-2">+1.8% from last month</p>
                     </div>
-                    <span class="icon widget-icon text-red-500"><i class="mdi mdi-finance mdi-48px"></i></span>
+                    <div class="bg-yellow-50 p-3 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="grid gap-6 grid-cols-1 md:grid-cols-3 mb-6">
-        <div class="card">
-            <div class="card-content">
+
+        <div class="bg-white rounded-lg shadow-sm p-6 transition-transform hover:scale-105">
+            <div class="flex flex-col p-6">
+                <div class="text-sm text-gray-600">Pieces Retrouvées</div>
                 <div class="flex items-center justify-between">
-                    <div class="widget-label">
-                        <h3>
-                            Nom de CNI retrouvée
-                        </h3>
-                        <h1>
-                            {{ paypalPayment }} €
-                        </h1>
+                    <div>
+                        <div class="text-2xl font-semibold text-gray-900">{{ props.totalCNI }}</div>
+                        <p class="text-xs text-green-600 mt-2">+12 cette semaine</p>
                     </div>
-                    <span class="icon widget-icon text-green-500"><i class="mdi mdi-account-multiple mdi-48px"></i></span>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-content">
-                <div class="flex items-center justify-between">
-                    <div class="widget-label">
-                        <h3>
-                            Orange Payments
-                        </h3>
-                        <h1>
-                            {{ orangePayment }} FCFA
-                        </h1>
+                    <div class="bg-green-50 p-3 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                     </div>
-                    <span class="icon widget-icon text-blue-500"><i class="mdi mdi-cart-outline mdi-48px"></i></span>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-content">
-                <div class="flex items-center justify-between">
-                    <div class="widget-label">
-                        <h3>
-                            MTN Payments
-                        </h3>
-                        <h1>
-                            {{ mtnPayment }} FCFA
-                        </h1>
-                    </div>
-                    <span class="icon widget-icon text-red-500"><i class="mdi mdi-finance mdi-48px"></i></span>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="card mb-6">
-        <header class="card-header">
-            <p class="card-header-title">
-                <span class="icon"><i class="mdi mdi-finance"></i></span>
-                Performance
-            </p>
-            <a href="#" class="card-header-icon">
-                <span class="icon"><i class="mdi mdi-reload"></i></span>
-            </a>
-        </header>
-        <div class="card-content">
-            <div class="chart-area">
-                <div class="h-full">
-                    <div class="chartjs-size-monitor">
-                        <div class="chartjs-size-monitor-expand">
-                            <div></div>
-                        </div>
-                        <div class="chartjs-size-monitor-shrink">
-                            <div></div>
-                        </div>
-                    </div>
-                    <canvas id="big-line-chart" width="2992" height="1000" class="chartjs-render-monitor block" style="height: 400px; width: 1197px;"></canvas>
+    <!-- Performance Chart -->
+    <div class="bg-white rounded-lg shadow-sm mb-8">
+        <div class="p-6 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-gray-900">Performance</h2>
+                <div class="flex items-center space-x-2">
+                    <button
+                        class="px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200">Semaine</button>
+                    <button class="px-3 py-1 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600">Mois</button>
+                    <button
+                        class="px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200">Année</button>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="notification blue">
-        <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0">
-            <div>
-                <span class="icon"><i class="mdi mdi-buffer"></i></span>
-                <b>Responsive table</b>
-            </div>
-            <button type="button" class="button small textual --jb-notification-dismiss">Dismiss</button>
+        <div class="p-6">
+            <canvas id="big-line-chart" height="400" class="w-full"></canvas>
         </div>
     </div>
 
-    <div class="card has-table">
-        <header class="card-header">
-            <p class="card-header-title">
-                <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
-                Clients
-            </p>
-            <a href="#" class="card-header-icon">
-                <span class="icon"><i class="mdi mdi-reload"></i></span>
-            </a>
-        </header>
-        <div class="card-content">
-            <table>
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Company</th>
-                    <th>City</th>
-                    <th>Progress</th>
-                    <th>Created</th>
-                    <th></th>
-                </tr>
+    <!-- Recent Clients Table -->
+    <div class="bg-white rounded-lg shadow-sm">
+        <div class="p-6 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-gray-900">Clients Récents</h2>
+                <button
+                    class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>Ajouter un client</span>
+                </button>
+            </div>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Client
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Entreprise</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ville
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Progrès
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date
+                        </th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Actions
+                        </th>
+                    </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td class="image-cell">
-                        <div class="image">
-                            <img src="https://avatars.dicebear.com/v2/initials/rebecca-bauch.svg" class="rounded-full">
-                        </div>
-                    </td>
-                    <td data-label="Name">Rebecca Bauch</td>
-                    <td data-label="Company">Daugherty-Daniel</td>
-                    <td data-label="City">South Cory</td>
-                    <td data-label="Progress" class="progress-cell">
-                        <progress max="100" value="79">79</progress>
-                    </td>
-                    <td data-label="Created">
-                        <small class="text-gray-500" title="Oct 25, 2021">Oct 25, 2021</small>
-                    </td>
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <button class="button small green --jb-modal"  data-target="sample-modal-2" type="button">
-                                <span class="icon"><i class="mdi mdi-eye"></i></span>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr v-for="client in props.clients" :key="client.id" class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 h-10 w-10">
+                                    <img class="h-10 w-10 rounded-full" :src="client.avatar" alt="">
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900">{{ client.name }}</div>
+                                    <div class="text-sm text-gray-500">{{ client.email }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">{{ client.company }}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">{{ client.city }}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-blue-500 h-2.5 rounded-full" :style="{ width: client.progress + '%' }">
+                                </div>
+                            </div>
+                            <span class="text-xs text-gray-500 mt-1">{{ client.progress }}%</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ client.created_at }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button class="text-blue-600 hover:text-blue-900 mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
                             </button>
-                            <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-                                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+                            <button class="text-red-600 hover:text-red-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
                             </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="image-cell">
-                        <div class="image">
-                            <img src="https://avatars.dicebear.com/v2/initials/felicita-yundt.svg" class="rounded-full">
-                        </div>
-                    </td>
-                    <td data-label="Name">Felicita Yundt</td>
-                    <td data-label="Company">Johns-Weissnat</td>
-                    <td data-label="City">East Ariel</td>
-                    <td data-label="Progress" class="progress-cell">
-                        <progress max="100" value="67">67</progress>
-                    </td>
-                    <td data-label="Created">
-                        <small class="text-gray-500" title="Jan 8, 2021">Jan 8, 2021</small>
-                    </td>
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <button class="button small green --jb-modal"  data-target="sample-modal-2" type="button">
-                                <span class="icon"><i class="mdi mdi-eye"></i></span>
-                            </button>
-                            <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-                                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="image-cell">
-                        <div class="image">
-                            <img src="https://avatars.dicebear.com/v2/initials/mr-larry-satterfield-v.svg" class="rounded-full">
-                        </div>
-                    </td>
-                    <td data-label="Name">Mr. Larry Satterfield V</td>
-                    <td data-label="Company">Hyatt Ltd</td>
-                    <td data-label="City">Windlerburgh</td>
-                    <td data-label="Progress" class="progress-cell">
-                        <progress max="100" value="16">16</progress>
-                    </td>
-                    <td data-label="Created">
-                        <small class="text-gray-500" title="Dec 18, 2021">Dec 18, 2021</small>
-                    </td>
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <button class="button small green --jb-modal"  data-target="sample-modal-2" type="button">
-                                <span class="icon"><i class="mdi mdi-eye"></i></span>
-                            </button>
-                            <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-                                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="image-cell">
-                        <div class="image">
-                            <img src="https://avatars.dicebear.com/v2/initials/mr-broderick-kub.svg" class="rounded-full">
-                        </div>
-                    </td>
-                    <td data-label="Name">Mr. Broderick Kub</td>
-                    <td data-label="Company">Kshlerin, Bauch and Ernser</td>
-                    <td data-label="City">New Kirstenport</td>
-                    <td data-label="Progress" class="progress-cell">
-                        <progress max="100" value="71">71</progress>
-                    </td>
-                    <td data-label="Created">
-                        <small class="text-gray-500" title="Sep 13, 2021">Sep 13, 2021</small>
-                    </td>
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <button class="button small green --jb-modal"  data-target="sample-modal-2" type="button">
-                                <span class="icon"><i class="mdi mdi-eye"></i></span>
-                            </button>
-                            <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-                                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="image-cell">
-                        <div class="image">
-                            <img src="https://avatars.dicebear.com/v2/initials/barry-weber.svg" class="rounded-full">
-                        </div>
-                    </td>
-                    <td data-label="Name">Barry Weber</td>
-                    <td data-label="Company">Schulist, Mosciski and Heidenreich</td>
-                    <td data-label="City">East Violettestad</td>
-                    <td data-label="Progress" class="progress-cell">
-                        <progress max="100" value="80">80</progress>
-                    </td>
-                    <td data-label="Created">
-                        <small class="text-gray-500" title="Jul 24, 2021">Jul 24, 2021</small>
-                    </td>
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <button class="button small green --jb-modal"  data-target="sample-modal-2" type="button">
-                                <span class="icon"><i class="mdi mdi-eye"></i></span>
-                            </button>
-                            <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-                                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="image-cell">
-                        <div class="image">
-                            <img src="https://avatars.dicebear.com/v2/initials/bert-kautzer-md.svg" class="rounded-full">
-                        </div>
-                    </td>
-                    <td data-label="Name">Bert Kautzer MD</td>
-                    <td data-label="Company">Gerhold and Sons</td>
-                    <td data-label="City">Mayeport</td>
-                    <td data-label="Progress" class="progress-cell">
-                        <progress max="100" value="62">62</progress>
-                    </td>
-                    <td data-label="Created">
-                        <small class="text-gray-500" title="Mar 30, 2021">Mar 30, 2021</small>
-                    </td>
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <button class="button small green --jb-modal"  data-target="sample-modal-2" type="button">
-                                <span class="icon"><i class="mdi mdi-eye"></i></span>
-                            </button>
-                            <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-                                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="image-cell">
-                        <div class="image">
-                            <img src="https://avatars.dicebear.com/v2/initials/lonzo-steuber.svg" class="rounded-full">
-                        </div>
-                    </td>
-                    <td data-label="Name">Lonzo Steuber</td>
-                    <td data-label="Company">Skiles Ltd</td>
-                    <td data-label="City">Marilouville</td>
-                    <td data-label="Progress" class="progress-cell">
-                        <progress max="100" value="17">17</progress>
-                    </td>
-                    <td data-label="Created">
-                        <small class="text-gray-500" title="Feb 12, 2021">Feb 12, 2021</small>
-                    </td>
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <button class="button small green --jb-modal"  data-target="sample-modal-2" type="button">
-                                <span class="icon"><i class="mdi mdi-eye"></i></span>
-                            </button>
-                            <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-                                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="image-cell">
-                        <div class="image">
-                            <img src="https://avatars.dicebear.com/v2/initials/jonathon-hahn.svg" class="rounded-full">
-                        </div>
-                    </td>
-                    <td data-label="Name">Jonathon Hahn</td>
-                    <td data-label="Company">Flatley Ltd</td>
-                    <td data-label="City">Billiemouth</td>
-                    <td data-label="Progress" class="progress-cell">
-                        <progress max="100" value="74">74</progress>
-                    </td>
-                    <td data-label="Created">
-                        <small class="text-gray-500" title="Dec 30, 2021">Dec 30, 2021</small>
-                    </td>
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <button class="button small green --jb-modal"  data-target="sample-modal-2" type="button">
-                                <span class="icon"><i class="mdi mdi-eye"></i></span>
-                            </button>
-                            <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-                                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="image-cell">
-                        <div class="image">
-                            <img src="https://avatars.dicebear.com/v2/initials/ryley-wuckert.svg" class="rounded-full">
-                        </div>
-                    </td>
-                    <td data-label="Name">Ryley Wuckert</td>
-                    <td data-label="Company">Heller-Little</td>
-                    <td data-label="City">Emeraldtown</td>
-                    <td data-label="Progress" class="progress-cell">
-                        <progress max="100" value="54">54</progress>
-                    </td>
-                    <td data-label="Created">
-                        <small class="text-gray-500" title="Jun 28, 2021">Jun 28, 2021</small>
-                    </td>
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <button class="button small green --jb-modal"  data-target="sample-modal-2" type="button">
-                                <span class="icon"><i class="mdi mdi-eye"></i></span>
-                            </button>
-                            <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-                                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="image-cell">
-                        <div class="image">
-                            <img src="https://avatars.dicebear.com/v2/initials/sienna-hayes.svg" class="rounded-full">
-                        </div>
-                    </td>
-                    <td data-label="Name">Sienna Hayes</td>
-                    <td data-label="Company">Conn, Jerde and Douglas</td>
-                    <td data-label="City">Jonathanfort</td>
-                    <td data-label="Progress" class="progress-cell">
-                        <progress max="100" value="55">55</progress>
-                    </td>
-                    <td data-label="Created">
-                        <small class="text-gray-500" title="Mar 7, 2021">Mar 7, 2021</small>
-                    </td>
-                    <td class="actions-cell">
-                        <div class="buttons right nowrap">
-                            <button class="button small green --jb-modal"  data-target="sample-modal-2" type="button">
-                                <span class="icon"><i class="mdi mdi-eye"></i></span>
-                            </button>
-                            <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-                                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-            <div class="table-pagination">
-                <div class="flex items-center justify-between">
-                    <div class="buttons">
-                        <button type="button" class="button active">1</button>
-                        <button type="button" class="button">2</button>
-                        <button type="button" class="button">3</button>
-                    </div>
-                    <small>Page 1 of 3</small>
+        </div>
+        <div class="px-6 py-4 border-t border-gray-200">
+            <div class="flex items-center justify-between">
+                <div class="text-sm text-gray-500">
+                    Showing 1 to 10 of 97 results
+                </div>
+                <div class="flex space-x-2">
+                    <button
+                        class="px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200">Previous</button>
+                    <button class="px-3 py-1 text-sm bg-blue-500 text-white rounded-md">1</button>
+                    <button class="px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200">2</button>
+                    <button class="px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200">3</button>
+                    <button
+                        class="px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200">Next</button>
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<script>
-import AdminLayout from "@/Layouts/AdminLayout";
-import HeaderAdmin from "@/Layouts/Admin/HeaderAdmin";
+<script setup>
+import { Head, Link } from '@inertiajs/inertia-vue3';
+import AdminLayout from "@/Layouts/AdminLayout.vue";
+import HeaderAdmin from "@/Layouts/Admin/HeaderAdmin.vue";
+import { ref, onMounted } from 'vue';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
-export default {
-    name: "index",
-    components: {HeaderAdmin},
-    layout: AdminLayout,
-    props: ['paypalPayment', 'orangePayment', 'mtnPayment']
-}
+const props = defineProps({
+    errors: Object,
+    paypalPayment: Number,
+    orangePayment: Number,
+    mtnPayment: Number,
+    totalCNI: Number,
+    clients: Array,
+});
+
+onMounted(() => {
+    const ctx = document.getElementById('big-line-chart');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'Transactions 2024',
+                data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56],
+                fill: false,
+                borderColor: 'rgb(59, 130, 246)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: true,
+                        color: 'rgba(0, 0, 0, 0.1)'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+});
 </script>
 
-<style scoped>
-
-</style>
+<script>
+export default {
+    layout: AdminLayout
+}
+</script>

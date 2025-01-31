@@ -1,37 +1,29 @@
-import { createApp, h } from 'vue';
-import { createInertiaApp, Head, Link } from '@inertiajs/vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { defineRule, configure } from 'vee-validate';
-import { localize } from '@vee-validate/i18n';
-import fr from '@vee-validate/i18n/dist/locale/fr.json';
-import Layout from "@/Layouts/Layout";
+import "../css/app.css";
+import "./bootstrap";
 
-configure({
-    generateMessage: localize({
-        fr
-    }),
-});
+import { createApp, h } from "vue";
+import { createInertiaApp, Head, Link } from "@inertiajs/vue3";
+import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
+import { ZiggyVue } from "ziggy-js";
 
-const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || "DocuTrack";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: async (name) => {
-        const page = (await import(`./Pages/${name}.vue`)).default;
-        page.layout ??= Layout;
-        return page;
-    },
+    resolve: (name) =>
+        resolvePageComponent(
+            `./Pages/${name}.vue`,
+            import.meta.glob("./Pages/**/*.vue")
+        ),
     setup({ el, App, props, plugin }) {
-        const app = createApp({ render: () => h(App, props) });
-        
-        app.use(plugin);
-        app.component('Head', Head);
-        app.component('Link', Link);
-        app.mixin({ methods: { route } });
-        
-        app.mount(el);
+        return createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .use(ZiggyVue)
+            .component("Head", Head) // Ajoutez cette ligne
+            .component("Link", Link) // Ajoutez cette ligne
+            .mount(el);
     },
     progress: {
-        color: '#1FBDEB',
+        color: "#4B5563",
     },
 });

@@ -8,21 +8,18 @@
     </div>
 </template>
 
-<script>
-import HeaderAdmin from "@/Layouts/Admin/HeaderAdmin";
-import Aside from "@/Layouts/Admin/Aside";
-import TheNavAdmin from "@/Layouts/Admin/TheNavAdmin";
+<script setup>
+import Aside from "./Admin/Aside.vue";
+import TheNavAdmin from "./Admin/TheNavAdmin.vue";
 import {ref} from "vue";
-export default {
-    name: "AdminLayout",
-    components: {TheNavAdmin, HeaderAdmin,Aside},
 
-    setup(){
-        const showingNavigationDropdown = ref(false);
-    }
-}
+const showingNavigationDropdown = ref(false);
 </script>
 
 <style scoped>
-
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 </style>

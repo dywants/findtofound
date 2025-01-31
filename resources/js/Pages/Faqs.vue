@@ -24,14 +24,16 @@
 </template>
 
 <script setup>
-import HeaderPage from "@/Layouts/HeaderPage";
-import { Link } from '@inertiajs/inertia-vue3';
-import Accordion from "@/Components/Accordion";
+import HeaderPage from "../Layouts/HeaderPage.vue";
+import { Head, Link } from '@inertiajs/vue3';
+import Accordion from "../Components/Accordion.vue";
 
-let props = defineProps({
-    faqs: Object,
-})
-
+defineProps({
+    faqs: {
+        type: Object,
+        required: true
+    }
+});
 </script>
 
 <style scoped>
