@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o as r,c as a,z as s,l as t}from"./app-B5YizUfN.js";const c={},n={key:0,class:"max-w-7xl mx-auto my-4"};function m(e,d){return e.$slots.headerPage?(r(),a("div",n,[s(e.$slots,"headerPage")])):t("",!0)}const f=o(c,[["render",m]]);export{f as H};

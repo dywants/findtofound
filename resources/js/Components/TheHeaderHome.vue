@@ -4,31 +4,32 @@
             <Splide :options="splideOptions">
                 <SplideSlide>
                     <div class="flex flex-col items-center md:flex-row lg:px-28 relative">
-                        <div class="flex flex-col items-start w-full pt-0 mb-16 text-left lg:flex-grow md:flex-1 xl:mr-20 md:pr-8 md:mb-0">
-                            <div class="px-8 md:px-0 mx-auto" >
-                                <p class="text">Retrouvez vos pièces grâce aux autres</p>
-                                <h1 class="mb-8 mt-4 text-2xl font-black tracking-tighter text-white md:text-5xl title-font">Une pièce <span class="text-tahiti-primary">égarées?</span> </h1>
-                                <p class="text">Ne panique pas ! Cherche-la ici. Il y a des chances d'une personne l'ai déjà retrouvée.</p>
-                                <!--                <p class="mb-8 text-base leading-relaxed text-left text-blueGray-600"> N'oublier pas que vous pourriez etre dans la même situation!. </p>-->
+                        <div
+                            class="flex flex-col items-start w-full pt-0 mb-16 text-left lg:flex-grow md:flex-1 xl:mr-20 md:pr-8 md:mb-0">
+                            <div class="px-8 md:px-0 mx-auto">
+                                <p class="text">La solution pour retrouver vos documents perdus</p>
+                                <h1
+                                    class="mb-8 mt-4 text-2xl font-black tracking-tighter text-white md:text-5xl title-font">
+                                    Document <span class="text-tahiti-primary">perdu ?</span></h1>
+                                <p class="text">Retrouvez rapidement vos documents grâce à notre communauté bienveillante. Des milliers de personnes s'entraident chaque jour sur notre plateforme.</p>
                                 <div class="flex flex-wrap gap-4 mt-8 text-center">
-                                    <NavLink class="block w-full px-5 pt-2.5 pb-2 text-sm font-medium text-tahiti-dark cursor-pointer rounded shadow bg-tahiti-primary sm:w-auto hover:bg-tahiti-primary hover:opacity-75 focus:outline-none focus:ring"
-                                             :href="route('find.register')">
-                                        Enregistrer une pièce trouvée
+                                    <NavLink
+                                        class="block w-full px-5 pt-2.5 pb-2 text-sm font-medium text-tahiti-dark cursor-pointer rounded shadow bg-tahiti-primary sm:w-auto hover:bg-tahiti-primary hover:opacity-75 focus:outline-none focus:ring"
+                                        :href="route('find.register')">
+                                        J'ai trouvé un document
                                     </NavLink>
 
-                                    <NavLink class="block w-full px-5 pt-2.5 pb-2 text-sm font-medium bg-transparent border-white cursor-pointer rounded shadow text-white sm:w-auto focus:outline-none focus:ring"
-                                             :href="route('found.search')">
-                                        Rechercher ma pièce perdue
+                                    <NavLink
+                                        class="block w-full px-5 pt-2.5 pb-2 text-sm font-medium bg-transparent border-white cursor-pointer rounded shadow text-white sm:w-auto focus:outline-none focus:ring"
+                                        :href="route('found.search')">
+                                        Je recherche un document
                                     </NavLink>
                                 </div>
                             </div>
                             <div class="bottom-0 left-0 absolute">
-                                <p class="text mb-4 hidden md:block">Elements pris en charge</p>
-                                <div class="items-elements md:hidden overflow-hidden bg-[#2E2E2E]">
-                                    <p class="item">passport --- carte d'identité --- acte de naissance ---</p>
-                                </div>
-                                <div class="items-elements bg-items hidden md:block">
-                                    <p class="item">sport --- carte d'identité --- acte de naissance --- permis de conduire ---Dip</p>
+                                <p class="text mb-4">Documents pris en charge</p>
+                                <div class="items-elements">
+                                    <p class="item">Passeport • Carte d'identité • Acte de naissance • Permis de conduire • Diplôme</p>
                                 </div>
                             </div>
                         </div>
@@ -39,28 +40,32 @@
                 </SplideSlide>
                 <SplideSlide>
                     <div class="flex flex-col items-center md:flex-row lg:px-28 relative">
-                        <div class="flex flex-col items-start w-full pt-0 mb-16 text-left lg:flex-grow md:flex-1 xl:mr-20 md:pr-8 md:mb-0">
+                        <div
+                            class="flex flex-col items-start w-full pt-0 mb-16 text-left lg:flex-grow md:flex-1 xl:mr-20 md:pr-8 md:mb-0">
                             <div class="px-8 md:px-0 mx-auto">
-                                <p class="text">Aidez les autres à retrouver leurs pièces</p>
-                                <h1 class="mb-8 mt-4 text-2xl font-black tracking-tighter text-white md:text-5xl title-font">Une pièce <span class="text-tahiti-primary">trouvées?</span> </h1>
-                                <p class="text">Je l'enregistre ici afin de donner une chance au propriétaire de la pièce de la retrouver</p>
-                                <!--                <p class="mb-8 text-base leading-relaxed text-left text-blueGray-600"> N'oublier pas que vous pourriez etre dans la même situation!. </p>-->
+                                <p class="text">Ensemble, facilitons la restitution des documents perdus</p>
+                                <h1
+                                    class="mb-8 mt-4 text-2xl font-black tracking-tighter text-white md:text-5xl title-font">
+                                    Document <span class="text-tahiti-primary">trouvé ?</span></h1>
+                                <p class="text">Aidez quelqu'un à retrouver son document en quelques clics. Votre geste peut faire une grande différence dans la vie d'une personne.</p>
                                 <div class="flex flex-wrap gap-4 mt-8 text-center">
-                                    <NavLink class="block w-full px-5 pt-2.5 pb-2 text-sm font-medium text-tahiti-dark cursor-pointer rounded shadow bg-tahiti-primary sm:w-auto hover:bg-tahiti-primary hover:opacity-75 focus:outline-none focus:ring"
-                                             :href="route('find.register')">
-                                        Enregistrer une pièce trouvée
+                                    <NavLink
+                                        class="block w-full px-5 pt-2.5 pb-2 text-sm font-medium text-tahiti-dark cursor-pointer rounded shadow bg-tahiti-primary sm:w-auto hover:bg-tahiti-primary hover:opacity-75 focus:outline-none focus:ring"
+                                        :href="route('find.register')">
+                                        J'ai trouvé un document
                                     </NavLink>
 
-                                    <NavLink class="block w-full px-5 pt-2.5 pb-2 text-sm font-medium bg-transparent border-white cursor-pointer rounded shadow text-white sm:w-auto focus:outline-none focus:ring"
-                                             :href="route('found.search')">
-                                        Rechercher ma pièce perdue
+                                    <NavLink
+                                        class="block w-full px-5 pt-2.5 pb-2 text-sm font-medium bg-transparent border-white cursor-pointer rounded shadow text-white sm:w-auto focus:outline-none focus:ring"
+                                        :href="route('found.search')">
+                                        Je recherche un document
                                     </NavLink>
                                 </div>
                             </div>
                             <div class="bottom-0 left-0 absolute">
-                                <p class="text mb-4">Elements pris en charge</p>
+                                <p class="text mb-4">Documents pris en charge</p>
                                 <div class="items-elements">
-                                    <p class="item">sport --- carte d'identité --- acte de naissance --- permis de conduire ---Dip</p>
+                                    <p class="item">Passeport • Carte d'identité • Acte de naissance • Permis de conduire • Diplôme</p>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +95,7 @@ const splideOptions = {
 </script>
 
 <style scoped>
-.text{
+.text {
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
@@ -98,18 +103,18 @@ const splideOptions = {
     color: #FFFFFF;
 }
 
-.items-elements{
+.items-elements {
     backdrop-filter: blur(2px);
     border-radius: 0px 8px 0px 0px;
-    padding: 10px 0 ;
+    padding: 10px 0;
     position: relative;
 }
 
-.bg-items{
+.bg-items {
     background: rgba(238, 238, 238, 0.05);
 }
 
-.items-elements:after{
+.items-elements:after {
     position: absolute;
     left: 5.73%;
     right: 6.32%;

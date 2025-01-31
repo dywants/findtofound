@@ -266,7 +266,6 @@ const updateAmount = (newAmount) => {
         </div>
     </Layout>
 
-
 </template>
 
 <style scoped>

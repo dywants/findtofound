@@ -1,8 +1,6 @@
 <template>
     <a href="/" class="flex items-center">
-        <img src="/images/icons/logo.svg" class="mr-3 h-6 sm:h-9" alt="findtofound Logo">
-        <span class="self-center text-xl font-semibold whitespace-nowrap text-white">Tosearch<span class="text-tahiti-primary">Find</span>
-        </span>
+        <img src="/images/logo.svg" class="mr-3 h-8" alt="DocuTrace Logo">
     </a>
 </template>
 
@@ -13,8 +11,10 @@ export default {
 </script>
 
 <style scoped>
-.logo {
-    width: 10rem;
-    height: 3.5rem;
+.text-gradient {
+    background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 </style>
