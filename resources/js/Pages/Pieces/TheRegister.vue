@@ -22,6 +22,9 @@ const currentStepIdx = ref(0);
 const amount = ref('');
 const isLoadingRegisterPiece = ref(false);
 const progressWidth = ref('0%');
+const checkAnnonymary = ref(false);
+const selectedImages = ref([]);  // Pour stocker les images sélectionnées
+const additionalDetails = ref(''); // Initialiser comme une chaîne vide
 
 const steps = [
     {
@@ -36,8 +39,8 @@ const steps = [
     },
     {
         number: '3',
-        name: 'Validation',
-        icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
+        name: 'Récompense',
+        icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
     }
 ];
 
@@ -46,17 +49,48 @@ const getSectionName = computed(() => {
 });
 
 const validationSchema = [
+    // Première étape - validation des informations de la pièce
     yup.object({
         fullName: yup.string().required('Le nom inscrit sur la pièce est une information importante'),
         findCity: yup.string().required("La ville où la pièce a été retrouvée est une information importante"),
         piece_id: yup.number().required("Le choix du type de pièce est important").positive().integer(),
-        photos: yup.mixed().required("L'image est requise"),
+        findDate: yup.date()
+            .required("La date de découverte est importante")
+            .max(new Date(), "La date ne peut pas être dans le futur"),
+        pieceCondition: yup.string()
+            .required("L'état de la pièce est important")
+            .oneOf(['Excellent', 'Bon', 'Moyen', 'Mauvais'], "Veuillez sélectionner un état valide"),
+        additionalDetails: yup.string().nullable()
     }),
+    // Deuxième étape - validation des informations personnelles
     yup.object({
-        name: yup.string().required('Votre nom est requis'),
-        email: yup.string().email().required('Votre email est requis'),
-        phone_number: yup.number().required('Votre numéro de téléphone nous permettra de vous contacter').positive().integer(),
+        localisation: yup.string().when('checkAnnonymary', {
+            is: true,
+            then: yup.string().required('Veuillez indiquer le lieu où vous avez déposé le document'),
+            otherwise: yup.string().optional()
+        }),
+        name: yup.string().when('checkAnnonymary', {
+            is: false,
+            then: yup.string().required('Votre nom est requis'),
+            otherwise: yup.string().optional()
+        }),
+        email: yup.string().when('checkAnnonymary', {
+            is: false,
+            then: yup.string().email().required('Votre email est requis'),
+            otherwise: yup.string().optional()
+        }),
+        phone_number: yup.string().when('checkAnnonymary', {
+            is: false,
+            then: yup.string().required('Votre numéro de téléphone nous permettra de vous contacter'),
+            otherwise: yup.string().optional()
+        }),
+        city: yup.string().when('checkAnnonymary', {
+            is: false,
+            then: yup.string().required('Votre ville de résidence est requise'),
+            otherwise: yup.string().optional()
+        })
     }),
+    // Troisième étape - validation de la rémunération
     yup.object({
         amount_check: yup.string().required('La validation de la rémunération est importante'),
     })
@@ -64,7 +98,7 @@ const validationSchema = [
 
 const onSubmit = (formData) => {
     isLoadingRegisterPiece.value = true;
-    router.post('/piece-enregistrer', formData, {
+    router.post('/piece/enregistrer', formData, {
         onSuccess: () => {
             isLoadingRegisterPiece.value = false;
         },
@@ -88,6 +122,10 @@ watch(currentStepIdx, (newVal) => {
 const updateAmount = (newAmount) => {
     amount.value = newAmount;
 };
+
+const updateImages = (images) => {
+    selectedImages.value = images;
+};
 </script>
 
 <template>
@@ -100,163 +138,144 @@ const updateAmount = (newAmount) => {
                 <template #headerPage>
                     <div class="bg-white shadow-sm border-b border-gray-200 px-4 py-6">
                         <div class="flex items-center space-x-4">
-                            <div class="p-2 bg-blue-50 rounded-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <h2 class="text-2xl font-bold text-gray-900 leading-tight">
-                                Déclarer une découverte
-                            </h2>
+                            <h1 class="text-2xl font-bold text-gray-900">
+                                {{ getSectionName }}
+                            </h1>
                         </div>
                     </div>
                 </template>
             </HeaderPage>
 
             <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-                <!-- Progress Section avec un meilleur espacement -->
+                <!-- Progress Section -->
                 <div class="max-w-4xl mx-auto mb-12">
-                    <!-- Step Title -->
-                    <div class="text-center mb-8">
-                        <h3 class="text-2xl font-bold text-gray-900">
-                            {{ getSectionName }}
-                        </h3>
-                        <p class="mt-2 text-sm text-gray-500">
-                            Étape {{ currentStepIdx + 1 }} sur {{ steps.length }}
-                        </p>
-                    </div>
+                    <nav aria-label="Progress">
+                        <div class="relative">
+                            <div class="absolute top-1/2 transform -translate-y-1/2 w-full h-1 bg-gray-200">
+                                <div class="h-full bg-blue-600 transition-all duration-500 ease-in-out"
+                                    :style="{ width: progressWidth }"></div>
+                            </div>
 
-                    <!-- Steps Indicators -->
-                    <div class="relative">
-                        <div class="absolute top-1/2 transform -translate-y-1/2 w-full h-1 bg-gray-200">
-                            <div class="h-full bg-blue-600 transition-all duration-500 ease-in-out"
-                                :style="{ width: progressWidth }"></div>
-                        </div>
-
-                        <div class="relative flex justify-between">
-                            <template v-for="(step, index) in steps" :key="index">
-                                <div class="flex flex-col items-center">
-                                    <div class="flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300"
-                                        :class="[
-                                            index < currentStepIdx ? 'bg-blue-600 text-white' :
-                                                index === currentStepIdx ? 'bg-blue-100 border-2 border-blue-600 text-blue-600' :
-                                                    'bg-white border-2 border-gray-300 text-gray-400'
+                            <div class="relative flex justify-between">
+                                <template v-for="(step, index) in steps" :key="index">
+                                    <div class="flex flex-col items-center">
+                                        <div class="flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300"
+                                            :class="[
+                                                index < currentStepIdx ? 'bg-blue-600 text-white' :
+                                                    index === currentStepIdx ? 'bg-blue-100 border-2 border-blue-600 text-blue-600' :
+                                                        'bg-white border-2 border-gray-300 text-gray-400'
+                                            ]">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path :d="step.icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                            </svg>
+                                        </div>
+                                        <div class="mt-2 text-sm font-medium" :class="[
+                                            index <= currentStepIdx ? 'text-blue-600' : 'text-gray-500'
                                         ]">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path :d="step.icon" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2" />
-                                        </svg>
+                                            {{ step.name }}
+                                        </div>
                                     </div>
-                                    <div class="mt-2 text-sm font-medium" :class="[
-                                        index <= currentStepIdx ? 'text-blue-600' : 'text-gray-500'
-                                    ]">
-                                        {{ step.name }}
-                                    </div>
-                                </div>
-                            </template>
+                                </template>
+                            </div>
                         </div>
-                    </div>
+                    </nav>
                 </div>
 
                 <!-- Form Section -->
-                <div class="max-w-3xl mx-auto">
-                    <div class="bg-white shadow-xl rounded-xl overflow-hidden border border-gray-100">
-                        <FormWizard :validation-schema="validationSchema" @submit="onSubmit" @CURRENT_STEP="updateStep">
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-white shadow-lg rounded-3xl overflow-hidden border border-gray-100">
+                        <FormWizard :validation-schema="validationSchema" @submit="onSubmit" @next="updateStep"
+                            @CURRENT_STEP="updateStep">
                             <FormStep>
                                 <template #header>
-                                    <div
-                                        class="px-8 py-10 bg-gradient-to-r from-blue-50 to-white border-b border-gray-100">
-                                        <div class="flex items-start space-x-4">
-                                            <div class="flex-shrink-0 mt-1">
-                                                <div class="p-2 bg-blue-100 rounded-lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                        class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24"
-                                                        stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                                    </svg>
+                                    <div class="relative">
+                                        <div class="px-8 py-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-white">
+                                            <div class="flex items-center space-x-5">
+                                                <div class="flex-shrink-0">
+                                                    <div class="w-12 h-12 flex items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg transform -rotate-3">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                                        </svg>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div>
-                                                <h3 class="text-2xl font-bold text-gray-900">
-                                                    Informations de la pièce
-                                                </h3>
-                                                <p class="mt-3 text-base text-gray-600">
-                                                    Renseignez les détails de la pièce que vous avez trouvée
-                                                </p>
+                                                <div>
+                                                    <h3 class="text-xl font-bold text-gray-900">
+                                                        Informations de la pièce
+                                                    </h3>
+                                                    <p class="mt-1 text-sm text-gray-500">
+                                                        Renseignez les détails de la pièce que vous avez trouvée
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </template>
-                                <div class="px-8 py-10 bg-white">
-                                    <InforObject :pieces="pieces" @amount="updateAmount" class="space-y-6" />
+                                <div class="p-8">
+                                    <div class="bg-gray-50/50 rounded-2xl p-6 backdrop-blur-sm border border-gray-100">
+                                        <InforObject :pieces="pieces" @amount="updateAmount" @updateImages="updateImages" v-model:additionalDetails="additionalDetails" class="space-y-6" />
+                                    </div>
                                 </div>
                             </FormStep>
 
                             <FormStep>
                                 <template #header>
-                                    <div
-                                        class="px-8 py-10 bg-gradient-to-r from-blue-50 to-white border-b border-gray-100">
-                                        <div class="flex items-start space-x-4">
-                                            <div class="flex-shrink-0 mt-1">
-                                                <div class="p-2 bg-blue-100 rounded-lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                        class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24"
-                                                        stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                                    </svg>
+                                    <div class="relative">
+                                        <div class="px-8 py-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-white">
+                                            <div class="flex items-center space-x-5">
+                                                <div class="flex-shrink-0">
+                                                    <div class="w-12 h-12 flex items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg transform -rotate-3">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                        </svg>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div>
-                                                <h3 class="text-2xl font-bold text-gray-900">
-                                                    Vos informations personnelles
-                                                </h3>
-                                                <p class="mt-3 text-base text-gray-600">
-                                                    Ces informations nous permettront de vous contacter
-                                                </p>
+                                                <div>
+                                                    <h3 class="text-xl font-bold text-gray-900">
+                                                        Vos informations personnelles
+                                                    </h3>
+                                                    <p class="mt-1 text-sm text-gray-500">
+                                                        Ces informations nous permettront de vous contacter
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </template>
-                                <div class="px-8 py-10 bg-white">
-                                    <YourInformation class="space-y-6" />
+                                <div class="p-8">
+                                    <div class="bg-gray-50/50 rounded-2xl p-6 backdrop-blur-sm border border-gray-100">
+                                        <YourInformation v-model="checkAnnonymary" class="space-y-6" />
+                                    </div>
                                 </div>
                             </FormStep>
 
                             <FormStep>
                                 <template #header>
-                                    <div
-                                        class="px-8 py-10 bg-gradient-to-r from-blue-50 to-white border-b border-gray-100">
-                                        <div class="flex items-start space-x-4">
-                                            <div class="flex-shrink-0 mt-1">
-                                                <div class="p-2 bg-blue-100 rounded-lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                        class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24"
-                                                        stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                    </svg>
+                                    <div class="relative">
+                                        <div class="px-8 py-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-white">
+                                            <div class="flex items-center space-x-5">
+                                                <div class="flex-shrink-0">
+                                                    <div class="w-12 h-12 flex items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg transform -rotate-3">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        </svg>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div>
-                                                <h3 class="text-2xl font-bold text-gray-900">
-                                                    Validation finale
-                                                </h3>
-                                                <p class="mt-3 text-base text-gray-600">
-                                                    Vérifiez les informations avant de finaliser
-                                                </p>
+                                                <div>
+                                                    <h3 class="text-xl font-bold text-gray-900">
+                                                        Récompense
+                                                    </h3>
+                                                    <p class="mt-1 text-sm text-gray-500">
+                                                        Choisissez si vous souhaitez une récompense pour avoir retrouvé ce document
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </template>
-                                <div class="px-8 py-10 bg-white">
-                                    <Validation :amount="amount" class="space-y-6" />
+                                <div class="p-8">
+                                    <div class="bg-gray-50/50 rounded-2xl p-6 backdrop-blur-sm border border-gray-100">
+                                        <Validation :amount="amount" :is-anonymous="checkAnnonymary" class="space-y-6" />
+                                    </div>
                                 </div>
                             </FormStep>
                         </FormWizard>

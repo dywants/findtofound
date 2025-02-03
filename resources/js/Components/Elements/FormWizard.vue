@@ -2,7 +2,7 @@
     <form @submit="onSubmit">
         <TheCard>
             <template #body>
-                <slot/>
+                <slot />
             </template>
 
             <template #footer>
@@ -63,7 +63,7 @@ export default {
             return currentStepIdx.value > 0;
         });
 
-        // extracts the indivdual step schema
+        // extracts the individual step schema
         const currentSchema = computed(() => {
             return props.validationSchema[currentStepIdx.value];
         });
@@ -83,7 +83,6 @@ export default {
             };
 
             // Sets initial values for the values already filled
-            // effectively fills the inputs when clicking on "previous"
             resetForm({
                 values: {
                     ...formData.value,
@@ -93,17 +92,11 @@ export default {
             if (!isLastStep.value) {
                 currentStepIdx.value++;
                 emit("next", formData.value);
-
                 return;
             }
 
             emit("submit", formData.value);
         });
-
-        function uploadImage() {
-            let formData  = new FormData();
-            formData.append('photos', formData.photos)
-        }
 
         function goToPrev() {
             if (currentStepIdx.value === 0) {
@@ -124,20 +117,18 @@ export default {
             hasPrevious,
             isLastStep,
             goToPrev,
-            uploadImage,
             currentIdx,
         };
     },
 };
 </script>
 
-
 <style>
 /*.container{*/
 /*    text-align: center;*/
 
 /*}*/
-.progress-container{
+.progress-container {
     display: flex;
     justify-content: space-between;
     position: relative;
@@ -146,7 +137,8 @@ export default {
     width: 300px;
 
 }
-.progress-container::before{
+
+.progress-container::before {
     content: '';
     background-color: #efefef;
     position: absolute;
@@ -158,7 +150,8 @@ export default {
     z-index: -1;
 
 }
-.progress{
+
+.progress {
     background-color: #3498db;
     position: absolute;
     top: 50%;
@@ -169,7 +162,8 @@ export default {
     z-index: -1;
     transition: 0.4s ease;
 }
-.circle{
+
+.circle {
     background-color: #fff;
     color: #999;
     border-radius: 50%;
@@ -182,10 +176,12 @@ export default {
 
     transition: 0.4s ease;
 }
-.circle.active{
+
+.circle.active {
     border-color: #3498db;
 }
-.btn{
+
+.btn {
     background-color: #3498db;
     color: white;
     border: 0;
@@ -195,16 +191,18 @@ export default {
     margin: 5px;
     font-size: 14px;
 }
-.btn:disabled{
+
+.btn:disabled {
     background-color: #999;
     cursor: not-allowed;
 
 }
-.btn:focus{
-    outline: 0 ;
-}
-.btn.active{
-    transform: scale(0.98);
+
+.btn:focus {
+    outline: 0;
 }
 
+.btn.active {
+    transform: scale(0.98);
+}
 </style>

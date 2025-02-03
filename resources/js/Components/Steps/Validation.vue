@@ -1,74 +1,91 @@
 <template>
     <article>
-        <div class="mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900 ">Désirez-vous être récompenser</label>
+        <div v-if="isAnonymous" class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-yellow-800">
+                        Mode anonyme activé
+                    </h3>
+                    <div class="mt-2 text-sm text-yellow-700">
+                        <p>
+                            En restant anonyme, vous ne pourrez pas recevoir de récompense pour avoir retrouvé ce
+                            document. Si vous souhaitez être récompensé(e), veuillez :
+                        </p>
+                        <ul class="list-disc list-inside mt-2">
+                            <li>Retourner à l'étape précédente</li>
+                            <li>Décocher l'option "Rester anonyme"</li>
+                            <li>Remplir vos informations de contact</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-else class="mb-6">
+            <label class="block mb-2 text-sm font-medium text-gray-900">Désirez-vous être récompensé ?</label>
             <div class="flex items-center space-x-3">
                 <div class="flex items-center mb-2">
-                    <Field type="checkbox" id="A3-yes" name="amount_check" :value="amount" v-model="checkedNames"
-                           class="opacity-0 absolute h-8 w-8"/>
-                    <div
-                        class="bg-white border-2 rounded-md border-blue-400 w-8 h-8 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-blue-500">
-                        <svg class="fill-current hidden w-3 h-3 text-blue-600 pointer-events-none" version="1.1"
-                             viewBox="0 0 17 12" xmlns="http://www.w3.org/2000/svg">
-                            <g fill="none" fill-rule="evenodd">
-                                <g transform="translate(-9 -11)" fill="#1F73F1" fill-rule="nonzero">
-                                    <path
-                                        d="m25.576 11.414c0.56558 0.55188 0.56558 1.4439 0 1.9961l-9.404 9.176c-0.28213 0.27529-0.65247 0.41385-1.0228 0.41385-0.37034 0-0.74068-0.13855-1.0228-0.41385l-4.7019-4.588c-0.56584-0.55188-0.56584-1.4442 0-1.9961 0.56558-0.55214 1.4798-0.55214 2.0456 0l3.679 3.5899 8.3812-8.1779c0.56558-0.55214 1.4798-0.55214 2.0456 0z"/>
-                                </g>
-                            </g>
-                        </svg>
-                    </div>
-                    <label for="A3-yes" class="select-none">Oui</label>
+                    <Field type="radio" id="amount-yes" name="amount_choice" :value="amount" v-model="checkedNames"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" />
+                    <label for="amount-yes" class="ml-2 text-sm font-medium text-gray-900">Oui</label>
                 </div>
 
                 <div class="flex items-center mb-2">
-                    <Field type="checkbox" id="A3-yes" name="amount_uncheck" value="0" v-model="checkedNames"
-                           class="opacity-0 absolute h-8 w-8"/>
-                    <div
-                        class="bg-white border-2 rounded-md border-blue-400 w-8 h-8 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-blue-500">
-                        <svg class="fill-current hidden w-3 h-3 text-blue-600 pointer-events-none" version="1.1"
-                             viewBox="0 0 17 12" xmlns="http://www.w3.org/2000/svg">
-                            <g fill="none" fill-rule="evenodd">
-                                <g transform="translate(-9 -11)" fill="#1F73F1" fill-rule="nonzero">
-                                    <path
-                                        d="m25.576 11.414c0.56558 0.55188 0.56558 1.4439 0 1.9961l-9.404 9.176c-0.28213 0.27529-0.65247 0.41385-1.0228 0.41385-0.37034 0-0.74068-0.13855-1.0228-0.41385l-4.7019-4.588c-0.56584-0.55188-0.56584-1.4442 0-1.9961 0.56558-0.55214 1.4798-0.55214 2.0456 0l3.679 3.5899 8.3812-8.1779c0.56558-0.55214 1.4798-0.55214 2.0456 0z"/>
-                                </g>
-                            </g>
-                        </svg>
-                    </div>
-                    <label for="A3-yes" class="select-none">Non</label>
+                    <Field type="radio" id="amount-no" name="amount_choice" value="0" v-model="checkedNames"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" />
+                    <label for="amount-no" class="ml-2 text-sm font-medium text-gray-900">Non</label>
                 </div>
             </div>
-            <ErrorMessage name="amount_uncheck" class="mt-2 text-sm text-red-600" />
-            <ErrorMessage name="amount_check" class="mt-2 text-sm text-red-600" />
-            <label for="" v-if="checkedNames" class="text-gray-800 text-[14px] mt-4" >
-                Votre récompense est de:
-                <span class="text-gray-800 text-[18px] font-semibold">{{ checkedNames }}Fcfa</span>
-            </label>
+            <ErrorMessage name="amount_choice" class="mt-2 text-sm text-red-600" />
+
+            <div v-if="checkedNames && checkedNames !== '0'" class="mt-4 p-4 bg-green-50 rounded-lg">
+                <label class="text-gray-800 text-sm">
+                    Votre récompense sera de :
+                    <span class="text-green-700 text-lg font-semibold ml-1">{{ checkedNames }} FCFA</span>
+                </label>
+            </div>
         </div>
     </article>
 </template>
 
 <script>
 import { Field, ErrorMessage } from "vee-validate";
-import * as yup from "yup";
+
 export default {
     name: "Validation",
-    components: {Field, ErrorMessage},
-    data(){
-       return {
-           checkedNames: ''
-       }
+    components: { Field, ErrorMessage },
+    props: {
+        amount: {
+            type: [String, Number],
+            required: true
+        },
+        isAnonymous: {
+            type: Boolean,
+            required: true,
+            default: false
+        }
     },
-    props: ['amount'],
-    computed: {
-        deviceAmount() {
-            return this.amount.formattedPrice()
+    data() {
+        return {
+            checkedNames: ''
+        }
+    },
+    watch: {
+        isAnonymous: {
+            immediate: true,
+            handler(newVal) {
+                if (newVal) {
+                    this.checkedNames = '0';
+                }
+            }
         }
     }
 }
 </script>
-
-<style scoped>
-
-</style>

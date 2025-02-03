@@ -30,6 +30,7 @@
     "dependencies": {
         "@heroicons/vue": "^2.2.0",
         "@splidejs/vue-splide": "^0.6.10",
+        "@tinymce/tinymce-vue": "^6.1.0",
         "@vee-validate/i18n": "^4.12.4",
         "@vee-validate/rules": "^4.12.4",
         "chart.js": "^4.4.7",

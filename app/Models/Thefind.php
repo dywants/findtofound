@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
-use Cknow\Money\Money;
+use App\Enum\PieceCondition;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Thefind extends Model
 {
     use HasFactory;
+    use HasSlug;
 
     /**
      * @var string[]
@@ -23,7 +27,29 @@ class Thefind extends Model
         'amount_check',
         'piece_id',
         'approval_status',
-        'photos'
+        'photos',
+        'is_anonymous',
+        'localisation',
+        // Nouveaux champs
+        'contact_person',
+        'pickup_hours',
+        'special_instructions',
+        'discovery_date',
+        'piece_condition',
+        'condition_details',
+        'deposit_location',
+        'deposit_city',
+        'deposit_district'
+    ];
+
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'is_anonymous' => 'boolean',
+        'discovery_date' => 'datetime',
+        'photos' => 'array',
+        'piece_condition' => PieceCondition::class
     ];
 
     /**
@@ -40,5 +66,15 @@ class Thefind extends Model
     public function piece(): BelongsTo
     {
         return $this->belongsTo(Piece::class);
+    }
+
+    /**
+     * @return SlugOptions
+     */
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 }

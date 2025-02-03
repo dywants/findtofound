@@ -58,55 +58,84 @@ class TheFindController extends Controller
      */
     public function store(FindRequest $request): Application|RedirectResponse|Redirector
     {
-        if (!Auth::check()) {
-
-            $generatedPassword = Str::random(10);
-
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($generatedPassword),
-            ]);
-
-            Auth::guard()->login($user);
-        }else{
-            $user = \auth()->user();
-            $generatedPassword = $user->password;
-        }
-
-//        $user->notify(new WelcomeEmailNotification($user,$generatedPassword));
-
-        $user->assignRole('Founds');
-
-        if ($request->hasFile('photos')){
+        $imgData = [];
+        
+        if ($request->hasFile('photos')) {
             $arrayImage = $request->photos;
-
-            foreach($arrayImage as $file)
-            {
-                $imageName = time(). '.' . $user->id . now()->format('y') . '/' . now()->format('m') . $file->getClientOriginalName();
+            foreach ($arrayImage as $file) {
+                $imageName = time() . '.' . now()->format('y') . '/' . now()->format('m') . $file->getClientOriginalName();
                 $file->storeAs('findImages', $imageName);
                 $imgData[] = $imageName;
             }
         }
 
-        Thefind::create([
+        // Préparer les données de base pour Thefind
+        $findData = [
             'fullName' => $request->fullName,
             'findCity' => $request->findCity,
             'ward' => $request->ward,
             'details' => $request->details,
             'amount_check' => $request->amount_check,
             'photos' => json_encode($imgData),
-            'user_id' => $user->id,
             'piece_id' => $request->piece_id,
-        ]);
+            'is_anonymous' => $request->checkAnnonymary,
+            'discovery_date' => $request->discovery_date,
+            'piece_condition' => $request->piece_condition,
+            'condition_details' => $request->condition_details,
+            'deposit_location' => $request->deposit_location,
+            'deposit_city' => $request->deposit_city,
+            'deposit_district' => $request->deposit_district,
+            'contact_person' => $request->contact_person,
+            'pickup_hours' => $request->pickup_hours,
+            'special_instructions' => $request->special_instructions
+        ];
 
-        Profile::create([
-            'user_id' => $user->id,
-            'phone_number' => $request->phone_number,
-            'city' => $request->city,
-        ]);
+        // Ajouter la localisation si anonyme
+        if ($request->checkAnnonymary) {
+            $findData['localisation'] = $request->localisation;
+            // Ne pas inclure user_id pour les soumissions anonymes
+        } else {
+            // Gérer l'utilisateur pour les soumissions non-anonymes
+            if (!Auth::check()) {
+                $generatedPassword = Str::random(10);
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($generatedPassword),
+                ]);
+                Auth::guard()->login($user);
+                $user->assignRole('Founds');
+            } else {
+                $user = auth()->user();
+                $generatedPassword = null;
+            }
 
-       return redirect(RouteServiceProvider::HOME)->with('message', $generatedPassword);
+            // Ajouter user_id seulement pour les soumissions non-anonymes
+            $findData['user_id'] = $user->id;
+
+            // Créer ou mettre à jour le profil
+            Profile::updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'phone_number' => $request->phone_number,
+                    'city' => $request->city,
+                ]
+            );
+        }
+
+        // Créer l'enregistrement Thefind
+        Thefind::create($findData);
+
+        // Préparer le message de retour
+        if ($request->checkAnnonymary) {
+            $message = 'Merci pour votre contribution anonyme!';
+        } else {
+            $message = $generatedPassword 
+                ? "Votre compte a été créé avec succès! Votre mot de passe temporaire est: $generatedPassword" 
+                : "Merci pour votre contribution!";
+        }
+
+        return redirect(RouteServiceProvider::HOME)->with('message', $message);
     }
 
     /**

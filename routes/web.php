@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/piece-enregistrer', [TheFindController::class, 'index'])->name('find.register');
-Route::post('/piece-enregistrer', [TheFindController::class, 'store'])->name('find.store');
+Route::post('/piece/enregistrer', [TheFindController::class, 'store'])->name('find.store');
 Route::get('/piece-rechercher/{thefind}', [TheFindController::class, 'show'])->name('find.show');
 Route::put('/piece-rechercher/{thefind}', [TheFindController::class, 'update'])->name('find.update');
 Route::get('/piece-rechercher', [TheFoundController::class, 'search'])->name('found.search');

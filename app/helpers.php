@@ -28,11 +28,26 @@ if (!function_exists('arrat_to_object')){
 }
 
 if(!function_exists('decode_image')){
+    /**
+     * Decode image data and return the first item
+     * 
+     * @param string|array $data The data to decode
+     * @return string|null The first image path or null if no images
+     */
     function decode_image($data){
-
-        foreach(json_decode($data,true) as $item){
-            return $item;
+        if (empty($data)) {
+            return null;
         }
+
+        // Si c'est déjà un tableau, pas besoin de décoder
+        $images = is_array($data) ? $data : json_decode($data, true);
+        
+        if (empty($images)) {
+            return null;
+        }
+
+        // Retourne le premier élément du tableau
+        return is_array($images) ? reset($images) : $images;
     }
 }
 
