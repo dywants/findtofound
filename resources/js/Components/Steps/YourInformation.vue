@@ -9,7 +9,7 @@
         <!-- Option Anonymat -->
         <div class="mb-8">
             <div class="flex items-center p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <Field type="checkbox" id="anonymous" name="checkAnnonymary" v-model="checkAnnonymary"
+                <Field type="checkbox" id="anonymous" name="isAnonymous" v-model="isAnonymous"
                     class="w-5 h-5 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2" />
                 <label for="anonymous" class="ml-3 flex-1">
                     <span class="block font-medium text-gray-900">Rester anonyme</span>
@@ -23,19 +23,19 @@
 
         <!-- Formulaire selon le choix -->
         <transition name="fade" mode="out-in">
-            <div v-if="checkAnnonymary" key="anonymous" class="space-y-6">
-                <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+            <div v-if="!isAnonymous" key="account" class="space-y-6">
+                <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
                     <div class="flex">
                         <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                            <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd"
-                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                    d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
                                     clip-rule="evenodd" />
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm text-blue-700">
-                                Pour faciliter la restitution du document, merci de fournir les informations suivantes
+                            <p class="text-sm text-green-700">
+                                Renseignez vos informations de contact pour être informé de la restitution
                             </p>
                         </div>
                     </div>
@@ -101,19 +101,19 @@
                     </div>
                 </div>
             </div>
-            <div v-else key="account" class="space-y-6">
-                <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+            <div v-else key="anonymous" class="space-y-6">
+                <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
                     <div class="flex">
                         <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                            <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd"
-                                    d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                                     clip-rule="evenodd" />
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm text-green-700">
-                                Pour faciliter la restitution du document, merci de fournir les informations suivantes
+                            <p class="text-sm text-blue-700">
+                                Créez un compte pour suivre facilement l'état de votre déclaration et être notifié
                             </p>
                         </div>
                     </div>
@@ -154,26 +154,35 @@
 
 <script>
 import { Field, ErrorMessage } from "vee-validate";
-import { ref, computed } from 'vue';
+import { ref, watch, computed } from 'vue';
 
 export default {
     name: 'YourInformation',
     components: { Field, ErrorMessage },
-    props: {
-        modelValue: {
-            type: Boolean,
-            required: true
-        }
-    },
-    emits: ['update:modelValue'],
+    emits: ['modeChange'],
     setup(props, { emit }) {
-        const checkAnnonymary = computed({
-            get: () => props.modelValue,
-            set: (value) => emit('update:modelValue', value)
+        const isAnonymous = ref(false);
+
+        // Émettre le changement de mode pour informer le parent
+        const watchIsAnonymous = watch(isAnonymous, (newValue) => {
+            emit('modeChange', newValue);
         });
 
+        // Règles de validation selon le mode
+        const validationSchema = computed(() => ({
+            name: 'required',
+            email: 'required|email',
+            phone_number: 'required',
+            city: 'required',
+            ...(!isAnonymous.value && {
+                password: 'required|min:8',
+                password_confirmation: 'required|confirmed:password'
+            })
+        }));
+
         return {
-            checkAnnonymary
+            isAnonymous,
+            validationSchema
         };
     }
 };
