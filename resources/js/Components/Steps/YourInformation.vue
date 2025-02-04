@@ -9,7 +9,7 @@
         <!-- Option Anonymat -->
         <div class="mb-8">
             <div class="flex items-center p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <Field type="checkbox" id="anonymous" name="checkAnnommary" v-model="checkAnnommary"
+                <Field type="checkbox" id="anonymous" name="checkAnnonymary" v-model="checkAnnonymary"
                     class="w-5 h-5 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2" />
                 <label for="anonymous" class="ml-3 flex-1">
                     <span class="block font-medium text-gray-900">Rester anonyme</span>
@@ -23,56 +23,7 @@
 
         <!-- Formulaire selon le choix -->
         <transition name="fade" mode="out-in">
-            <!-- Mode Création de Compte -->
-            <div v-if="checkAnnommary" key="account" class="space-y-6">
-                <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd"
-                                    d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <div class="ml-3">
-                            <p class="text-sm text-green-700">
-                                Un compte sera créé pour vous permettre de suivre la restitution
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="form-group">
-                        <label for="name" class="form-label">Votre nom</label>
-                        <Field type="text" name="name" id="name" class="form-input" placeholder="Jean Dupont" />
-                        <ErrorMessage name="name" class="form-error" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email" class="form-label">Votre email</label>
-                        <Field type="email" name="email" id="email" class="form-input"
-                            placeholder="jean.dupont@example.com" />
-                        <ErrorMessage name="email" class="form-error" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="phone" class="form-label">Numéro de téléphone</label>
-                        <Field type="tel" name="phone_number" id="phone" class="form-input"
-                            placeholder="+237 6XX XX XX XX" />
-                        <ErrorMessage name="phone_number" class="form-error" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="city" class="form-label">Ville de résidence</label>
-                        <Field type="text" name="city" id="city" class="form-input" placeholder="Douala" />
-                        <ErrorMessage name="city" class="form-error" />
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mode Anonyme -->
-            <div v-else key="anonymous" class="space-y-6">
+            <div v-if="checkAnnonymary" key="anonymous" class="space-y-6">
                 <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -150,13 +101,60 @@
                     </div>
                 </div>
             </div>
+            <div v-else key="account" class="space-y-6">
+                <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-green-700">
+                                Pour faciliter la restitution du document, merci de fournir les informations suivantes
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Votre nom</label>
+                        <Field type="text" name="name" id="name" class="form-input" placeholder="Jean Dupont" />
+                        <ErrorMessage name="name" class="form-error" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Votre email</label>
+                        <Field type="email" name="email" id="email" class="form-input"
+                            placeholder="jean.dupont@example.com" />
+                        <ErrorMessage name="email" class="form-error" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Numéro de téléphone</label>
+                        <Field type="tel" name="phone_number" id="phone" class="form-input"
+                            placeholder="+237 6XX XX XX XX" />
+                        <ErrorMessage name="phone_number" class="form-error" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city" class="form-label">Ville de résidence</label>
+                        <Field type="text" name="city" id="city" class="form-input" placeholder="Douala" />
+                        <ErrorMessage name="city" class="form-error" />
+                    </div>
+                </div>
+            </div>
+
         </transition>
     </div>
 </template>
 
 <script>
 import { Field, ErrorMessage } from "vee-validate";
-import { ref, watch } from 'vue';
+import { ref, computed } from 'vue';
 
 export default {
     name: 'YourInformation',
@@ -169,14 +167,13 @@ export default {
     },
     emits: ['update:modelValue'],
     setup(props, { emit }) {
-        const checkAnnommary = ref(props.modelValue);
-
-        watch(checkAnnommary, (newValue) => {
-            emit('update:modelValue', newValue);
+        const checkAnnonymary = computed({
+            get: () => props.modelValue,
+            set: (value) => emit('update:modelValue', value)
         });
 
         return {
-            checkAnnommary
+            checkAnnonymary
         };
     }
 };

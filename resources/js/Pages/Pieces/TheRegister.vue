@@ -24,7 +24,12 @@ const isLoadingRegisterPiece = ref(false);
 const progressWidth = ref('0%');
 const checkAnnonymary = ref(false);
 const selectedImages = ref([]);  // Pour stocker les images sélectionnées
-const additionalDetails = ref(''); // Initialiser comme une chaîne vide
+const additionalDetails = ref('');
+
+// Fonction pour mettre à jour les images
+const updateImages = (newImages) => {
+    selectedImages.value = newImages;
+};
 
 const steps = [
     {
@@ -122,10 +127,6 @@ watch(currentStepIdx, (newVal) => {
 const updateAmount = (newAmount) => {
     amount.value = newAmount;
 };
-
-const updateImages = (images) => {
-    selectedImages.value = images;
-};
 </script>
 
 <template>
@@ -212,7 +213,14 @@ const updateImages = (images) => {
                                 </template>
                                 <div class="p-8">
                                     <div class="bg-gray-50/50 rounded-2xl p-6 backdrop-blur-sm border border-gray-100">
-                                        <InforObject :pieces="pieces" @amount="updateAmount" @updateImages="updateImages" v-model:additionalDetails="additionalDetails" class="space-y-6" />
+                                        <InforObject 
+                                            :pieces="pieces" 
+                                            :stored-images="selectedImages"
+                                            @amount="updateAmount" 
+                                            @update-images="updateImages"
+                                            v-model:additionalDetails="additionalDetails" 
+                                            class="space-y-6" 
+                                        />
                                     </div>
                                 </div>
                             </FormStep>

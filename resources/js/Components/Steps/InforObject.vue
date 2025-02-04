@@ -2,7 +2,7 @@
     <article class="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm p-8">
         <!-- En-tête du formulaire -->
         <div class="mb-8">
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">Informations de la pièce</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">'Informations de la pièce'</h2>
             <p class="text-gray-600">Veuillez remplir les informations concernant la pièce trouvée</p>
         </div>
 
@@ -22,8 +22,11 @@
                             </option>
                         </Field>
                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
                             </svg>
                         </div>
                     </div>
@@ -32,7 +35,8 @@
 
                 <!-- Nom sur la pièce -->
                 <div class="space-y-4">
-                    <label for="fullName" class="block text-sm font-medium text-gray-700">Nom inscrit sur la pièce</label>
+                    <label for="fullName" class="block text-sm font-medium text-gray-700">Nom inscrit sur la
+                        pièce</label>
                     <div class="mt-1 relative rounded-xl shadow-sm">
                         <Field type="text" id="fullName" name="fullName"
                             class="block w-full px-4 py-3 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow duration-200 bg-white shadow-sm hover:shadow-md"
@@ -56,7 +60,8 @@
             <div class="space-y-8">
                 <!-- Ville de découverte -->
                 <div class="space-y-4">
-                    <label for="findCity" class="block text-sm font-medium text-gray-700">Ville où la pièce a été retrouvée</label>
+                    <label for="findCity" class="block text-sm font-medium text-gray-700">Ville où la pièce a été
+                        retrouvée</label>
                     <div class="mt-1 relative rounded-xl shadow-sm">
                         <Field type="text" id="findCity" name="findCity"
                             class="block w-full px-4 py-3 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow duration-200 bg-white shadow-sm hover:shadow-md"
@@ -72,13 +77,17 @@
                         <Field name="pieceCondition" as="select"
                             class="block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-xl transition-shadow duration-200 bg-white shadow-sm hover:shadow-md">
                             <option value="">Sélectionnez l'état</option>
-                            <option v-for="condition in pieceConditions" :key="condition.value" :value="condition.value">
+                            <option v-for="condition in pieceConditions" :key="condition.value"
+                                :value="condition.value">
                                 {{ condition.value }}
                             </option>
                         </Field>
                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
                             </svg>
                         </div>
                     </div>
@@ -113,34 +122,32 @@
                     'bg-gray-50 border-blue-500': isDragging,
                     'hover:border-blue-500': imgUrl.length < 2,
                     'opacity-50 cursor-not-allowed': imgUrl.length >= 2
-                }"
-                @dragenter.prevent="isDragging = true"
-                @dragleave.prevent="isDragging = false"
-                @dragover.prevent
+                }" @dragenter.prevent="isDragging = true" @dragleave.prevent="isDragging = false" @dragover.prevent
                 @drop.prevent="handleDrop($event)">
-                
+
                 <div class="text-center">
                     <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4-4m4-4h.01" 
+                        <path
+                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4-4m4-4h.01"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    
+
                     <div class="mt-4">
-                        <label class="relative cursor-pointer"
-                            :class="{'cursor-not-allowed': imgUrl.length >= 2}">
-                            <span class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                :class="{'opacity-50': imgUrl.length >= 2}">
+                        <label class="relative cursor-pointer" :class="{ 'cursor-not-allowed': imgUrl.length >= 2 }">
+                            <span
+                                class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                :class="{ 'opacity-50': imgUrl.length >= 2 }">
                                 Sélectionner des photos
                             </span>
                             <input type="file" class="sr-only" @change="onFileChange" accept="image/*" multiple
                                 :disabled="imgUrl.length >= 2">
                         </label>
                     </div>
-                    
+
                     <p class="mt-2 text-sm text-gray-500">
                         ou glissez-déposez vos images ici
                     </p>
-                    
+
                     <p class="mt-2 text-xs text-gray-400">
                         PNG, JPG jusqu'à 10MB
                     </p>
@@ -166,18 +173,20 @@
 
             <!-- Aperçu des images -->
             <div v-if="imgUrl.length > 0" class="grid grid-cols-2 gap-4 mt-4">
-                <div v-for="(url, index) in imgUrl" :key="index" 
-                    class="relative rounded-lg overflow-hidden group">
+                <div v-for="(url, index) in imgUrl" :key="index" class="relative rounded-lg overflow-hidden group">
                     <img :src="url" class="w-full h-32 object-cover">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
                         <button @click="removeImage(index)"
                             class="p-2 bg-red-500 rounded-full text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
                     </div>
-                    <span class="absolute bottom-2 left-2 text-white text-sm font-medium bg-black bg-opacity-50 px-2 py-1 rounded">
+                    <span
+                        class="absolute bottom-2 left-2 text-white text-sm font-medium bg-black bg-opacity-50 px-2 py-1 rounded">
                         {{ index === 0 ? 'Recto' : 'Verso' }}
                     </span>
                 </div>
@@ -188,30 +197,9 @@
         <div class="mt-8 space-y-4">
             <label class="block text-sm font-medium text-gray-700">Détails supplémentaires</label>
             <div class="mt-1">
-                <Editor
-                    v-model="additionalDetailsValue"
-                    :api-key="'no-api-key'"
-                    :init="{
-                        height: 300,
-                        menubar: false,
-                        plugins: [
-                            'advlist', 'autolink', 'lists', 'link', 'charmap', 'preview',
-                            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                            'insertdatetime', 'media', 'table', 'help', 'wordcount'
-                        ],
-                        toolbar: 'undo redo | formatselect | ' +
-                            'bold italic backcolor | alignleft aligncenter ' +
-                            'alignright alignjustify | bullist numlist outdent indent | ' +
-                            'removeformat',
-                        content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; }',
-                        skin: 'oxide',
-                        content_css: 'default',
-                        branding: false,
-                        placeholder: 'Ajoutez des détails supplémentaires ici...',
-                        statusbar: false
-                    }"
-                    class="mt-1 block w-full rounded-xl shadow-sm"
-                />
+                <QuillEditor v-model:content="additionalDetailsValue" :options="editorConfig"
+                    class="border border-gray-300 rounded-lg shadow-sm" 
+                    style="min-height: 200px;" />
             </div>
             <ErrorMessage name="additionalDetails" class="mt-2 text-sm text-red-600" />
         </div>
@@ -222,11 +210,16 @@
 import { Field, ErrorMessage } from "vee-validate";
 import { ref, reactive, watch, onMounted } from 'vue';
 import axios from 'axios';
-import Editor from '@tinymce/tinymce-vue';
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 export default {
     name: "InforObject",
-    components: { Field, ErrorMessage, Editor },
+    components: {
+        Field,
+        ErrorMessage,
+        QuillEditor
+    },
     emits: ['updateImages', 'amount', 'update:additionalDetails'],
     props: {
         pieces: {
@@ -261,12 +254,34 @@ export default {
         ]);
 
         const additionalDetailsValue = ref(props.additionalDetails);
+        const editorConfig = {
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'align': [] }],
+                    ['link', 'image'],
+                    ['clean']
+                ]
+            },
+            theme: 'snow',
+            placeholder: 'Ajoutez des détails supplémentaires ici...'
+        };
+
+        // Surveiller les changements dans les props storedImages
+        watch(() => props.storedImages, (newImages) => {
+            if (newImages && newImages.length > 0) {
+                imgUrl.value = [...newImages];
+            }
+        }, { deep: true });
 
         watch(additionalDetailsValue, (newValue) => {
             emit('update:additionalDetails', newValue);
         });
 
-        onMounted(async () => {
+        onMounted(() => {
             if (props.storedImages && props.storedImages.length > 0) {
                 imgUrl.value = [...props.storedImages];
             }
@@ -287,7 +302,7 @@ export default {
 
         const handleImageUpload = async (file) => {
             if (imgUrl.value.length >= 2) return;
-            
+
             const reader = new FileReader();
             reader.onload = (e) => {
                 imgUrl.value.push(e.target.result);
@@ -301,7 +316,7 @@ export default {
                 alert('Vous ne pouvez télécharger que 2 photos maximum');
                 return;
             }
-            
+
             for (const file of files) {
                 if (file.type.startsWith('image/')) {
                     await handleImageUpload(file);
@@ -312,13 +327,13 @@ export default {
         const handleDrop = async (e) => {
             e.preventDefault();
             isDragging.value = false;
-            
+
             const files = Array.from(e.dataTransfer.files);
             if (imgUrl.value.length + files.length > 2) {
                 alert('Vous ne pouvez télécharger que 2 photos maximum');
                 return;
             }
-            
+
             for (const file of files) {
                 if (file.type.startsWith('image/')) {
                     await handleImageUpload(file);
@@ -337,6 +352,7 @@ export default {
             rotations,
             pieceConditions,
             additionalDetailsValue,
+            editorConfig,
             onChange,
             onFileChange,
             handleDrop,
@@ -348,7 +364,8 @@ export default {
 </script>
 
 <style scoped>
-.form-input:focus, .form-select:focus {
+.form-input:focus,
+.form-select:focus {
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
