@@ -232,6 +232,10 @@ Cette page est accessible via l'URL `/icon-test` et sert à la fois de documenta
 
 Ce document trace les améliorations potentielles à apporter à la vue TheSearch.vue, suite à l'analyse de sa structure et de ses fonctionnalités.
 
+## Améliorations pour TheRegisterInfoFounder.vue
+
+Ce document présente les améliorations potentielles pour la page TheRegisterInfoFounder.vue, qui permet aux utilisateurs de finaliser leurs informations de contact et de procéder au paiement pour récupérer un objet perdu.
+
 ## Améliorations pour TheShowFind.vue
 
 Ce document trace les améliorations à apporter à la vue TheShowFind.vue, qui affiche les détails d'une pièce retrouvée.
@@ -327,6 +331,88 @@ Ce document trace les améliorations à apporter à la vue TheShowFind.vue, qui 
   - [x] Optimiser l'expérience tactile (plus grandes zones de clic)
 
 ### Fonctionnalités additionnelles
+
+## Plan d'amélioration pour TheRegisterInfoFounder.vue
+
+### Structure et organisation du code
+
+- [x] Refactoriser la page en composants réutilisables
+  - [x] Créer un composant `ProgressStepper.vue` pour la barre de progression
+  - [x] Créer un composant `UserInfoForm.vue` pour le formulaire d'information
+  - [x] Créer un composant `InfoSummary.vue` pour afficher le résumé des informations
+  - [x] Créer un composant `PaymentOptions.vue` pour les options de paiement
+  - [x] Refactoriser la page principale pour utiliser ces composants
+
+### Améliorations UI/UX
+
+- [x] Moderniser l'interface utilisateur
+  - [x] Améliorer la présentation des étapes de progression
+    - [x] Ajouter des animations pour les transitions entre étapes
+    - [x] Utiliser des icônes descriptives pour chaque étape
+    - [ ] Implémenter un pourcentage de progression visuel
+  - [x] Enrichir l'affichage des options de paiement
+    - [x] Ajouter des effets d'interaction plus modernes (hover, focus, active)
+    - [x] Standardiser la taille des logos des méthodes de paiement
+    - [x] Intégrer des badges ou indicateurs pour les moyens de paiement sélectionnés
+  - [x] Améliorer le formulaire d'informations
+    - [x] Ajouter la validation en temps réel des champs (format d'email, numéro de téléphone, etc.)
+    - [ ] Implémenter l'auto-complétion pour le champ ville avec une liste prédéfinie
+    - [x] Ajouter des suggestions d'erreur plus descriptives
+
+### Expérience utilisateur
+
+- [x] Optimiser le flux de paiement
+  - [x] Simplifier le processus en minimisant les étapes
+  - [ ] Ajouter une fonctionnalité de sauvegarde automatique des informations (localStorage)
+  - [x] Implémenter un indicateur de sécurité du paiement
+  - [x] Ajouter un récapitulatif clair des frais et de la récompense
+- [x] Améliorer les retours d'information
+  - [ ] Ajouter des notifications de succès/échec plus visibles
+  - [x] Intégrer des animations de chargement pendant le traitement
+  - [x] Confirmer visuellement chaque étape complétée
+- [x] Enrichir les informations contextuelles
+  - [x] Ajouter des tooltips explicatifs pour les différentes options de paiement
+  - [ ] Inclure une FAQ directement accessible depuis la page
+  - [x] Fournir des informations claires pour chaque moyen de paiement
+
+### Adaptabilité et responsive design
+
+- [x] Renforcer l'adaptabilité mobile
+  - [x] Optimiser la disposition des formulaires sur petits écrans
+  - [x] Adapter la présentation des méthodes de paiement pour l'affichage vertical
+  - [x] Améliorer l'accessibilité des boutons et des champs sur mobile
+- [ ] Améliorer la compatibilité multi-navigateurs
+  - [ ] Tester et optimiser sur différents navigateurs (Chrome, Firefox, Safari, Edge)
+  - [x] Assurer une expérience cohérente quelle que soit la plateforme
+
+### Intégration technique et optimisations
+
+- [x] Améliorer l'intégration des passerelles de paiement
+  - [x] Moderniser l'intégration PayPal avec une interface utilisateur améliorée
+  - [x] Optimiser l'affichage des options de paiement (affichage conditionnel)
+  - [ ] Améliorer la gestion des erreurs de paiement
+- [x] Optimiser les performances
+  - [ ] Implémenter le chargement différé des ressources externes
+  - [x] Optimiser les transitions et animations pour de meilleures performances
+  - [x] Utiliser des transitions CSS pour des animations fluides
+
+### Accessibilité
+
+- [ ] Renforcer l'accessibilité WCAG
+  - [ ] Améliorer la navigation au clavier
+  - [ ] Ajouter des attributs ARIA appropriés
+  - [ ] Assurer un contraste suffisant pour tous les éléments de texte
+  - [ ] Fournir des alternatives textuelles pour les éléments visuels
+
+### Tableau de bord de progression
+
+| Date | Tâche | Statut | Description |
+|------|-------|--------|-------------|
+| 02/03/2025 | Refactorisation en composants | Terminé | Décomposer la page en composants réutilisables pour améliorer la maintenabilité |
+| | Modernisation de l'interface | À faire | Améliorer l'aspect visuel et l'expérience utilisateur |
+| | Optimisation du flux de paiement | À faire | Simplifier et sécuriser le processus de paiement |
+| | Adaptation mobile | À faire | Assurer une expérience optimale sur tous les appareils |
+| | Amélioration de l'accessibilité | À faire | Rendre la page conforme aux normes WCAG |
 
 - [ ] Implémenter des fonctionnalités avancées
   - [ ] Ajouter la géolocalisation pour trouver les objets perdus à proximité
