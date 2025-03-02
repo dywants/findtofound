@@ -91,8 +91,8 @@
                                     Rechercher pièce</NavLink>
                             </li>
                             <li>
-                                <NavLink :href="route('documents.protect')" :active="$page.url === route('documents.protect')">
-                                    Protection Documents</NavLink>
+                                <NavLink :href="route('documents.home')" :active="$page.url.startsWith('/documents')">
+                                    DocuTrace</NavLink>
                             </li>
                             <li>
                                 <NavLink :href="route('contact')" :active="$page.url === route('contact')">Contact</NavLink>
@@ -122,8 +122,8 @@
                                     Rechercher pièce</NavLink>
                             </li>
                             <li>
-                                <NavLink :href="route('documents.protect')" :active="$page.url === route('documents.protect')">
-                                    Protection Documents</NavLink>
+                                <NavLink :href="route('documents.home')" :active="$page.url.startsWith('/documents')">
+                                    DocuTrace</NavLink>
                             </li>
                             <li>
                                 <NavLink>Blog</NavLink>
