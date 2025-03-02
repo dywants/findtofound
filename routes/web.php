@@ -34,7 +34,9 @@ Route::get('/piece-rechercher', [TheFoundController::class, 'search'])->name('fo
 Route::get('/piece/{thefind}/enregistrer', [TheFoundController::class, 'register'])->name('found.info');
 Route::post('/piece/enregistrer', [TheFoundController::class, 'store'])->name('found.store');
 Route::get('/paiement', [TheFoundController::class, 'paiement'])->name('paiement');
-Route::get('/contacter-nous', ContactIndexController::class)->name('contact');
+// Routes pour la page de contact
+Route::get('/contacter-nous', [\App\Http\Controllers\ContactController::class, 'index'])->name('contact');
+Route::post('/contacter-nous/submit', [\App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
 Route::get('/faqs', FaqsIndexController::class)->name('faqs');
 Route::get('/icon-test', function() {
     return \Inertia\Inertia::render('IconTest');
