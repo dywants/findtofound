@@ -1,12 +1,14 @@
 <template>
-    <Head>
-        <title>DocuTrace - Protection de Documents</title>
-        <meta type="description" content="Protégez vos documents importants avec DocuTrace - Ajoutez des filigranes et protégez vos fichiers importants">
-        <meta name="language" content="fr">
-        <meta property="og:locale" content="fr_FR">
-    </Head>
+    <Layout>
+        <Head>
+            <title>DocuTrace - Protection de Documents</title>
+            <meta type="description"
+                content="Protégez vos documents importants avec DocuTrace - Ajoutez des filigranes et protégez vos fichiers importants">
+            <meta name="language" content="fr">
+            <meta property="og:locale" content="fr_FR">
+        </Head>
 
-    <div class="min-h-screen bg-gradient-to-b from-white to-blue-50">
+        <div class="min-h-screen bg-gradient-to-b from-white to-blue-50">
         <!-- En-tête avec illustration et message d'accroche -->
         <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white">
             <div class="max-w-7xl mx-auto py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
@@ -16,34 +18,46 @@
                             Protégez vos documents importants
                         </h1>
                         <p class="mt-4 sm:mt-6 text-lg sm:text-xl">
-                            DocuTrace vous permet d'ajouter facilement des filigranes à vos documents et images pour prévenir l'utilisation non autorisée.
+                            DocuTrace vous permet d'ajouter facilement des filigranes à vos documents et images pour
+                            prévenir l'utilisation non autorisée.
                         </p>
                         <div class="mt-6 sm:mt-8">
                             <template v-if="$page.props.auth && $page.props.auth.user">
-                                <Link :href="route('documents.protect')" class="inline-flex items-center px-5 sm:px-6 py-2 sm:py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transform transition duration-300 hover:scale-105" aria-label="Accéder à la page de protection de documents">
-                                    Protéger mes documents
-                                    <Icon name="chevron-right" class="ml-2" aria-hidden="true" />
+                                <Link :href="route('documents.protect')"
+                                    class="inline-flex items-center px-5 sm:px-6 py-2 sm:py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transform transition duration-300 hover:scale-105"
+                                    aria-label="Accéder à la page de protection de documents">
+                                Protéger mes documents
+                                <Icon name="chevron-right" class="ml-2" aria-hidden="true" />
                                 </Link>
                             </template>
                             <template v-else>
-                                <div class="space-y-4 sm:space-y-0 sm:space-x-4 flex flex-col sm:flex-row sm:items-center justify-center">
-                                    <Link :href="route('login')" class="inline-flex items-center px-5 sm:px-6 py-2 sm:py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transform transition duration-300 hover:scale-105" aria-label="Se connecter pour accéder à la protection de documents">
-                                        Se connecter
-                                        <Icon name="user" class="ml-2" aria-hidden="true" />
+                                <div
+                                    class="space-y-4 sm:space-y-0 sm:space-x-4 flex flex-col sm:flex-row sm:items-center justify-center">
+                                    <Link :href="route('login')"
+                                        class="inline-flex items-center px-5 sm:px-6 py-2 sm:py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transform transition duration-300 hover:scale-105"
+                                        aria-label="Se connecter pour accéder à la protection de documents">
+                                    Se connecter
+                                    <Icon name="user" class="ml-2" aria-hidden="true" />
                                     </Link>
-                                    <Link :href="route('register')" class="inline-flex items-center px-5 sm:px-6 py-2 sm:py-3 border border-white text-base font-medium rounded-md shadow-sm text-white bg-blue-600 bg-opacity-80 hover:bg-opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transform transition duration-300 hover:scale-105" aria-label="Créer un compte pour accéder à la protection de documents">
-                                        Créer un compte
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
-                                        </svg>
+                                    <Link :href="route('register')"
+                                        class="inline-flex items-center px-5 sm:px-6 py-2 sm:py-3 border border-white text-base font-medium rounded-md shadow-sm text-white bg-blue-600 bg-opacity-80 hover:bg-opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transform transition duration-300 hover:scale-105"
+                                        aria-label="Créer un compte pour accéder à la protection de documents">
+                                    Créer un compte
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
+                                        fill="currentColor" aria-hidden="true">
+                                        <path
+                                            d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+                                    </svg>
                                     </Link>
                                 </div>
-                                <p class="text-sm text-white text-opacity-90 mt-3">Vous devez être connecté pour protéger vos documents</p>
+                                <p class="text-sm text-white text-opacity-90 mt-3">Vous devez être connecté pour
+                                    protéger vos documents</p>
                             </template>
                         </div>
                     </div>
                     <div class="hidden md:block">
-                        <svg class="w-full h-64 fade-in" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="w-full h-64 fade-in" viewBox="0 0 400 300" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
                             <!-- Illustration du document protégé -->
                             <rect x="100" y="50" width="200" height="250" rx="8" fill="white" />
                             <rect x="120" y="80" width="160" height="10" rx="2" fill="#E5E7EB" />
@@ -51,10 +65,13 @@
                             <rect x="120" y="120" width="160" height="10" rx="2" fill="#E5E7EB" />
                             <rect x="120" y="140" width="100" height="10" rx="2" fill="#E5E7EB" />
                             <!-- Filigrane -->
-                            <text transform="translate(200 180) rotate(-30)" class="text-5xl" fill="rgba(37, 99, 235, 0.2)" text-anchor="middle" dominant-baseline="middle" font-weight="bold">PROTÉGÉ</text>
+                            <text transform="translate(200 180) rotate(-30)" class="text-5xl"
+                                fill="rgba(37, 99, 235, 0.2)" text-anchor="middle" dominant-baseline="middle"
+                                font-weight="bold">PROTÉGÉ</text>
                             <!-- Icône de sécurité -->
                             <circle cx="200" cy="240" r="20" fill="#3B82F6" />
-                            <path d="M195 240L198 243L205 236" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M195 240L198 243L205 236" stroke="white" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
                         </svg>
                     </div>
                 </div>
@@ -75,8 +92,10 @@
 
                 <div class="mt-8 sm:mt-12">
                     <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-                        <div class="flex flex-col items-center text-center transform transition duration-300 hover:scale-105">
-                            <div class="flex items-center justify-center h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-blue-100 text-blue-600 mb-3 sm:mb-4 icon-container" aria-hidden="true">
+                        <div
+                            class="flex flex-col items-center text-center transform transition duration-300 hover:scale-105">
+                            <div class="flex items-center justify-center h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-blue-100 text-blue-600 mb-3 sm:mb-4 icon-container"
+                                aria-hidden="true">
                                 <Icon name="document" size="28" class="icon" aria-hidden="true" />
                             </div>
                             <h3 class="text-lg sm:text-xl font-medium text-gray-900">1. Téléversez votre document</h3>
@@ -85,8 +104,10 @@
                             </p>
                         </div>
 
-                        <div class="flex flex-col items-center text-center transform transition duration-300 hover:scale-105">
-                            <div class="flex items-center justify-center h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-blue-100 text-blue-600 mb-3 sm:mb-4 icon-container" aria-hidden="true">
+                        <div
+                            class="flex flex-col items-center text-center transform transition duration-300 hover:scale-105">
+                            <div class="flex items-center justify-center h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-blue-100 text-blue-600 mb-3 sm:mb-4 icon-container"
+                                aria-hidden="true">
                                 <Icon name="text" size="28" solid class="icon" aria-hidden="true" />
                             </div>
                             <h3 class="text-lg sm:text-xl font-medium text-gray-900">2. Ajoutez votre filigrane</h3>
@@ -95,11 +116,14 @@
                             </p>
                         </div>
 
-                        <div class="flex flex-col items-center text-center transform transition duration-300 hover:scale-105">
-                            <div class="flex items-center justify-center h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-blue-100 text-blue-600 mb-3 sm:mb-4 icon-container" aria-hidden="true">
+                        <div
+                            class="flex flex-col items-center text-center transform transition duration-300 hover:scale-105">
+                            <div class="flex items-center justify-center h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-blue-100 text-blue-600 mb-3 sm:mb-4 icon-container"
+                                aria-hidden="true">
                                 <Icon name="download" size="28" class="icon" aria-hidden="true" />
                             </div>
-                            <h3 class="text-lg sm:text-xl font-medium text-gray-900">3. Téléchargez votre document protégé</h3>
+                            <h3 class="text-lg sm:text-xl font-medium text-gray-900">3. Téléchargez votre document
+                                protégé</h3>
                             <p class="mt-2 text-sm sm:text-base text-gray-500">
                                 Récupérez votre document avec filigrane prêt à être partagé en toute sécurité.
                             </p>
@@ -120,18 +144,24 @@
 
                 <div class="mt-12">
                     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-                        <div class="bg-white p-6 rounded-lg shadow-sm transform transition duration-300 hover:shadow-md hover:-translate-y-1">
-                            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mb-4">
+                        <div
+                            class="bg-white p-6 rounded-lg shadow-sm transform transition duration-300 hover:shadow-md hover:-translate-y-1">
+                            <div
+                                class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mb-4">
                                 <Icon name="shield" solid />
                             </div>
                             <h3 class="text-lg font-medium text-gray-900">Protection</h3>
                             <p class="mt-2 text-sm text-gray-500">
-                                Protégez vos documents contre l'utilisation non autorisée et prévenez le vol de propriété intellectuelle.
+                                Protégez vos documents contre l'utilisation non autorisée et prévenez le vol de
+                                propriété
+                                intellectuelle.
                             </p>
                         </div>
 
-                        <div class="bg-white p-6 rounded-lg shadow-sm transform transition duration-300 hover:shadow-md hover:-translate-y-1">
-                            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mb-4">
+                        <div
+                            class="bg-white p-6 rounded-lg shadow-sm transform transition duration-300 hover:shadow-md hover:-translate-y-1">
+                            <div
+                                class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mb-4">
                                 <Icon name="fast" solid />
                             </div>
                             <h3 class="text-lg font-medium text-gray-900">Rapidité</h3>
@@ -140,8 +170,10 @@
                             </p>
                         </div>
 
-                        <div class="bg-white p-6 rounded-lg shadow-sm transform transition duration-300 hover:shadow-md hover:-translate-y-1">
-                            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mb-4">
+                        <div
+                            class="bg-white p-6 rounded-lg shadow-sm transform transition duration-300 hover:shadow-md hover:-translate-y-1">
+                            <div
+                                class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mb-4">
                                 <Icon name="device-mobile" solid />
                             </div>
                             <h3 class="text-lg font-medium text-gray-900">Accessibilité</h3>
@@ -150,8 +182,10 @@
                             </p>
                         </div>
 
-                        <div class="bg-white p-6 rounded-lg shadow-sm transform transition duration-300 hover:shadow-md hover:-translate-y-1">
-                            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mb-4">
+                        <div
+                            class="bg-white p-6 rounded-lg shadow-sm transform transition duration-300 hover:shadow-md hover:-translate-y-1">
+                            <div
+                                class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mb-4">
                                 <Icon name="storage" solid />
                             </div>
                             <h3 class="text-lg font-medium text-gray-900">Archivage</h3>
@@ -175,40 +209,50 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+                    <div
+                        class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
                         <div class="p-4 bg-gray-100 border-b">
                             <h3 class="text-lg font-medium text-gray-900">Document original</h3>
                         </div>
                         <div class="p-6 text-center">
                             <!-- Exemple d'image original -->
                             <div class="bg-gray-200 rounded-lg p-8 mb-4" style="min-height: 200px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto text-gray-400"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                                 <p class="mt-2 text-gray-500">Document sans protection</p>
                             </div>
                             <p class="text-red-500">Risque de copie non autorisée</p>
                         </div>
                     </div>
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+                    <div
+                        class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
                         <div class="p-4 bg-blue-100 border-b">
                             <h3 class="text-lg font-medium text-blue-900">Document protégé</h3>
                         </div>
                         <div class="p-6 text-center">
                             <!-- Exemple d'image protégée -->
                             <div class="bg-gray-200 rounded-lg p-8 mb-4 relative" style="min-height: 200px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto text-gray-400"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                                 <!-- Filigrane -->
                                 <div class="absolute inset-0 flex items-center justify-center opacity-40">
-                                    <p class="text-blue-700 font-bold text-xl transform -rotate-45">PROTÉGÉ - DocuTrace</p>
+                                    <p class="text-blue-700 font-bold text-xl transform -rotate-45">PROTÉGÉ - DocuTrace
+                                    </p>
                                 </div>
                                 <p class="mt-2 text-gray-500">Document avec filigrane</p>
                             </div>
                             <p class="text-green-500 flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
                                 </svg>
                                 Protection contre la copie non autorisée
                             </p>
@@ -218,8 +262,8 @@
                 <div class="text-center mt-12">
                     <Link :href="route('documents.protect')"
                         class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 hover:scale-105">
-                        <Icon name="shield" class="h-5 w-5 mr-2" />
-                        Commencer la protection maintenant
+                    <Icon name="shield" class="h-5 w-5 mr-2" />
+                    Commencer la protection maintenant
                     </Link>
                 </div>
             </div>
@@ -239,7 +283,8 @@
                     <div class="space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10">
                         <div class="flex transition duration-300 hover:text-blue-600">
                             <div class="flex-shrink-0">
-                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                                <div
+                                    class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
                                     <Icon name="document-pdf" solid />
                                 </div>
                             </div>
@@ -253,7 +298,8 @@
 
                         <div class="flex transition duration-300 hover:text-blue-600">
                             <div class="flex-shrink-0">
-                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                                <div
+                                    class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
                                     <Icon name="photograph" solid />
                                 </div>
                             </div>
@@ -267,7 +313,8 @@
 
                         <div class="flex transition duration-300 hover:text-blue-600">
                             <div class="flex-shrink-0">
-                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                                <div
+                                    class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
                                     <Icon name="photograph" solid />
                                 </div>
                             </div>
@@ -295,58 +342,77 @@
 
                 <div class="mt-12 space-y-6 divide-y divide-gray-200">
                     <div class="grid gap-6 md:grid-cols-1">
-                    <div class="pt-6 transition duration-300 hover:bg-white hover:shadow-sm hover:rounded-lg hover:p-4">
-                        <div class="text-lg">
-                            <h3 class="font-medium text-gray-900">Mes documents sont-ils stockés de manière sécurisée ?</h3>
+                        <div
+                            class="pt-6 transition duration-300 hover:bg-white hover:shadow-sm hover:rounded-lg hover:p-4">
+                            <div class="text-lg">
+                                <h3 class="font-medium text-gray-900">Mes documents sont-ils stockés de manière
+                                    sécurisée ?</h3>
+                            </div>
+                            <div class="mt-2 text-base text-gray-500">
+                                <p>Oui, tous vos documents sont stockés de manière sécurisée. Seul vous pouvez y accéder
+                                    depuis
+                                    votre compte. Nous utilisons le chiffrement pour protéger vos données.</p>
+                            </div>
                         </div>
-                        <div class="mt-2 text-base text-gray-500">
-                            <p>Oui, tous vos documents sont stockés de manière sécurisée. Seul vous pouvez y accéder depuis votre compte. Nous utilisons le chiffrement pour protéger vos données.</p>
-                        </div>
-                    </div>
 
-                    <div class="pt-6 transition duration-300 hover:bg-white hover:shadow-sm hover:rounded-lg hover:p-4">
-                        <div class="text-lg">
-                            <h3 class="font-medium text-gray-900">Puis-je modifier ou supprimer un filigrane après l'avoir appliqué ?</h3>
+                        <div
+                            class="pt-6 transition duration-300 hover:bg-white hover:shadow-sm hover:rounded-lg hover:p-4">
+                            <div class="text-lg">
+                                <h3 class="font-medium text-gray-900">Puis-je modifier ou supprimer un filigrane après
+                                    l'avoir
+                                    appliqué ?</h3>
+                            </div>
+                            <div class="mt-2 text-base text-gray-500">
+                                <p>Non, une fois le filigrane appliqué, il ne peut pas être modifié. Vous devrez
+                                    téléverser à
+                                    nouveau votre document et créer un nouveau filigrane si nécessaire.</p>
+                            </div>
                         </div>
-                        <div class="mt-2 text-base text-gray-500">
-                            <p>Non, une fois le filigrane appliqué, il ne peut pas être modifié. Vous devrez téléverser à nouveau votre document et créer un nouveau filigrane si nécessaire.</p>
-                        </div>
-                    </div>
 
-                    <div class="pt-6 transition duration-300 hover:bg-white hover:shadow-sm hover:rounded-lg hover:p-4">
-                        <div class="text-lg">
-                            <h3 class="font-medium text-gray-900">Y a-t-il une limite au nombre de documents que je peux protéger ?</h3>
-                        </div>
-                        <div class="mt-2 text-base text-gray-500">
-                            <p>Non, il n'y a pas de limite au nombre de documents que vous pouvez protéger. Vous pouvez utiliser le service autant que nécessaire.</p>
+                        <div
+                            class="pt-6 transition duration-300 hover:bg-white hover:shadow-sm hover:rounded-lg hover:p-4">
+                            <div class="text-lg">
+                                <h3 class="font-medium text-gray-900">Y a-t-il une limite au nombre de documents que je
+                                    peux
+                                    protéger ?</h3>
+                            </div>
+                            <div class="mt-2 text-base text-gray-500">
+                                <p>Non, il n'y a pas de limite au nombre de documents que vous pouvez protéger. Vous
+                                    pouvez
+                                    utiliser le service autant que nécessaire.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Appel à l'action -->
-        <div class="bg-blue-700">
-            <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
-                <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-                    <span class="block">Prêt à protéger vos documents ?</span>
-                    <span class="block text-blue-200">Commencez dès maintenant, c'est simple et rapide.</span>
-                </h2>
-                <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
-                    <div class="inline-flex rounded-md shadow">
-                        <Link :href="route('documents.protect')" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 transform transition duration-300 hover:scale-105">
+            <!-- Appel à l'action -->
+            <div class="bg-blue-700">
+                <div
+                    class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+                    <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                        <span class="block">Prêt à protéger vos documents ?</span>
+                        <span class="block text-blue-200">Commencez dès maintenant, c'est simple et rapide.</span>
+                    </h2>
+                    <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+                        <div class="inline-flex rounded-md shadow">
+                            <Link :href="route('documents.protect')"
+                                class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 transform transition duration-300 hover:scale-105">
                             Protéger mes documents
-                        </Link>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </Layout>
 </template>
 
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
 import Icon from '@/Components/Icon.vue';
+import Layout from '@/Layouts/Layout.vue';
 import { onMounted, ref } from 'vue';
 
 // Référence aux sections pour l'animation au défilement
@@ -386,8 +452,13 @@ onMounted(() => {
 <style scoped>
 /* Animation pour l'illustration */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .fade-in {
@@ -406,6 +477,7 @@ onMounted(() => {
         transform: translateY(20px);
         opacity: 0;
     }
+
     to {
         transform: translateY(0);
         opacity: 1;
