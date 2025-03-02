@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="200" viewBox="0 0 240 200" fill="none">
+  <path d="M120 180C154.794 180 183 151.794 183 117C183 82.2061 154.794 54 120 54C85.2061 54 57 82.2061 57 117C57 151.794 85.2061 180 120 180Z" fill="#FEF2F2"/>
+  <circle cx="120" cy="100" r="35" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+  <path d="M100 100L120 120L140 100" stroke="#EF4444" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M100 85L120 105L140 85" stroke="#EF4444" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M120 120V155" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/>
+  <path d="M110 145H130" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/>
+  <path d="M115 150H125" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M87 45.5C89.4853 45.5 91.5 43.4853 91.5 41C91.5 38.5147 89.4853 36.5 87 36.5C84.5147 36.5 82.5 38.5147 82.5 41C82.5 43.4853 84.5147 45.5 87 45.5ZM87 48C90.866 48 94 44.866 94 41C94 37.134 90.866 34 87 34C83.134 34 80 37.134 80 41C80 44.866 83.134 48 87 48Z" fill="#EF4444"/>
+  <circle cx="175" cy="75" r="6" fill="#FECACA"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M153 55.5C156.59 55.5 159.5 52.5899 159.5 49C159.5 45.4101 156.59 42.5 153 42.5C149.41 42.5 146.5 45.4101 146.5 49C146.5 52.5899 149.41 55.5 153 55.5ZM153 58C157.971 58 162 53.9706 162 49C162 44.0294 157.971 40 153 40C148.029 40 144 44.0294 144 49C144 53.9706 148.029 58 153 58Z" fill="#EF4444"/>
+  <circle cx="70" cy="65" r="5" fill="#FECACA"/>
+</svg>

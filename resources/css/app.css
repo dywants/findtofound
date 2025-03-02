@@ -1,3 +1,4 @@
+@import 'variables.css';
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
@@ -18,6 +19,10 @@
 @import "_progress.css";
 @import "_table.css";
 @import "_title-bar.css";
+@import "_typography.css";
+@import "_spacing.css";
+@import "_animations.css";
+@import "_responsive.css";
 
 /* Custom styles */
 input:checked + div {

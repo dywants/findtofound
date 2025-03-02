@@ -1,0 +1,146 @@
+/* _responsive.css - Styles spécifiques pour la responsivité */
+
+/* Variables pour les points de rupture */
+:root {
+  --breakpoint-xs: 375px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* Classes utilitaires pour la visibilité basée sur la taille d'écran */
+.hide-on-mobile {
+  @apply hidden sm:block;
+}
+
+.hide-on-desktop {
+  @apply block sm:hidden;
+}
+
+.hide-on-tablet {
+  @apply hidden md:block;
+}
+
+/* Ajustements de typographie pour les appareils mobiles */
+@media (max-width: 640px) {
+  .heading-1 {
+    font-size: calc(var(--font-size-heading-1) * 0.8);
+    line-height: 1.1;
+  }
+  
+  .heading-2 {
+    font-size: calc(var(--font-size-heading-2) * 0.85);
+    line-height: 1.2;
+  }
+  
+  .heading-3 {
+    font-size: calc(var(--font-size-heading-3) * 0.9);
+    line-height: 1.25;
+  }
+  
+  .paragraph-lg {
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+  }
+  
+  /* Réduire les espacements sur mobile */
+  .section {
+    padding-top: var(--spacing-6);
+    padding-bottom: var(--spacing-6);
+  }
+  
+  .container {
+    padding-left: var(--spacing-4);
+    padding-right: var(--spacing-4);
+  }
+}
+
+/* Optimisations pour les écrans tactiles */
+@media (hover: none) {
+  /* Supprimer les effets de survol qui ne fonctionnent pas bien sur tactile */
+  .hover-scale {
+    transform: none !important;
+  }
+  
+  /* Augmenter les zones cliquables sur les appareils tactiles */
+  .button, 
+  .link,
+  .interactive-element {
+    @apply min-h-[44px];  /* Taille minimale recommandée pour les éléments interactifs */
+  }
+  
+  /* Augmenter l'espacement des éléments interactifs pour éviter les clics accidentels */
+  .interactive-container > * {
+    @apply my-1;
+  }
+}
+
+/* Style des formulaires sur mobile */
+@media (max-width: 640px) {
+  .form-group {
+    @apply mb-4;
+  }
+  
+  .input, 
+  .select, 
+  .textarea {
+    @apply py-2 px-3 text-sm;
+  }
+  
+  .input-group {
+    @apply flex-col;
+  }
+  
+  .input-group > * {
+    @apply rounded-lg my-1 w-full;
+  }
+  
+  .input-group .addon {
+    @apply border-gray-300 bg-gray-100 text-sm py-2 px-3;
+  }
+}
+
+/* Grilles et mise en page responsive */
+.responsive-grid {
+  @apply grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-4);
+}
+
+.responsive-container {
+  @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Ajustements du menu de navigation sur mobile */
+.mobile-nav {
+  @apply fixed inset-0 z-50 transform transition-transform duration-300 ease-in-out;
+}
+
+.mobile-nav.hidden {
+  @apply -translate-x-full;
+}
+
+.mobile-nav.visible {
+  @apply translate-x-0;
+}
+
+/* Utils pour les images responsives */
+.img-responsive {
+  @apply w-full h-auto object-cover;
+}
+
+.img-responsive.contain {
+  @apply object-contain;
+}
+
+/* Animations optimisées pour mobile (économie de batterie) */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -55,6 +55,75 @@
   @apply hover:border-gray-900;
 }
 
+/* Nouveaux styles basés sur notre système de couleurs */
+.button.primary {
+  @apply bg-primary-600 text-white border-primary-600;
+  @apply hover:bg-primary-700;
+  @apply hover:border-primary-700;
+  @apply hover:shadow-md hover:-translate-y-0.5;
+  @apply focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+  @apply active:bg-primary-800 active:shadow-sm active:translate-y-0;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.button.primary.outline {
+  @apply bg-transparent text-primary-600 border-primary-500;
+  @apply hover:bg-primary-50;
+  @apply focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+}
+
+.button.secondary {
+  @apply bg-secondary-600 text-white border-secondary-600;
+  @apply hover:bg-secondary-700;
+  @apply hover:border-secondary-700;
+  @apply hover:shadow-md hover:-translate-y-0.5;
+  @apply focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500;
+  @apply active:bg-secondary-800 active:shadow-sm active:translate-y-0;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.button.secondary.outline {
+  @apply bg-transparent text-secondary-600 border-secondary-500;
+  @apply hover:bg-secondary-50;
+  @apply focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500;
+}
+
+.button.accent {
+  @apply bg-accent-600 text-white border-accent-600;
+  @apply hover:bg-accent-700;
+  @apply hover:border-accent-700;
+  @apply focus:ring-2 focus:ring-offset-2 focus:ring-accent-500;
+  transition: all var(--transition-normal);
+}
+
+.button.success {
+  @apply bg-success-500 text-white border-success-500;
+  @apply hover:bg-success-700;
+  @apply hover:border-success-700;
+  @apply focus:ring-2 focus:ring-offset-2 focus:ring-success-500;
+  transition: all var(--transition-normal);
+}
+
+.button.warning {
+  @apply bg-warning-500 text-white border-warning-500;
+  @apply hover:bg-warning-700;
+  @apply hover:border-warning-700;
+  @apply focus:ring-2 focus:ring-offset-2 focus:ring-warning-500;
+  transition: all var(--transition-normal);
+}
+
+.button.error {
+  @apply bg-error-500 text-white border-error-500;
+  @apply hover:bg-error-700;
+  @apply hover:border-error-700;
+  @apply focus:ring-2 focus:ring-offset-2 focus:ring-error-500;
+  transition: all var(--transition-normal);
+}
+
 .buttons {
   @apply flex items-center flex-wrap -mb-2;
 }
@@ -77,4 +146,220 @@
 
 .buttons.small .button {
   @apply text-xs p-1;
+}
+
+/* États de bouton */
+.button:disabled,
+.button.disabled {
+  @apply opacity-50 cursor-not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* État de chargement */
+.button.loading {
+  @apply text-transparent relative pointer-events-none;
+}
+
+.button.loading::after {
+  content: '';
+  @apply absolute w-5 h-5 rounded-full border-2 border-current border-r-transparent;
+  top: calc(50% - 0.625rem);
+  left: calc(50% - 0.625rem);
+  animation: spin 0.75s infinite linear;
+}
+
+/* Variantes d'indicateurs de chargement */
+.button.loading.dots::after {
+  content: none;
+}
+
+.button.loading.dots {
+  @apply relative;
+}
+
+.button.loading.dots::before {
+  content: '•••';
+  @apply absolute text-current animate-pulse;
+}
+
+/* Effet de ripple */
+.button.ripple::before {
+  content: '';
+  @apply absolute w-full h-full top-0 left-0 bg-white opacity-0 pointer-events-none;
+  transform: scale(0);
+  transition: transform 0.5s, opacity 0.5s;
+  border-radius: inherit;
+}
+
+.button.ripple:active::before {
+  transform: scale(2);
+  opacity: 0.15;
+  transition: 0s;
+}
+
+/* Animation */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Animation d'entrée */
+.button.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animations pour les états */
+.button.pulse {
+  animation: buttonPulse 2s infinite;
+}
+
+@keyframes buttonPulse {
+  0% { box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(var(--color-primary-rgb), 0); }
+  100% { box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0); }
+}
+
+/* Animation de rebondissement */
+.button.with-bounce:hover {
+  animation: buttonBounce 0.5s ease;
+}
+
+@keyframes buttonBounce {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-4px); }
+  60% { transform: translateY(-2px); }
+}
+
+/* Animation de shake */
+.button.with-shake:active {
+  animation: buttonShake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes buttonShake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-2px, 0, 0); }
+  40%, 60% { transform: translate3d(2px, 0, 0); }
+}
+
+/* Tailles supplémentaires */
+.button.xs {
+  @apply text-xs py-1 px-2 rounded;
+}
+
+.button.lg {
+  @apply text-lg py-3 px-6 rounded-md;
+}
+
+.button.xl {
+  @apply text-xl py-4 px-8 rounded-lg font-bold;
+}
+
+.button.with-icon {
+  @apply inline-flex items-center justify-center;
+}
+
+.button.with-icon svg,
+.button.with-icon img {
+  @apply h-5 w-5 transition-transform duration-300;
+}
+
+.button.with-icon.icon-left svg,
+.button.with-icon.icon-left img {
+  @apply mr-2;
+}
+
+.button.with-icon.icon-right svg,
+.button.with-icon.icon-right img {
+  @apply ml-2;
+}
+
+.button.with-icon:hover svg,
+.button.with-icon:hover img {
+  @apply transform; 
+}
+
+.button.with-icon.icon-right:hover svg,
+.button.with-icon.icon-right:hover img {
+  @apply translate-x-1;
+}
+
+.button.with-icon.icon-left:hover svg,
+.button.with-icon.icon-left:hover img {
+  @apply -translate-x-1;
+}
+
+.button.circle {
+  @apply rounded-full flex items-center justify-center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+}
+
+.button.circle.sm {
+  width: 2rem;
+  height: 2rem;
+}
+
+.button.circle.lg {
+  width: 3rem;
+  height: 3rem;
+}
+
+.button.circle.xl {
+  width: 4rem;
+  height: 4rem;
+}
+
+/* Bouton flottant */
+.button.floating {
+  @apply fixed rounded-full shadow-lg;
+  z-index: 50;
+}
+
+.button.floating.bottom-right {
+  @apply bottom-6 right-6;
+}
+
+.button.floating.bottom-left {
+  @apply bottom-6 left-6;
+}
+
+.button.floating.top-right {
+  @apply top-6 right-6;
+}
+
+.button.floating.top-left {
+  @apply top-6 left-6;
+}
+
+.button.xl {
+  @apply text-xl py-4 px-8 rounded-lg;
+}
+
+/* Boutons avec icônes */
+.button.with-icon {
+  @apply inline-flex items-center gap-2;
+}
+
+.button.with-icon.icon-right {
+  @apply flex-row-reverse;
+}
+
+.button.icon-only {
+  @apply p-2 rounded-full;
+}
+
+.button.icon-only.sm {
+  @apply p-1;
+}
+
+.button.icon-only.lg {
+  @apply p-3;
 }

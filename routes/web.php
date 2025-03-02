@@ -36,6 +36,9 @@ Route::post('/piece/enregistrer', [TheFoundController::class, 'store'])->name('f
 Route::get('/paiement', [TheFoundController::class, 'paiement'])->name('paiement');
 Route::get('/contacter-nous', ContactIndexController::class)->name('contact');
 Route::get('/faqs', FaqsIndexController::class)->name('faqs');
+Route::get('/icon-test', function() {
+    return \Inertia\Inertia::render('IconTest');
+})->name('icon.test');
 
 Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('dashboard');
