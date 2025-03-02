@@ -262,9 +262,9 @@ Ce document trace les améliorations à apporter à la vue TheShowFind.vue, qui 
 
 ### Interactions et fonctionnalités
 
-- [ ] Améliorer l'expérience utilisateur
-  - [ ] Ajouter une fonctionnalité de partage sur les réseaux sociaux
-  - [ ] Implémenter un système pour signaler un problème concernant cette pièce
+- [x] Améliorer l'expérience utilisateur
+  - [x] Ajouter une fonctionnalité de partage sur les réseaux sociaux
+  - [x] Implémenter un système pour signaler un problème concernant cette pièce
   - [ ] Ajouter une option pour contacter directement le propriétaire
 - [ ] Optimiser le processus de validation
   - [ ] Ajouter une prévisualisation des étapes de validation avant de cliquer sur le bouton
@@ -273,23 +273,23 @@ Ce document trace les améliorations à apporter à la vue TheShowFind.vue, qui 
 
 ### Adaptabilité et accessibilité
 
-- [ ] Améliorer la réactivité sur mobile
-  - [ ] Optimiser la disposition pour les petits écrans (agencement vertical au lieu de horizontal)
-  - [ ] Adapter la taille des éléments pour une meilleure expérience tactile
-- [ ] Renforcer l'accessibilité
-  - [ ] Ajouter des attributs ARIA appropriés
-  - [ ] Améliorer le contraste des couleurs
-  - [ ] Assurer que tous les éléments interactifs sont accessibles au clavier
+- [x] Améliorer la réactivité sur mobile
+  - [x] Optimiser la disposition pour les petits écrans (agencement vertical au lieu de horizontal)
+  - [x] Adapter la taille des éléments pour une meilleure expérience tactile
+- [x] Renforcer l'accessibilité
+  - [x] Ajouter des attributs ARIA appropriés
+  - [x] Améliorer le contraste des couleurs
+  - [x] Assurer que tous les éléments interactifs sont accessibles au clavier
 
 ### Optimisations techniques
 
-- [ ] Améliorer les performances
-  - [ ] Optimiser le chargement des images (images responsive, lazy loading)
-  - [ ] Implémenter le chargement progressif des contenus
-- [ ] Refactoriser le code CSS
-  - [ ] Extraire les styles répétitifs en classes utilitaires
-  - [ ] Utiliser des variables CSS pour les valeurs récurrentes
-  - [ ] Standardiser les styles avec le reste de l'application
+- [x] Améliorer les performances
+  - [x] Optimiser le chargement des images (images responsive, lazy loading)
+  - [x] Implémenter le chargement progressif des contenus
+- [x] Refactoriser le code CSS
+  - [x] Extraire les styles répétitifs en classes utilitaires
+  - [x] Utiliser des variables CSS pour les valeurs récurrentes
+  - [x] Standardiser les styles avec le reste de l'application
 
 ### Performance et UX
 

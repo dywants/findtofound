@@ -14,14 +14,17 @@
             <div :class="icon ? 'ml-4 flex-1' : 'flex-1'">
                 <!-- Titre et badges -->
                 <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-semibold text-gray-900">{{ title }}</h3>
-                    <div v-if="badge" :class="['px-3 py-1 rounded-full text-sm font-medium', badgeClass]">
+                    <h3 :id="headingId" class="text-lg font-semibold text-gray-900">{{ title }}</h3>
+                    <div v-if="badge" 
+                         :class="['px-3 py-1 rounded-full text-sm font-medium', badgeClass]"
+                         role="status"
+                         aria-live="polite">
                         {{ badge }}
                     </div>
                 </div>
                 
                 <!-- Contenu -->
-                <div class="mt-2 text-gray-600">
+                <div class="mt-2 text-gray-600" :aria-labelledby="headingId">
                     <slot></slot>
                 </div>
             </div>
@@ -32,6 +35,12 @@
 <script>
 export default {
     name: 'InfoSection',
+    computed: {
+        headingId() {
+            // Génère un ID unique pour l'en-tête pour l'accessibilité
+            return `info-section-heading-${this._uid}`;
+        }
+    },
     props: {
         title: {
             type: String,

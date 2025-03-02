@@ -1,11 +1,14 @@
 <template>
-    <div class="relative rounded-lg overflow-hidden" :style="{ height: height + 'px' }">
+    <div class="relative rounded-lg overflow-hidden" :style="{ height: height + 'px' }" :aria-label="mapAriaLabel">
         <!-- Carte -->
-        <div ref="mapContainer" class="w-full h-full"></div>
+        <div ref="mapContainer" class="w-full h-full" role="img"></div>
         
         <!-- Overlay de chargement -->
-        <div v-if="loading" class="absolute inset-0 bg-gray-100 bg-opacity-75 flex items-center justify-center">
-            <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <div v-if="loading" 
+             class="absolute inset-0 bg-gray-100 bg-opacity-75 flex items-center justify-center"
+             role="status"
+             aria-live="polite">
+            <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
@@ -13,14 +16,20 @@
         </div>
         
         <!-- Information de distance -->
-        <div v-if="userDistance && showDistance" class="absolute bottom-3 left-3 bg-white px-3 py-2 rounded-lg shadow-md text-sm">
+        <div v-if="userDistance && showDistance" 
+             class="absolute bottom-3 left-3 bg-white px-3 py-2 rounded-lg shadow-md text-sm"
+             role="status"
+             aria-live="polite">
             <div class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
                 <span class="font-medium">Distance: {{ formatDistance(userDistance) }}</span>
             </div>
         </div>
+        
+        <!-- Texte d'aide pour l'accessibilité, visible uniquement par les lecteurs d'écran -->
+        <p class="sr-only">{{ accessibilityDescription }}</p>
     </div>
 </template>
 
@@ -68,6 +77,16 @@ export default {
         },
         lngNumber() {
             return typeof this.longitude === 'string' ? parseFloat(this.longitude) : this.longitude;
+        },
+        mapAriaLabel() {
+            return `Carte montrant l'emplacement de ${this.locationName}`;
+        },
+        accessibilityDescription() {
+            let desc = `Carte montrant l'emplacement de ${this.locationName}, situé aux coordonnées ${this.latNumber}, ${this.lngNumber}.`;
+            if (this.userDistance) {
+                desc += ` Vous êtes à ${this.formatDistance(this.userDistance)} de cet emplacement.`;
+            }
+            return desc;
         }
     },
     mounted() {

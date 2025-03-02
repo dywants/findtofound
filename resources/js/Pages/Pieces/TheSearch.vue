@@ -146,9 +146,9 @@
                                     <div class="mt-4 flex justify-between items-center">
                                         <span
                                             class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700">
-                                            {{ result.item.amount_check.amount == 0 ? result.item.amount_piece.formatted
-                                                :
-                                                result.item.amount_check.formatted }}
+                                            {{ result.item.amount_check && result.item.amount_check.amount == 0 && result.item.amount_piece 
+                                                ? result.item.amount_piece.formatted
+                                                : (result.item.amount_check ? result.item.amount_check.formatted : 'N/A') }}
                                         </span>
                                         <button
                                             class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-50 hover:bg-blue-100">
@@ -191,7 +191,9 @@
                             <div class="px-4 pb-4 mt-auto">
                                 <div class="flex justify-between items-center">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700">
-                                        {{ result.item.amount_check.amount == 0 ? result.item.amount_piece.formatted : result.item.amount_check.formatted }}
+                                        {{ result.item.amount_check && result.item.amount_check.amount == 0 && result.item.amount_piece 
+                                            ? result.item.amount_piece.formatted
+                                            : (result.item.amount_check ? result.item.amount_check.formatted : 'N/A') }}
                                     </span>
                                     <span class="text-sm text-blue-600 flex items-center">
                                         Voir
@@ -251,13 +253,26 @@ export default {
             debouncedSearch,
             toggleView,
             formatDate 
-        } = useSearch(usePage().props.value.searchItems, {
+        } = useSearch(props.searchItems || [], {
             keys: ['fullName', 'findCity', 'details']
         });
         
+        // Debug: Afficher les données reçues
+        console.log('SearchItems received:', props.searchItems);
+        
         // Fonction pour afficher les images
-        const showImage = (file) => {
-            return "/storage/findImages/" + file;
+        const showImage = (photos) => {
+            if (!photos || (Array.isArray(photos) && photos.length === 0)) {
+                return '/storage/images/default-placeholder.jpg';
+            }
+            
+            // Prendre la première photo si c'est un tableau
+            if (Array.isArray(photos)) {
+                return "/storage/findImages/" + photos[0];
+            }
+            
+            // Si c'est une chaîne, la retourner directement
+            return "/storage/findImages/" + photos;
         };
         
         return {

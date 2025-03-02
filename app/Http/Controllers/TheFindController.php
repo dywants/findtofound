@@ -202,7 +202,7 @@ class TheFindController extends Controller
             'findCity' => $thefind->findCity,
             'ward' => $thefind->ward,
             'details' => $thefind->details,
-            'photos' => json_decode($thefind->photos),
+            'photos' => is_string($thefind->photos) ? json_decode($thefind->photos) : $thefind->photos,
             'amount_check' => money(order_amount($thefind->amount_check)),
             'amount_piece' => money(amount_piece($thefind->piece_id))
         ]);

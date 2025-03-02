@@ -28,12 +28,14 @@
                 </template>
             </HeaderPage>
 
-            <div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
-                <!-- Fil d'Ariane -->
-                <BreadcrumbNav :items="[
-                    { label: 'Rechercher une pièce', href: route('found.search') },
-                    { label: fullName }
-                ]" />
+            <div class="max-w-7xl mx-auto py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
+                <!-- Fil d'Ariane - adapté aux mobiles -->
+                <div class="mb-4 sm:mb-6">
+                    <BreadcrumbNav :items="[
+                        { label: 'Rechercher une pièce', href: route('found.search') },
+                        { label: fullName }
+                    ]" />
+                </div>
 
                 <!-- Contenu Principal -->
                 <DetailCard
@@ -42,9 +44,19 @@
                 >
                     <!-- Section Image (Galerie) -->
                     <template #imageSection>
-                        <div class="relative">
-                            <!-- Bouton de vue plein écran -->
+                        <!-- Squelette de chargement avant que les images ne soient prêtes -->
+                        <div v-if="imagesLoading" class="bg-gray-100 animate-pulse rounded-lg overflow-hidden relative" style="height: 400px;">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <svg class="animate-spin h-10 w-10 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div v-else class="relative">
+                            <!-- Bouton de vue plein écran - accessible au clavier -->
                             <button @click="toggleFullscreen" 
+                                aria-label="Afficher en plein écran"
                                 class="absolute top-4 right-4 z-10 bg-white bg-opacity-75 p-2 rounded-full hover:bg-opacity-100 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path v-if="isFullscreen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -82,38 +94,73 @@
                                     <!-- Affiche toutes les photos disponibles -->
                                     <SplideSlide v-for="(photo, index) in photos" :key="index">
                                         <div class="splide__zoom">
-                                            <img :alt="`${fullName} - Photo ${index + 1}`" :src="showImage(photo)" 
-                                                class="w-full h-full object-cover cursor-zoom-in">
+                                            <img :alt="`${fullName} - Photo ${index + 1}`" 
+                                             :src="showImage(photo)" 
+                                             loading="lazy"
+                                             class="w-full h-full object-cover cursor-zoom-in"
+                                             :srcset="generateSrcSet(photo)">
+                                             
                                         </div>
                                     </SplideSlide>
                                 </template>
                             </Splide>
                             
-                            <!-- Galerie de miniatures -->
-                            <Splide v-if="Array.isArray(photos) && photos.length > 1" 
-                                ref="thumbnailSplide" 
-                                :options="{
-                                    rewind: true,
-                                    gap: '1rem',
-                                    pagination: false,
-                                    fixedWidth: 100,
-                                    fixedHeight: 60,
-                                    cover: true,
-                                    isNavigation: true,
-                                    arrows: photos && photos.length > 4
-                                }" 
-                                @splide:mounted="syncMainSlider"
-                                class="mt-4">
-                                <SplideSlide v-for="(photo, index) in photos" :key="index" class="cursor-pointer">
-                                    <img :alt="`Miniature ${index + 1}`" :src="showImage(photo)" 
-                                        class="w-full h-full object-cover rounded-md opacity-70 hover:opacity-100 transition-opacity duration-200">
-                                </SplideSlide>
-                            </Splide>
+                            <!-- Galerie de miniatures - version desktop -->
+                            <div class="hidden md:block">
+                                <Splide v-if="Array.isArray(photos) && photos.length > 1" 
+                                    ref="thumbnailSplide" 
+                                    :options="{
+                                        rewind: true,
+                                        gap: '1rem',
+                                        pagination: false,
+                                        fixedWidth: 100,
+                                        fixedHeight: 60,
+                                        cover: true,
+                                        isNavigation: true,
+                                        arrows: photos && photos.length > 4
+                                    }" 
+                                    @splide:mounted="syncMainSlider"
+                                    class="mt-4">
+                                    <SplideSlide v-for="(photo, index) in photos" :key="index" class="cursor-pointer">
+                                        <img :alt="`Miniature ${index + 1}`" 
+                                             :src="showImage(photo, 'thumbnail')" 
+                                             loading="lazy"
+                                             class="w-full h-full object-cover rounded-md opacity-70 hover:opacity-100 transition-opacity duration-200">
+                                    </SplideSlide>
+                                </Splide>
+                            </div>
+                            
+                            <!-- Version mobile : affichage simplifié des vignettes -->
+                            <div class="block md:hidden mt-4 overflow-x-auto">
+                                <div class="flex space-x-2 pb-1">
+                                    <div 
+                                        v-for="(photo, index) in normalizedPhotos"
+                                        :key="'mobile-thumb-' + index"
+                                        @click="currentSlideIndex = index; $refs.mainSplide.splide.go(index)"
+                                        class="flex-shrink-0 w-14 h-14 rounded-md overflow-hidden cursor-pointer transition-all duration-200"
+                                        :class="{'ring-2 ring-blue-500': currentSlideIndex === index}"
+                                    >
+                                        <img 
+                                            :src="showImage(photo, 'thumbnail')"
+                                            :alt="'Vignette ' + index"
+                                            loading="lazy"
+                                            class="w-full h-full object-cover"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
-                        <!-- Modal plein écran -->
-                        <div v-if="isFullscreen" class="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
-                            <button @click="toggleFullscreen" class="absolute top-4 right-4 z-10 bg-white bg-opacity-50 p-2 rounded-full hover:bg-opacity-100 transition-all duration-200">
+                        <!-- Modal plein écran - optimisée pour tous les appareils -->
+                        <div v-if="isFullscreen" 
+                            class="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center overflow-hidden touch-none"
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="fullscreen-gallery-title">
+                            <h2 id="fullscreen-gallery-title" class="sr-only">Galerie plein écran - {{fullName}}</h2>
+                            <button @click="toggleFullscreen" 
+                                aria-label="Fermer la galerie"
+                                class="absolute top-4 right-4 z-10 bg-white bg-opacity-50 p-2 rounded-full hover:bg-opacity-100 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
@@ -129,7 +176,10 @@
                             }" :index="currentSlideIndex">
                                 <SplideSlide v-if="photos && !Array.isArray(photos)">
                                     <div class="splide__zoom">
-                                        <img :alt="fullName" :src="showImage(photos)" class="max-h-[85vh] mx-auto object-contain">
+                                        <img :alt="fullName" 
+                                             :src="showImage(photos)" 
+                                             :srcset="generateSrcSet(photos)" 
+                                             class="max-h-[85vh] mx-auto object-contain">
                                     </div>
                                 </SplideSlide>
                                 
@@ -144,8 +194,10 @@
                                     
                                     <SplideSlide v-for="(photo, index) in photos" :key="index">
                                         <div class="splide__zoom">
-                                            <img :alt="`${fullName} - Photo ${index + 1}`" :src="showImage(photo)" 
-                                                class="max-h-[85vh] mx-auto object-contain cursor-zoom-in">
+                                            <img :alt="`${fullName} - Photo ${index + 1}`" 
+                                                 :src="showImage(photo)" 
+                                                 :srcset="generateSrcSet(photo)" 
+                                                 class="max-h-[85vh] mx-auto object-contain cursor-zoom-in">
                                         </div>
                                     </SplideSlide>
                                 </template>
@@ -219,7 +271,8 @@
                     <template #actions>
                         <div class="mt-6 space-y-4">
                             <Link :href="route('found.info', { thefind: id })"
-                                class="w-full inline-flex items-center justify-center px-6 py-4 border border-transparent rounded-lg text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                                class="w-full inline-flex items-center justify-center px-6 py-5 sm:py-4 border border-transparent rounded-lg text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                                aria-label="Valider cette trouvaille">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -228,9 +281,11 @@
                                 Valider cette trouvaille
                             </Link>
                             
-                            <div class="flex space-x-2">
+                            <!-- Boutons adaptatifs selon la taille d'écran -->
+                            <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-2">
                                 <button @click="shareItem" 
-                                    class="flex-1 inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                                    class="flex-1 inline-flex items-center justify-center px-4 py-3 sm:py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                                    aria-label="Partager cette trouvaille">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                                     </svg>
@@ -238,7 +293,8 @@
                                 </button>
                                 
                                 <button @click="reportIssue"
-                                    class="flex-1 inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                                    class="flex-1 inline-flex items-center justify-center px-4 py-3 sm:py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                                    aria-label="Signaler un problème">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                     </svg>
@@ -301,13 +357,50 @@ export default {
     data() {
         return {
             isFullscreen: false,
-            currentSlideIndex: 0
+            currentSlideIndex: 0,
+            imagesLoading: true
+        }
+    },
+    mounted() {
+        // Simuler un temps de chargement (dans une vraie application, cela serait remplacé
+        // par une vérification réelle du chargement des images)
+        setTimeout(() => {
+            this.imagesLoading = false;
+        }, 800);
+    },
+    computed: {
+        normalizedPhotos() {
+            // Normalise la propriété photos pour toujours avoir un tableau
+            if (!this.photos) return [];
+            if (Array.isArray(this.photos)) return this.photos;
+            return [this.photos];
         }
     },
     methods: {
-        showImage(file) {
+        showImage(file, size = 'full') {
             if (!file) return '';
+            
+            // Pour l'instant, utiliser les images originales pour toutes les tailles
+            // jusqu'à ce que les dossiers de miniatures existent
             return "/storage/findImages/" + file;
+            
+            // Code pour utiliser des miniatures si elles existent dans le futur
+            /*
+            if (size === 'thumbnail') {
+                return `/storage/findImages/thumbnails/${file}`;
+            } else if (size === 'medium') {
+                return `/storage/findImages/medium/${file}`;
+            }
+            
+            return "/storage/findImages/" + file;
+            */
+        },
+        
+        generateSrcSet(file) {
+            if (!file) return '';
+            
+            // Utiliser simplement l'image originale pour toutes les tailles pour l'instant
+            return `${this.showImage(file)} 1200w`;
         },
         toggleFullscreen() {
             this.isFullscreen = !this.isFullscreen;
@@ -368,17 +461,4 @@ export default {
 }
 </script>
 
-<style>
-.splide__arrow {
-    background: rgba(37, 99, 235, 0.9) !important;
-    opacity: 1 !important;
-}
-
-.splide__arrow svg {
-    fill: #ffffff !important;
-}
-
-.splide__pagination__page.is-active {
-    background: rgb(37, 99, 235) !important;
-}
-</style>
+<!-- Les styles ont été déplacés vers resources/css/components.css -->

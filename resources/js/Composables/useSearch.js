@@ -93,8 +93,22 @@ export function useSearch(items, options = {}) {
         isSearching.value = true;
         clearTimeout(searchTimeout.value);
         
+        // Consigner la recherche au fur et à mesure
+        console.log('recherche en cours pour:', searchInput.value);
+        
         searchTimeout.value = setTimeout(() => {
-            term.value = searchInput.value;
+            // Nettoyer le terme de recherche pour qu'il soit plus facile à traiter
+            const cleanInput = searchInput.value?.trim() || '';
+            
+            // N'effectuer la recherche que si le terme a au moins 2 caractères
+            if (cleanInput.length >= 2) {
+                term.value = cleanInput;
+                console.log('Terme de recherche actif:', term.value);
+            } else {
+                // Réinitialiser si la recherche est trop courte
+                term.value = '';
+            }
+            
             isSearching.value = false;
             
             // Sauvegarder la recherche dans l'historique récent
