@@ -4,6 +4,8 @@
 
 La fonctionnalité de protection de documents permet aux utilisateurs d'ajouter des filigranes à leurs documents importants (images et PDF) afin de les protéger contre l'utilisation non autorisée. Cette documentation technique décrit l'implémentation de cette fonctionnalité.
 
+La page d'accueil de la fonctionnalité est accessible à tous les visiteurs, tandis que les fonctionnalités de protection nécessitent une authentification.
+
 ## Structure du code
 
 ### Contrôleur principal
@@ -71,8 +73,13 @@ Un modèle `ProtectedDocument` est utilisé pour stocker les métadonnées des d
 
 Les routes suivantes sont définies pour cette fonctionnalité :
 
-- GET `/documents/protection` → `DocumentProtectionController@home` (Nom : `documents.home`)
-- GET `/documents/protect` → `DocumentProtectionController@index` (Nom : `documents.index`)
+### Route accessible sans authentification
+
+- GET `/documents` → `DocumentProtectionController@home` (Nom : `documents.home`)
+
+### Routes nécessitant une authentification
+
+- GET `/documents/protect` → `DocumentProtectionController@index` (Nom : `documents.protect`)
 - POST `/documents/protect` → `DocumentProtectionController@protect` (Nom : `documents.protect`)
 - GET `/documents/{document}/download` → `DocumentProtectionController@download` (Nom : `documents.download`)
 - DELETE `/documents/{document}` → `DocumentProtectionController@destroy` (Nom : `documents.destroy`)

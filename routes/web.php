@@ -80,9 +80,13 @@ Route::post('/generate-token', [AfrikpayController::class, 'generateToken'])->na
 Route::get('/payment-afrikpay/{id}', [AfrikpayController::class, 'index'])->name('afrikpay.index');
 
 // Routes pour la protection des documents
+// Route accessible sans authentification (page d'accueil)
+Route::get('/documents', [DocumentProtectionController::class, 'home'])->name('documents.home');
+
+// Routes nécessitant une authentification
 Route::middleware(['auth'])->group(function () {
     Route::get('/documents/protect', [DocumentProtectionController::class, 'index'])->name('documents.protect');
-    Route::post('/documents/protect', [DocumentProtectionController::class, 'protect']);
+    Route::post('/documents/protect', [DocumentProtectionController::class, 'protect'])->name('documents.protect');
     Route::get('/documents/{document}/download', [DocumentProtectionController::class, 'download'])->name('documents.download');
     Route::delete('/documents/{document}', [DocumentProtectionController::class, 'destroy'])->name('documents.destroy');
 });

@@ -6,9 +6,18 @@ La fonctionnalité de protection de documents de DocuTrace vous permet d'ajouter
 
 ## Accès à la fonctionnalité
 
-1. Connectez-vous à votre compte DocuTrace
+### Pour tous les visiteurs
+
+La page d'accueil de la protection de documents est accessible à tous :
+1. Visitez le site DocuTrace
 2. Dans le menu principal, cliquez sur "Protection de Documents"
 3. Vous arriverez sur la page d'accueil qui présente les avantages et le fonctionnement du service
+
+### Pour utiliser la fonctionnalité de protection
+
+Pour protéger vos documents, vous devez être connecté :
+1. Si vous n'êtes pas connecté, utilisez les boutons "Se connecter" ou "Créer un compte" sur la page d'accueil
+2. Une fois connecté, vous pouvez accéder à la page de protection en cliquant sur "Protéger mes documents"
 
 ## Protection d'un document
 

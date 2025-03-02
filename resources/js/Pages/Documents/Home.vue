@@ -19,10 +19,27 @@
                             DocuTrace vous permet d'ajouter facilement des filigranes à vos documents et images pour prévenir l'utilisation non autorisée.
                         </p>
                         <div class="mt-6 sm:mt-8">
-                            <Link :href="route('documents.protect')" class="inline-flex items-center px-5 sm:px-6 py-2 sm:py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transform transition duration-300 hover:scale-105" aria-label="Accéder à la page de protection de documents">
-                                Protéger mes documents
-                                <Icon name="chevron-right" class="ml-2" aria-hidden="true" />
-                            </Link>
+                            <template v-if="$page.props.auth && $page.props.auth.user">
+                                <Link :href="route('documents.protect')" class="inline-flex items-center px-5 sm:px-6 py-2 sm:py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transform transition duration-300 hover:scale-105" aria-label="Accéder à la page de protection de documents">
+                                    Protéger mes documents
+                                    <Icon name="chevron-right" class="ml-2" aria-hidden="true" />
+                                </Link>
+                            </template>
+                            <template v-else>
+                                <div class="space-y-4 sm:space-y-0 sm:space-x-4 flex flex-col sm:flex-row sm:items-center justify-center">
+                                    <Link :href="route('login')" class="inline-flex items-center px-5 sm:px-6 py-2 sm:py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transform transition duration-300 hover:scale-105" aria-label="Se connecter pour accéder à la protection de documents">
+                                        Se connecter
+                                        <Icon name="user" class="ml-2" aria-hidden="true" />
+                                    </Link>
+                                    <Link :href="route('register')" class="inline-flex items-center px-5 sm:px-6 py-2 sm:py-3 border border-white text-base font-medium rounded-md shadow-sm text-white bg-blue-600 bg-opacity-80 hover:bg-opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transform transition duration-300 hover:scale-105" aria-label="Créer un compte pour accéder à la protection de documents">
+                                        Créer un compte
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+                                        </svg>
+                                    </Link>
+                                </div>
+                                <p class="text-sm text-white text-opacity-90 mt-3">Vous devez être connecté pour protéger vos documents</p>
+                            </template>
                         </div>
                     </div>
                     <div class="hidden md:block">
