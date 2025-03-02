@@ -232,6 +232,65 @@ Cette page est accessible via l'URL `/icon-test` et sert à la fois de documenta
 
 Ce document trace les améliorations potentielles à apporter à la vue TheSearch.vue, suite à l'analyse de sa structure et de ses fonctionnalités.
 
+## Améliorations pour TheShowFind.vue
+
+Ce document trace les améliorations à apporter à la vue TheShowFind.vue, qui affiche les détails d'une pièce retrouvée.
+
+### Structure et organisation du code
+
+- [x] Extraire les sections répétitives en composants réutilisables
+  - [x] Créer un composant `BreadcrumbNav.vue` pour le fil d'Ariane
+  - [x] Créer un composant `DetailCard.vue` pour la présentation des informations
+
+### Amélioration de la galerie d'images
+
+- [x] Améliorer la galerie de photos avec Splide
+  - [x] Intégrer la gestion de plusieurs photos (actuellement une seule slide est affichée)
+  - [x] Ajouter des miniatures pour la navigation entre les images
+  - [x] Implémenter une fonction de zoom sur les images
+  - [x] Ajouter une vue plein écran pour les images
+
+### Enrichissement de l'interface utilisateur
+
+- [x] Améliorer la mise en page des informations
+  - [x] Organiser les détails en sections thématiques (informations générales, emplacement, etc.)
+  - [x] Ajouter des icônes pour chaque catégorie d'information
+  - [x] Utiliser des badges pour mettre en évidence les informations importantes
+- [x] Enrichir la section de localisation
+  - [x] Intégrer une carte interactive montrant l'emplacement de la pièce
+  - [x] Ajouter un indicateur de distance par rapport à la position de l'utilisateur
+
+### Interactions et fonctionnalités
+
+- [ ] Améliorer l'expérience utilisateur
+  - [ ] Ajouter une fonctionnalité de partage sur les réseaux sociaux
+  - [ ] Implémenter un système pour signaler un problème concernant cette pièce
+  - [ ] Ajouter une option pour contacter directement le propriétaire
+- [ ] Optimiser le processus de validation
+  - [ ] Ajouter une prévisualisation des étapes de validation avant de cliquer sur le bouton
+  - [ ] Implémenter une confirmation avant validation
+  - [ ] Ajouter des indicateurs d'état pour suivre le processus de validation
+
+### Adaptabilité et accessibilité
+
+- [ ] Améliorer la réactivité sur mobile
+  - [ ] Optimiser la disposition pour les petits écrans (agencement vertical au lieu de horizontal)
+  - [ ] Adapter la taille des éléments pour une meilleure expérience tactile
+- [ ] Renforcer l'accessibilité
+  - [ ] Ajouter des attributs ARIA appropriés
+  - [ ] Améliorer le contraste des couleurs
+  - [ ] Assurer que tous les éléments interactifs sont accessibles au clavier
+
+### Optimisations techniques
+
+- [ ] Améliorer les performances
+  - [ ] Optimiser le chargement des images (images responsive, lazy loading)
+  - [ ] Implémenter le chargement progressif des contenus
+- [ ] Refactoriser le code CSS
+  - [ ] Extraire les styles répétitifs en classes utilitaires
+  - [ ] Utiliser des variables CSS pour les valeurs récurrentes
+  - [ ] Standardiser les styles avec le reste de l'application
+
 ### Performance et UX
 
 - [x] Optimiser la recherche
