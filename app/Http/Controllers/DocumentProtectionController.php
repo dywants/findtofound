@@ -10,8 +10,18 @@ use Inertia\Inertia;
 
 class DocumentProtectionController extends Controller
 {
-    public function index()
+    public function home()
     {
+        return Inertia::render('Documents/Home');
+    }
+
+    public function index(Request $request)
+    {
+        // Si l'utilisateur vient d'une page externe, rediriger vers la page d'accueil
+        if (!$request->hasHeader('referer') || !str_contains($request->header('referer'), config('app.url'))) {
+            return redirect()->route('documents.home');
+        }
+        
         return Inertia::render('Documents/Protect', [
             'documents' => auth()->user()->protectedDocuments
         ]);
@@ -47,7 +57,8 @@ class DocumentProtectionController extends Controller
         }
         // Si c'est un PDF
         else {
-            // TODO: Implémenter la protection PDF
+            // Stockage temporaire du PDF - la version complète avec filigrane sera implémentée plus tard
+            // Dans une future version, nous utiliserons une bibliothèque comme FPDF ou TCPDF
             Storage::disk('protected_docs')->putFileAs('', $file, $filename);
         }
 
@@ -60,14 +71,14 @@ class DocumentProtectionController extends Controller
             'watermark_text' => $request->watermark_text,
         ]);
 
-        return redirect()->back()->with('success', 'Document protégé avec succès');
+        return redirect()->back()->with('success', 'Votre document a été protégé avec succès. Vous pouvez maintenant le télécharger depuis la liste ci-dessous.');
     }
 
     public function download(ProtectedDocument $document)
     {
         // Vérifier que l'utilisateur est autorisé à télécharger ce document
         if ($document->user_id !== auth()->id()) {
-            abort(403);
+            abort(403, 'Vous n\'êtes pas autorisé à accéder à ce document protégé.');
         }
 
         return Storage::disk('protected_docs')->download($document->filename, $document->original_name);
@@ -77,7 +88,7 @@ class DocumentProtectionController extends Controller
     {
         // Vérifier que l'utilisateur est autorisé à supprimer ce document
         if ($document->user_id !== auth()->id()) {
-            abort(403);
+            abort(403, 'Vous n\'êtes pas autorisé à supprimer ce document protégé.');
         }
 
         // Supprimer le fichier
@@ -86,6 +97,6 @@ class DocumentProtectionController extends Controller
         // Supprimer l'enregistrement
         $document->delete();
 
-        return redirect()->back()->with('success', 'Document supprimé avec succès');
+        return redirect()->back()->with('success', 'Le document a été supprimé avec succès de votre bibliothèque.');
     }
 }

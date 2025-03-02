@@ -519,3 +519,96 @@ Ce document liste les améliorations à apporter à la page Contact.vue, afin de
 | 02/03/2025 | Modernisation de l'interface | Terminé | Refonte complète de l'UI avec animations, arrière-plans stylisés et carte interactive |
 | 02/03/2025 | Optimisation pour mobile | Terminé | Mise en page responsive et adaptation des éléments pour tous appareils |
 | 02/03/2025 | Section FAQ interactive | Terminé | Implémentation d'un système d'accordéon pour les questions fréquentes |
+
+## Création d'une page d'accueil pour la protection de documents
+
+Ce document trace les étapes pour créer une page d'accueil dédiée à la fonctionnalité de protection de documents, afin d'améliorer l'expérience utilisateur et de fournir un contexte clair avant l'utilisation de l'outil.
+
+### Contexte
+
+Actuellement, la fonctionnalité de protection de documents (DocuTrace) est accessible directement via la page Protect.vue qui combine à la fois l'explication de la fonctionnalité et l'interface utilisateur pour protéger les documents. Cette approche manque d'une introduction claire et d'un parcours utilisateur progressif.
+
+### Objectifs
+
+- Créer une page d'accueil dédiée qui explique clairement le but et les avantages de la protection de documents
+- Améliorer l'expérience utilisateur en établissant un parcours progressif
+- Mettre en valeur les fonctionnalités clés de la protection de documents
+- Maintenir la cohérence avec les améliorations UX/UI déjà implémentées dans d'autres parties de l'application
+
+### Plan d'implémentation
+
+#### Étape 1 : Conception de la structure de la page d'accueil
+
+- [x] Concevoir une mise en page moderne et attrayante pour la page d'accueil
+  - [x] Créer une section d'en-tête avec une illustration représentative et un message d'accroche
+  - [x] Développer une section expliquant le concept de protection de documents
+  - [x] Créer une section présentant les fonctionnalités clés avec des icônes
+  - [x] Concevoir une section des avantages de la protection de documents
+  - [x] Ajouter une section FAQ pour répondre aux questions communes
+  - [x] Intégrer un appel à l'action clair pour rediriger vers la page de protection
+
+#### Étape 2 : Mise en œuvre technique
+
+- [x] Créer un nouveau composant Vue pour la page d'accueil (DocumentsHome.vue)
+  - [x] Implémenter la structure HTML/CSS de base selon la conception
+  - [x] Intégrer les composants existants (comme les icônes)
+  - [x] Ajouter des animations et transitions pour une expérience utilisateur engageante
+  
+- [x] Modifier les routes pour intégrer la nouvelle page
+  - [x] Ajouter une nouvelle route pour la page d'accueil dans web.php
+  - [x] Mettre à jour la navigation pour inclure un lien vers cette page
+  - [x] Ajuster la route existante pour rediriger vers la nouvelle page d'accueil
+
+#### Étape 3 : Optimisation de l'expérience utilisateur
+
+- [x] Améliorer la navigation entre les pages de la fonctionnalité
+  - [x] Ajouter un fil d'Ariane (breadcrumb) pour faciliter la navigation
+  - [x] Créer des boutons d'action clairs avec des états de survol dynamiques
+  
+- [x] Enrichir le contenu informatif
+  - [x] Ajouter des exemples visuels de documents protégés
+  - [x] Créer des infographies illustrant le processus de protection
+  - [ ] Intégrer des témoignages d'utilisateurs (optionnel)
+
+#### Étape 4 : Tests et optimisations
+
+- [x] Tester la réactivité sur différents appareils
+  - [x] Optimiser la mise en page pour les appareils mobiles
+  - [x] Assurer la compatibilité avec différents navigateurs
+  
+- [x] Effectuer des tests d'accessibilité
+  - [x] Vérifier le contraste des couleurs
+  - [x] Ajouter les attributs ARIA appropriés
+  - [x] Tester la navigation au clavier
+
+#### Étape 5 : Finalisation et déploiement
+
+- [x] Revoir le contenu et effectuer les ajustements finaux
+  - [x] Corriger les problèmes identifiés lors des tests
+  - [x] Affiner les textes et les messages
+  
+- [x] Finaliser la fonctionnalité
+  - [x] Mettre à jour la documentation
+  - [x] Préparer la fonctionnalité pour le déploiement
+
+### Tableau de bord de progression
+
+| Date | Tâche | Statut | Description |
+|------|-------|--------|-------------|
+| 02/03/2025 | Analyse initiale de la fonctionnalité de protection de documents | Terminé | Évaluation de la structure actuelle et identification du besoin d'une page d'accueil |
+| 02/03/2025 | Planification des améliorations | Terminé | Élaboration du plan détaillé pour la création de la page d'accueil DocumentsHome.vue |
+| 02/03/2025 | Conception de la page d'accueil | Terminé | Création du composant Home.vue avec toutes les sections requises : en-tête, guide étape par étape, avantages, formats supportés et FAQ |
+| 02/03/2025 | Intégration des icônes | Terminé | Ajout de nouvelles icônes au composant Icon.vue pour enrichir l'interface utilisateur |
+| 02/03/2025 | Mise à jour des routes | Terminé | Ajout d'une nouvelle route pour la page d'accueil et modification du contrôleur |
+| 02/03/2025 | Intégration dans la navigation | Terminé | Mise à jour de la barre de navigation pour inclure un lien vers la nouvelle page d'accueil |
+| 02/03/2025 | Implémentation des animations | Terminé | Ajout d'animations et transitions pour améliorer l'expérience utilisateur, incluant des animations au défilement avec IntersectionObserver |
+| 02/03/2025 | Optimisation de la redirection | Terminé | Mise en place d'une redirection intelligente depuis la page de protection vers la page d'accueil pour les utilisateurs externes |
+| 02/03/2025 | Intégration du fil d'Ariane | Terminé | Ajout d'un composant BreadcrumbNav pour améliorer la navigation et l'orientation de l'utilisateur |
+| 02/03/2025 | Amélioration des boutons | Terminé | Ajout d'icônes et d'animations aux boutons d'action pour une meilleure expérience utilisateur |
+| 02/03/2025 | Enrichissement visuel | Terminé | Création d'une section d'exemple avec infographie pour illustrer la protection de documents |
+| 02/03/2025 | Création du composant InfoCard | Terminé | Développement d'un composant réutilisable pour l'affichage d'informations avec icônes |
+| 02/03/2025 | Optimisation mobile | Terminé | Adaptation de l'interface pour les appareils mobiles avec des tailles de texte et d'espacement responsives |
+| 02/03/2025 | Amélioration de l'accessibilité | Terminé | Ajout d'attributs ARIA et amélioration de la navigation au clavier |
+| 02/03/2025 | Amélioration des messages utilisateur | Terminé | Optimisation des messages de succès, d'erreur et de confirmation pour une meilleure expérience utilisateur |
+| 02/03/2025 | Optimisation SEO | Terminé | Ajout de méta-données linguistiques et d'informations Open Graph pour améliorer le référencement |
+| 02/03/2025 | Finalisation du projet | Terminé | Vérification finale de toutes les fonctionnalités et préparation pour le déploiement |
