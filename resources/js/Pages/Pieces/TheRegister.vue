@@ -338,13 +338,6 @@ const updateAmount = (newAmount) => {
                 <!-- Form Section -->
                 <div class="max-w-4xl mx-auto">
                     <div class="bg-white shadow-lg rounded-3xl overflow-hidden border border-gray-100">
-                        <!-- Bouton de déboggage -->
-                        <div class="bg-yellow-100 p-4 text-center">
-                            <button @click="debugForm" type="button"
-                                class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
-                                Déboguer le formulaire
-                            </button>
-                        </div>
 
                         <!-- Afficher les erreurs de validation si présentes -->
                         <div v-if="validationErrors"

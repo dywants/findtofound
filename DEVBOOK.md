@@ -228,8 +228,83 @@ Cette page est accessible via l'URL `/icon-test` et sert à la fois de documenta
 | 02/03/2025 | Étape 1 : Refonte visuelle de RegisterIntro.vue | Terminé | Refonte complète de la mise en page avec un design plus moderne et aéré. Création d'un layout en sections horizontales avec dégradés et espaces blancs. Intégration d'illustrations pour les étapes du processus avec des icônes pertinentes. Amélioration des animations et des transitions. |
 | 02/03/2025 | Étape 2 : Visualisation des parcours utilisateur dans RegisterIntro.vue | Terminé | Création d'un diagramme de flux visuel montrant clairement les deux chemins possibles (avec/sans récompense). Mise en place d'un système de couleurs différenciées (bleu pour le parcours avec récompense, vert pour le parcours anonyme). Détails des étapes spécifiques à chaque parcours avec descriptions claires et icones numérotées. |
 
+## Améliorations pour TheSearch.vue
+
+Ce document trace les améliorations potentielles à apporter à la vue TheSearch.vue, suite à l'analyse de sa structure et de ses fonctionnalités.
+
+### Performance et UX
+
+- [x] Optimiser la recherche
+  - [x] Implémenter un debounce sur l'input de recherche pour éviter des recherches excessives pendant la saisie
+  - [x] Ajouter un indicateur de chargement pendant que les résultats sont filtrés
+  - [x] Mémoriser les termes de recherche récents pour accélérer les recherches répétées
+
+- [x] Améliorer le retour utilisateur
+  - [x] Afficher le nombre de résultats trouvés (ex: "7 résultats pour 'carte d'identité'")
+  - [x] Ajouter des filtres supplémentaires (date, type de document, ville)
+  - [x] Permettre le tri des résultats (par date, par pertinence)
+
+### UI et Design
+
+- [x] Moderniser l'interface des résultats
+  - [x] Proposer une vue alternative en grille en plus de la vue liste
+  - [x] Ajouter un bouton pour basculer entre les vues liste et grille
+  - [x] Améliorer l'affichage des images (gestion des ratios, lazy loading optimisé)
+
+- [x] Améliorer la présentation des résultats
+  - [x] Reformater la date pour une meilleure lisibilité
+  - [ ] Ajouter des badges colorés pour différents types de documents
+  - [ ] Améliorer la mise en évidence des termes recherchés dans les résultats
+
+### Accessibilité
+
+- [x] Renforcer l'accessibilité
+  - [x] Ajouter des attributs ARIA appropriés (aria-label, aria-live)
+  - [x] Améliorer la navigation au clavier
+  - [x] S'assurer que les contrastes de couleurs sont suffisants
+
+- [x] Optimiser pour tous les appareils
+  - [x] Améliorer la disposition sur les très petits écrans
+  - [x] Optimiser l'expérience tactile (plus grandes zones de clic)
+
+### Fonctionnalités additionnelles
+
+- [ ] Implémenter des fonctionnalités avancées
+  - [ ] Ajouter la géolocalisation pour trouver les objets perdus à proximité
+  - [ ] Permettre une recherche par carte interactive
+  - [ ] Ajouter des suggestions de recherche basées sur les termes populaires
+
+- [ ] Enrichir l'expérience utilisateur
+  - [ ] Implémenter l'historique de recherche personnel
+  - [ ] Permettre de sauvegarder des recherches favorites
+  - [ ] Ajouter des notifications pour les nouvelles pièces correspondant aux critères précédemment recherchés
+
+### Optimisations techniques
+
+- [x] Refactoriser pour plus de maintenabilité
+  - [x] Extraire la logique de recherche dans un composable Vue réutilisable
+  - [x] Améliorer la configuration de Fuse.js pour des résultats plus pertinents
+  - [ ] Standardiser l'affichage des résultats dans un composant dédié
+
+- [x] Optimiser les performances
+  - [ ] Implémenter une pagination ou un infinite scroll pour les grands volumes de résultats
+  - [x] Mettre en cache les résultats de recherche récents
+  - [ ] Optimiser le rendu des listes avec `v-for` (utiliser `v-memo` pour les éléments stables)
+
+## Journal des améliorations de TheSearch.vue
+
+| Date | Description | Auteur |
+|------|-------------|--------|
+| 02/03/2025 | Ajout du debounce, d'un indicateur de chargement et de l'affichage du nombre de résultats | |
+| 02/03/2025 | Implémentation des filtres par date et options de tri | |
+| 02/03/2025 | Ajout d'une vue alternative en grille avec bascule entre les modes d'affichage | |
+| 02/03/2025 | Amélioration de l'accessibilité avec attributs ARIA et focus styles | |
+| 02/03/2025 | Refactorisation de la logique de recherche dans un composable Vue réutilisable | |
+
 ## Notes et idées supplémentaires
 
 - Envisager l'utilisation d'une bibliothèque d'animations comme GSAP pour des transitions plus fluides
+- Intégrer un système de reconnaissance d'image pour faciliter la recherche de pièces similaires
+- Explorer l'utilisation d'une API de géolocalisation pour améliorer la recherche par proximité
 - Explorer la possibilité d'ajouter un mode sombre
 - Considérer l'ajout de préférences utilisateur pour personnaliser l'interface
