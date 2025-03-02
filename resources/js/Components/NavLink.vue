@@ -22,7 +22,10 @@ const classes = computed(() => {
 </script>
 
 <template>
-  <Link :href="href" :class="classes">
+  <Link v-if="href" :href="href" :class="classes">
     <slot />
   </Link>
+  <span v-else :class="classes">
+    <slot />
+  </span>
 </template>

@@ -1,0 +1,10 @@
+Ajouter des animations de transition entre les étapes
+Permettre l'enregistrement temporaire du formulaire pour y revenir plus tard
+Intégrer des suggestions automatiques pour certains champs comme la localisation
+
+Recommandations supplémentaires
+Pour parfaire cette intégration, vous pourriez envisager :
+
+Ajouter des tests unitaires pour vérifier les différents scénarios
+Optimiser le schéma de base de données pour mieux refléter cette logique à deux voies
+Créer une documentation utilisateur expliquant clairement les deux options

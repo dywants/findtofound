@@ -11,6 +11,9 @@
                         Precedent
                     </Button>
                     <Button type="submit">{{ isLastStep ? "Soumettre" : "Suivant" }}</Button>
+                    <Button v-if="isLastStep" type="button" @click="debugSubmit" class="bg-green-500 hover:bg-green-600">
+                        Force Soumettre
+                    </Button>
                 </div>
             </template>
         </TheCard>
@@ -19,14 +22,14 @@
 
 <script>
 import { useForm } from "vee-validate";
-import { ref, computed, provide, watch } from "vue";
+import { ref, computed, provide, watch, nextTick } from "vue";
 import TheCard from "@/Components/Elements/TheCard";
 import Button from "@/Components/Button";
 
 export default {
     name: "FormWizard",
     components: { Button, TheCard },
-    emits: ["next", "submit", "CURRENT_STEP"],
+    emits: ["next", "submit", "CURRENT_STEP", "formDataChange"],
     props: {
         validationSchema: {
             type: Array,
@@ -69,8 +72,9 @@ export default {
         });
 
         // vee-validate will be aware of computed schema changes
-        const { resetForm, handleSubmit } = useForm({
+        const { resetForm, handleSubmit, setFieldValue } = useForm({
             validationSchema: currentSchema,
+            initialValues: formData.value
         });
 
         // We are using the "submit" handler to progress to next steps
@@ -81,8 +85,8 @@ export default {
                 ...formData.value,
                 ...values,
             };
-
-            // Sets initial values for the values already filled
+            
+            // Propager les valeurs au formulaire suivant
             resetForm({
                 values: {
                     ...formData.value,
@@ -98,26 +102,35 @@ export default {
             emit("submit", formData.value);
         });
 
-        function goToPrev() {
+        async function goToPrev() {
             if (currentStepIdx.value === 0) {
                 return;
             }
 
             currentStepIdx.value--;
 
-            resetForm({
-                values: {
-                    ...formData.value,
-                },
+            // Attendre le prochain cycle de rendu avant de réinitialiser le formulaire
+            await nextTick();
+
+            // Restaurer les valeurs de l'étape précédente sans réinitialiser le formulaire
+            Object.entries(formData.value).forEach(([field, value]) => {
+                setFieldValue(field, value);
             });
         }
 
+        // Fonction de déboggage pour forcer la soumission
+        function debugSubmit() {
+            console.log('Tentative de soumission forcée avec les données:', formData.value);
+            emit("submit", formData.value);
+        }
+        
         return {
             onSubmit,
             hasPrevious,
             isLastStep,
             goToPrev,
             currentIdx,
+            debugSubmit,
         };
     },
 };

@@ -61,7 +61,12 @@ import { Field, ErrorMessage } from "vee-validate";
 export default {
     name: "Validation",
     components: { Field, ErrorMessage },
+    emits: ['form-data-change'],
     props: {
+        initialData: {
+            type: Object,
+            default: () => ({})
+        },
         amount: {
             type: [String, Number],
             required: true
@@ -74,10 +79,17 @@ export default {
     },
     data() {
         return {
-            checkedNames: ''
+            checkedNames: this.initialData.amount_choice || ''
         }
     },
     watch: {
+        checkedNames: {
+            handler(newVal) {
+                this.$emit('form-data-change', {
+                    amount_choice: newVal
+                });
+            }
+        },
         isAnonymous: {
             immediate: true,
             handler(newVal) {

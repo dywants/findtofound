@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Meta;
 use App\Http\Requests\FindRequest;
+use App\Mail\UserPasswordMail;
 use App\Models\Piece;
 use App\Models\Profile;
 use App\Models\Thefind;
 use App\Models\User;
 use App\Notifications\WelcomeEmailNotification;
+use Illuminate\Support\Facades\Mail;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -24,19 +26,37 @@ use stdClass;
 class TheFindController extends Controller
 {
     /**
+     * Display the introduction page for the registration process.
+     *
+     * @return \Inertia\Response
+     */
+    public function intro(): \Inertia\Response
+    {
+        Meta::addMeta('title', 'Introduction à l\'enregistrement d\'objet trouvé');
+        Meta::addMeta('description', "Découvrez le processus d'enregistrement d'un objet trouvé et vos options concernant les récompenses.");
+        Meta::addMeta('robots', 'Index, follow');
+
+        return inertia::render('Pieces/RegisterIntro');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Inertia\Response
      */
-    public function index(): \Inertia\Response
+    public function index(Request $request): \Inertia\Response
     {
         $pieces = Piece::all();
         Meta::addMeta('title', 'Enregistrer une pièce retrouvée!');
         Meta::addMeta('description', "Cette page permet l'enregistrement des informations d'une pièce retrouvée ainsi que les informations de celui qui à retrouvée la pièce");
         Meta::addMeta('robots', 'Index, follow');
 
+        // Récupérer la préférence de récompense depuis la requête
+        $wantReward = $request->has('wantReward') ? filter_var($request->wantReward, FILTER_VALIDATE_BOOLEAN) : true;
+
         return inertia::render('Pieces/TheRegister', [
             'pieces' => $pieces,
+            'wantReward' => $wantReward,
         ]);
     }
 
@@ -78,64 +98,94 @@ class TheFindController extends Controller
             'amount_check' => $request->amount_check,
             'photos' => json_encode($imgData),
             'piece_id' => $request->piece_id,
-            'is_anonymous' => $request->checkAnnonymary,
             'discovery_date' => $request->discovery_date,
             'piece_condition' => $request->piece_condition,
             'condition_details' => $request->condition_details,
-            'deposit_location' => $request->deposit_location,
-            'deposit_city' => $request->deposit_city,
-            'deposit_district' => $request->deposit_district,
-            'contact_person' => $request->contact_person,
-            'pickup_hours' => $request->pickup_hours,
             'special_instructions' => $request->special_instructions
         ];
 
-        // Ajouter la localisation si anonyme
-        if ($request->checkAnnonymary) {
+        // Déterminer si l'utilisateur veut une récompense (par défaut: oui)
+        $wantReward = $request->has('wantReward') ? filter_var($request->wantReward, FILTER_VALIDATE_BOOLEAN) : true;
+        
+        // Ajouter le champ want_reward aux données
+        $findData['want_reward'] = $wantReward;
+        
+        // Scénario 1: L'utilisateur NE VEUT PAS de récompense
+        if (!$wantReward) {
+            // Traiter les données de dépôt
+            $findData['is_anonymous'] = true; // Considéré comme anonyme pour la base de données
             $findData['localisation'] = $request->localisation;
-            // Ne pas inclure user_id pour les soumissions anonymes
-        } else {
-            // Gérer l'utilisateur pour les soumissions non-anonymes
-            if (!Auth::check()) {
-                $generatedPassword = Str::random(10);
-                $user = User::create([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'password' => Hash::make($generatedPassword),
-                ]);
-                Auth::guard()->login($user);
-                $user->assignRole('Founds');
-            } else {
-                $user = auth()->user();
-                $generatedPassword = null;
+            $findData['deposit_location'] = $request->localisation;
+            $findData['pickup_hours'] = $request->pickup_hours;
+            $findData['special_instructions'] = $request->additionalInfo ?? null;
+            
+            // Ajouter la date de dépôt avec le bon format
+            if ($request->depositDate) {
+                $findData['deposit_date'] = $request->depositDate;
             }
+        }
+        // Scénario 2: L'utilisateur VEUT une récompense
+        else {
+            $findData['is_anonymous'] = $request->checkAnnonymary;
+            
+            // Scénario 2A: Utilisateur anonyme avec récompense
+            if ($request->checkAnnonymary) {
+                $findData['localisation'] = $request->localisation;
+                $findData['deposit_location'] = $request->deposit_location ?? $request->localisation;
+                $findData['deposit_city'] = $request->deposit_city;
+                $findData['deposit_district'] = $request->deposit_district;
+                $findData['contact_person'] = $request->contact_person;
+                $findData['pickup_hours'] = $request->pickup_hours;
+            }
+            // Scénario 2B: Utilisateur identifié avec récompense
+            else {
+                // Gérer l'utilisateur
+                if (!Auth::check()) {
+                    $generatedPassword = Str::random(10);
+                    $user = User::create([
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'password' => Hash::make($generatedPassword),
+                    ]);
+                    // Envoyer le mot de passe par email
+                    Mail::to($user->email)->send(new UserPasswordMail($user, $generatedPassword));
+                    
+                    Auth::guard()->login($user);
+                    $user->assignRole('Founds');
+                } else {
+                    $user = auth()->user();
+                    $generatedPassword = null;
+                }
 
-            // Ajouter user_id seulement pour les soumissions non-anonymes
-            $findData['user_id'] = $user->id;
+                // Ajouter user_id seulement pour les soumissions non-anonymes
+                $findData['user_id'] = $user->id;
 
-            // Créer ou mettre à jour le profil
-            Profile::updateOrCreate(
-                ['user_id' => $user->id],
-                [
-                    'phone_number' => $request->phone_number,
-                    'city' => $request->city,
-                ]
-            );
+                // Créer ou mettre à jour le profil
+                Profile::updateOrCreate(
+                    ['user_id' => $user->id],
+                    [
+                        'phone_number' => $request->phone_number,
+                        'city' => $request->city,
+                    ]
+                );
+            }
         }
 
         // Créer l'enregistrement Thefind
         Thefind::create($findData);
 
         // Préparer le message de retour
-        if ($request->checkAnnonymary) {
+        if (!$wantReward) {
+            $message = 'Merci pour votre déclaration! Les informations de dépôt ont été enregistrées.';
+        } else if ($request->checkAnnonymary) {
             $message = 'Merci pour votre contribution anonyme!';
         } else {
-            $message = $generatedPassword 
+            $message = isset($generatedPassword) 
                 ? "Votre compte a été créé avec succès! Votre mot de passe temporaire est: $generatedPassword" 
                 : "Merci pour votre contribution!";
         }
 
-        return redirect(RouteServiceProvider::HOME)->with('message', $message);
+        return redirect('/')->with('message', $message);
     }
 
     /**

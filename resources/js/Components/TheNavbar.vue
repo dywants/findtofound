@@ -83,7 +83,7 @@
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink :href="route('find.register')" :active="$page.url === route('find.register')">
+                                <NavLink :href="route('find.intro')" :active="$page.url === route('find.intro') || $page.url === route('find.register')">
                                     Enregister pièce</NavLink>
                             </li>
                             <li>
@@ -114,7 +114,7 @@
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink :href="route('find.register')" :active="$page.url === route('find.register')">
+                                <NavLink :href="route('find.intro')" :active="$page.url === route('find.intro') || $page.url === route('find.register')">
                                     Enregister pièce</NavLink>
                             </li>
                             <li>

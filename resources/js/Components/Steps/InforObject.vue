@@ -173,8 +173,8 @@
 
             <!-- Aperçu des images -->
             <div v-if="imgUrl.length > 0" class="grid grid-cols-2 gap-4 mt-4">
-                <div v-for="(url, index) in imgUrl" :key="index" class="relative rounded-lg overflow-hidden group">
-                    <img :src="url" class="w-full h-32 object-cover">
+                <div v-for="(img, index) in imgUrl" :key="index" class="relative rounded-lg overflow-hidden group">
+                    <img :src="img.url || img" class="w-full h-32 object-cover">
                     <div
                         class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
                         <button @click="removeImage(index)"
@@ -198,8 +198,7 @@
             <label class="block text-sm font-medium text-gray-700">Détails supplémentaires</label>
             <div class="mt-1">
                 <QuillEditor v-model:content="additionalDetailsValue" :options="editorConfig"
-                    class="border border-gray-300 rounded-lg shadow-sm" 
-                    style="min-height: 200px;" />
+                    class="border border-gray-300 rounded-lg shadow-sm" style="min-height: 200px;" />
             </div>
             <ErrorMessage name="additionalDetails" class="mt-2 text-sm text-red-600" />
         </div>
@@ -220,7 +219,7 @@ export default {
         ErrorMessage,
         QuillEditor
     },
-    emits: ['updateImages', 'amount', 'update:additionalDetails'],
+    emits: ['updateImages', 'amount', 'update:additionalDetails', 'form-data-change'],
     props: {
         pieces: {
             type: Array,
@@ -234,14 +233,25 @@ export default {
         },
         amount: {
             type: Number,
-            required: true
+            required: false,
+            default: 0
         },
         additionalDetails: {
-            type: String,
+            type: [String, Object],
             default: ''
+        },
+        initialData: {
+            type: Object,
+            default() {
+                return {};
+            }
         }
     },
     setup(props, { emit }) {
+        // Initialiser les données avec les valeurs sauvegardées
+        const formValues = reactive({
+            ...props.initialData
+        });
         const imgUrl = ref([]);
         const isDragging = ref(false);
         const isLoading = ref([]);
@@ -253,14 +263,15 @@ export default {
             { value: 'Mauvais' }
         ]);
 
-        const additionalDetailsValue = ref(props.additionalDetails);
+                // S'assurer que additionalDetailsValue est initialisé avec une chaîne vide si null ou undefined
+        const additionalDetailsValue = ref(props.additionalDetails || '');
         const editorConfig = {
             modules: {
                 toolbar: [
                     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
                     ['bold', 'italic', 'underline'],
                     [{ 'color': [] }, { 'background': [] }],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                     [{ 'align': [] }],
                     ['link', 'image'],
                     ['clean']
@@ -271,32 +282,59 @@ export default {
         };
 
         // Surveiller les changements dans les props storedImages
-        watch(() => props.storedImages, (newImages) => {
-            if (newImages && newImages.length > 0) {
+        // Utiliser immediate: false pour éviter une récursion lors de l'initialisation
+        watch(() => props.storedImages, (newImages, oldImages) => {
+            // Vérifier que les données ont changé pour éviter les mises à jour récursives
+            if (newImages && newImages.length > 0 && JSON.stringify(newImages) !== JSON.stringify(imgUrl.value)) {
+                console.log('storedImages changed in InforObject', newImages);
                 imgUrl.value = [...newImages];
             }
-        }, { deep: true });
+        }, { deep: true, immediate: false });
 
-        watch(additionalDetailsValue, (newValue) => {
-            emit('update:additionalDetails', newValue);
+        // Utiliser un débat pour éviter les mises à jour trop fréquentes
+        watch(additionalDetailsValue, (newValue, oldValue) => {
+            // Éviter d'émettre si la valeur n'a pas changé
+            if (JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
+                console.log('additionalDetails changed', newValue);
+                emit('update:additionalDetails', newValue);
+            }
         });
 
         onMounted(() => {
+            // Initialiser imgUrl avec les images stockées sans déclencher de watcher
             if (props.storedImages && props.storedImages.length > 0) {
+                console.log('Initializing imgUrl with storedImages', props.storedImages);
                 imgUrl.value = [...props.storedImages];
             }
+            
+            // Initialiser formValues avec les données initiales si présentes
+            if (props.initialData && Object.keys(props.initialData).length > 0) {
+                Object.assign(formValues, props.initialData);
+            }
+            
+            // Émettre l'objet form-data-change une seule fois pour initialiser les données
+            setTimeout(() => {
+                emit('form-data-change', formValues);
+            }, 0);
         });
-
-        // Surveiller les changements d'images et émettre les mises à jour
-        watch(imgUrl, (newImages) => {
-            emit('updateImages', newImages);
+        
+        // Surveiller les changements dans les données du formulaire
+        watch(formValues, (newValues) => {
+            emit('form-data-change', newValues);
         }, { deep: true });
+
+        // Eviter de surveiller imgUrl directement pour éviter une récursion infinie
+        // À la place, nous émettrons des événements manuellement après les modifications
 
         const onChange = (event) => {
             let pieceId = event.target.value;
-            const pieceSelect = props.pieces.find(piece => piece.id == pieceId)
+            const pieceSelect = props.pieces.find(piece => piece.id == pieceId);
+            
+            // Mettre à jour la valeur dans formValues
+            formValues.piece_id = pieceId;
+            
             if (pieceSelect) {
-                emit("amount", pieceSelect.amount)
+                emit("amount", pieceSelect.amount);
             }
         };
 
@@ -305,7 +343,18 @@ export default {
 
             const reader = new FileReader();
             reader.onload = (e) => {
-                imgUrl.value.push(e.target.result);
+                // Préparer l'objet image avec l'URL et le fichier
+                const imageObject = {
+                    url: e.target.result,
+                    file: file // Stocker le fichier lui-même pour l'envoi au serveur
+                };
+                
+                // Créer une nouvelle copie du tableau pour éviter les problèmes de réactivité
+                const newImgUrls = [...imgUrl.value, imageObject];
+                imgUrl.value = newImgUrls;
+                
+                // Émettre l'événement manuellement après la modification
+                emit('updateImages', newImgUrls);
             };
             reader.readAsDataURL(file);
         };
@@ -342,7 +391,13 @@ export default {
         };
 
         const removeImage = (index) => {
-            imgUrl.value.splice(index, 1);
+            // Créer une nouvelle copie du tableau pour éviter les problèmes de réactivité
+            const newImgUrls = [...imgUrl.value];
+            newImgUrls.splice(index, 1);
+            imgUrl.value = newImgUrls;
+            
+            // Émettre l'événement manuellement après la modification
+            emit('updateImages', newImgUrls);
         };
 
         return {
