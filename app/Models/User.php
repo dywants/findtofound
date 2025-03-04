@@ -90,4 +90,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(Thefound::class, 'user_id');
     }
+
+    /**
+     * Relation avec les documents protégés de l'utilisateur
+     * 
+     * @return HasMany
+     */
+    public function protectedDocuments(): HasMany
+    {
+        return $this->hasMany(ProtectedDocument::class);
+    }
 }

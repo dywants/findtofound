@@ -596,6 +596,10 @@ Actuellement, la fonctionnalité de protection de documents (DocuTrace) est acce
 | Date | Tâche | Statut | Description |
 |------|-------|--------|-------------|
 | 02/03/2025 | Analyse initiale de la fonctionnalité de protection de documents | Terminé | Évaluation de la structure actuelle et identification du besoin d'une page d'accueil |
+| 03/03/2025 | Implémentation de la prévisualisation des documents | Terminé | Ajout d'une fonctionnalité de prévisualisation pour les documents téléversés avec support pour les images (affichage direct) et les PDF (avec lien d'ouverture). Correction des bugs liés à la manipulation des fichiers et amélioration de l'expérience utilisateur avec adaptation dynamique de l'interface. |
+| 03/03/2025 | Enrichissement de la présentation des documents protégés | Terminé | Refonte complète de l'affichage des documents pour utiliser un format de grille de cartes visuelles. Ajout de miniatures pour les images et icones différenciés pour les PDF et autres fichiers. Intégration de badges de type pour les différents formats (PDF, JPEG, etc.), d'animations au survol et d'options de tri et d'affichage. Amélioration générale de l'expérience utilisateur et de l'esthétique. |
+| 03/03/2025 | Implémentation du filigranage PDF | Terminé | Ajout de la fonctionnalité de filigranage pour les documents PDF en utilisant FPDI/FPDF avec rotation et transparence du texte. Création d'une classe ExtendedFpdi pour étendre les fonctionnalités de base. |
+| 03/03/2025 | Plan d'améliorations pour Documents/Protect.vue | En cours | Élaboration d'un plan détaillé pour améliorer l'interface et l'expérience utilisateur de la page de protection de documents |
 | 02/03/2025 | Planification des améliorations | Terminé | Élaboration du plan détaillé pour la création de la page d'accueil DocumentsHome.vue |
 | 02/03/2025 | Conception de la page d'accueil | Terminé | Création du composant Home.vue avec toutes les sections requises : en-tête, guide étape par étape, avantages, formats supportés et FAQ |
 | 02/03/2025 | Intégration des icônes | Terminé | Ajout de nouvelles icônes au composant Icon.vue pour enrichir l'interface utilisateur |
@@ -612,3 +616,94 @@ Actuellement, la fonctionnalité de protection de documents (DocuTrace) est acce
 | 02/03/2025 | Amélioration des messages utilisateur | Terminé | Optimisation des messages de succès, d'erreur et de confirmation pour une meilleure expérience utilisateur |
 | 02/03/2025 | Optimisation SEO | Terminé | Ajout de méta-données linguistiques et d'informations Open Graph pour améliorer le référencement |
 | 02/03/2025 | Finalisation du projet | Terminé | Vérification finale de toutes les fonctionnalités et préparation pour le déploiement |
+
+## Améliorations pour Documents/Protect.vue
+
+Ce document détaille les améliorations à apporter à la page de protection de documents (Protect.vue), suite à l'analyse de sa structure et de ses fonctionnalités.
+
+### Structure et organisation du code
+
+- [x] Refactoriser la structure de la page en composants réutilisables
+  - [x] Créer un composant `DocumentUploader.vue` pour la zone de téléversement de fichiers
+  - [x] Créer un composant `ProtectedDocumentList.vue` pour la liste des documents
+  - [x] Créer un composant `DocumentCard.vue` pour l'affichage individuel des documents
+  - [x] Refactoriser la vue principale pour utiliser ces composants
+
+### Interface utilisateur
+
+- [x] Améliorer la zone de téléversement
+  - [x] Ajouter un système de glisser-déposer (drag and drop)
+  - [x] Ajouter une prévisualisation des documents téléversés
+    - [x] Prévisualisation directe des images (JPG, PNG, etc.)
+    - [x] Prévisualisation des PDF avec lien pour ouverture dans nouvel onglet
+    - [x] Adaptation dynamique de l'interface selon le type de fichier
+  - [ ] Améliorer les animations de téléversement
+  - [ ] Ajouter un indicateur de progression
+
+- [x] Enrichir la présentation des documents protégés
+  - [x] Transformer la liste en une grille de cartes visuelles pour chaque document
+  - [x] Intégrer les miniatures des documents quand possible (pour images/PDF)
+  - [x] Ajouter des badges d'état et de type de fichier plus visibles
+  - [x] Améliorer l'interface avec des effets de survol et transitions
+  - [x] Ajouter des options de tri et de filtrage
+
+- [x] Améliorer les filigranages et options de protection
+  - [ ] Ajouter des préréglages de filigrane (modes confidentiel, brouillon, etc.)
+  - [x] Implémenter le filigranage pour les fichiers PDF avec transparence et rotation
+  - [x] Optimiser la visibilité et le positionnement du filigrane en arrière-plan
+  - [x] Ajuster les options de couleur et d'opacité pour le filigrane
+  - [ ] Proposer des options de protection supplémentaires (mot de passe, expiration)
+
+### Expérience utilisateur
+
+- [ ] Améliorer les interactions et le feedback
+  - [ ] Ajouter des animations lors des actions (téléversement, téléchargement)
+  - [ ] Améliorer les messages de confirmation et d'erreur
+  - [ ] Ajouter des tooltips explicatifs pour les différentes options
+  - [ ] Intégrer des notifications pour les opérations longues
+
+- [ ] Faciliter la gestion des documents
+  - [ ] Implémenter la fonctionnalité de recherche dans les documents
+  - [ ] Ajouter un système de tags ou de catégories
+  - [ ] Permettre l'organisation en dossiers ou collections
+  - [ ] Ajouter un historique des versions pour chaque document
+
+- [ ] Optimiser pour tous les appareils
+  - [ ] Améliorer la vue sur mobile et tablette
+  - [ ] Adapter l'interface de téléversement pour les écrans tactiles
+  - [ ] Assurer une expérience cohérente sur tous les navigateurs
+
+### Accessibilité et performance
+
+- [ ] Renforcer l'accessibilité
+  - [ ] Ajouter des attributs ARIA appropriés
+  - [ ] Améliorer la navigation au clavier
+  - [ ] S'assurer que les contrastes de couleurs sont suffisants
+  - [ ] Tester avec des lecteurs d'écran
+
+- [ ] Optimiser les performances
+  - [ ] Implémenter le chargement paresseux (lazy loading) pour les documents
+  - [ ] Optimiser le traitement des fichiers côté client
+  - [ ] Améliorer la mise en cache des documents récents
+
+### Nouvelles fonctionnalités
+
+- [ ] Ajouter des fonctionnalités avancées
+  - [ ] Permettre le partage sécurisé des documents protégés
+  - [ ] Ajouter un suivi des consultations de documents
+  - [ ] Intégrer une visionneuse de documents en ligne
+  - [ ] Ajouter la possibilité d'ajouter des annotations ou des commentaires
+
+- [ ] Intégrer avec d'autres services
+  - [ ] Permettre l'importation depuis des services cloud (Google Drive, Dropbox)
+  - [ ] Ajouter l'exportation vers différents formats
+  - [ ] Proposer l'intégration avec des outils de signature électronique
+
+### Tableau de bord de progression
+
+| Date | Tâche | Statut | Description |
+|------|-------|--------|-------------|
+| 03/03/2025 | Analyse initiale de la page Documents/Protect.vue | Terminé | Évaluation de la structure actuelle et identification des améliorations potentielles |
+| 03/03/2025 | Refactorisation de la structure du code de Documents/Protect.vue | Terminé | Création des composants réutilisables DocumentUploader, DocumentCard et ProtectedDocumentList, et refactorisation de la vue principale |
+| 03/03/2025 | Correction des bugs liés à la refactorisation | Terminé | Correction des vérifications de valeurs null dans les composants pour éviter les erreurs et amélioration de la robustesse du code |
+| 03/03/2025 | Amélioration du système de filigranage PDF | Terminé | Résolution des problèmes avec le filigranage PDF, optimisation de la visibilité et de la position du filigrane en arrière-plan, amélioration de la robustesse de la classe ExtendedFpdi |
