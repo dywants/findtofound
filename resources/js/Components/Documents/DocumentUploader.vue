@@ -5,13 +5,27 @@
         </label>
         <div
             class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-blue-400 transition-colors duration-300"
-            :class="{ 'border-blue-500 bg-blue-50': isDragging }"
+            :class="{
+                'border-blue-500 bg-blue-50': isDragging,
+                'border-green-500 bg-green-50': selectedFile && selectedFile.name && !isDragging
+            }"
             @dragover.prevent="isDragging = true"
             @dragleave.prevent="isDragging = false"
             @drop.prevent="onDrop"
         >
             <div class="space-y-1 text-center w-full">
-                <template v-if="selectedFile && selectedFile.value && previewUrl">
+                <!-- Indicateur de chargement réussi -->
+                <div v-if="selectedFile && selectedFile.name" class="mb-3">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        Fichier prêt
+                    </div>
+                </div>
+
+                <!-- Prévisualisations -->
+                <template v-if="selectedFile && selectedFile.name && previewUrl">
                     <!-- Prévisualisation pour les images -->
                     <div v-if="isImage" class="mb-4 max-h-60 overflow-hidden rounded-md border border-gray-200 bg-white">
                         <img :src="previewUrl" alt="Prévisualisation" class="mx-auto max-h-60 object-contain" />
@@ -40,12 +54,12 @@
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </template>
-                <div class="flex flex-col sm:flex-row text-sm text-gray-600 justify-center">
+                <div class="flex flex-col sm:flex-row text-sm text-gray-600 justify-center mt-2">
                     <label
                         :for="props.id"
-                        class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
+                        class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500 px-3 py-1 border border-blue-200"
                     >
-                        <span>{{ selectedFile && selectedFile.value ? 'Changer de fichier' : 'Téléverser un fichier' }}</span>
+                        <span>{{ selectedFile && selectedFile.name ? 'Changer de fichier' : 'Téléverser un fichier' }}</span>
                         <input
                             :id="props.id"
                             type="file"
@@ -55,18 +69,18 @@
                             :aria-describedby="`${props.id}-info`"
                         >
                     </label>
-                    <p v-if="isDragging" class="pl-1 sm:mt-0">ou déposez le fichier ici</p>
-                    <p v-else-if="!selectedFile || !selectedFile.value" class="pl-1 sm:mt-0">ou glissez-déposez</p>
+                    <p v-if="isDragging" class="pl-1 sm:mt-0 py-1">ou déposez le fichier ici</p>
+                    <p v-else-if="!selectedFile || !selectedFile.name" class="pl-1 sm:mt-0 py-1">ou glissez-déposez</p>
                 </div>
-                <p :id="`${props.id}-info`" class="text-xs text-gray-500 text-center sm:text-left">
+                <p :id="`${props.id}-info`" class="text-xs text-gray-500 text-center sm:text-left mt-2">
                     {{ props.formatInfo }}
                 </p>
-                <div v-if="selectedFile && selectedFile.value" class="mt-3 text-sm bg-blue-50 border border-blue-200 rounded-md p-2 flex items-center justify-between">
-                    <div class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                <div v-if="selectedFile && selectedFile.name" class="mt-3 text-sm bg-blue-50 border border-blue-200 rounded-md p-2 flex items-center justify-between">
+                    <div class="flex items-center max-w-[80%]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-600 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
-                        <span class="font-medium text-blue-700">{{ selectedFile.value.name }}</span>
+                        <span class="font-medium text-blue-700 truncate">{{ selectedFile.name }}</span>
                     </div>
                     <button @click="clearSelection" class="p-1 hover:bg-blue-100 rounded-full transition-colors duration-200" title="Supprimer le fichier">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 hover:text-blue-700" viewBox="0 0 20 20" fill="currentColor">
@@ -124,12 +138,14 @@ const previewUrl = ref(null);
 // Computed properties for file types
 const isImage = computed(() => {
     if (!selectedFile.value) return false;
-    return /\.(jpg|jpeg|png|gif|webp)$/i.test(selectedFile.value.name);
+    const fileName = typeof selectedFile.value === 'object' ? selectedFile.value.name : '';
+    return /\.(jpg|jpeg|png|gif|webp)$/i.test(fileName);
 });
 
 const isPdf = computed(() => {
     if (!selectedFile.value) return false;
-    return /\.pdf$/i.test(selectedFile.value.name);
+    const fileName = typeof selectedFile.value === 'object' ? selectedFile.value.name : '';
+    return /\.pdf$/i.test(fileName);
 });
 
 // Créer une URL pour la prévisualisation du fichier
@@ -143,16 +159,21 @@ const createPreviewUrl = (file) => {
 
     // Création de l'URL pour prévisualiser l'image ou le PDF
     previewUrl.value = URL.createObjectURL(file);
+
+    // Log pour déboguer
+    console.log('Prévisualisation créée:', previewUrl.value);
 };
 
 // Initialiser selectedFile avec modelValue si présent
 if (props.modelValue) {
     selectedFile.value = props.modelValue;
     createPreviewUrl(props.modelValue);
+    console.log('Initialisation avec modelValue:', props.modelValue);
 }
 
 // Watch for prop changes
 watch(() => props.modelValue, (newValue) => {
+    console.log('Prop modelValue changed:', newValue);
     selectedFile.value = newValue;
     if (newValue) {
         createPreviewUrl(newValue);
@@ -169,6 +190,7 @@ watch(() => props.modelValue, (newValue) => {
 const onChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+        console.log('Fichier sélectionné via input:', file.name);
         selectedFile.value = file;
         createPreviewUrl(file);
         emit('update:modelValue', file);
@@ -180,6 +202,7 @@ const onDrop = (event) => {
     isDragging.value = false;
     const file = event.dataTransfer.files[0];
     if (file) {
+        console.log('Fichier déposé:', file.name);
         selectedFile.value = file;
         createPreviewUrl(file);
         emit('update:modelValue', file);
@@ -188,6 +211,7 @@ const onDrop = (event) => {
 };
 
 const clearSelection = () => {
+    console.log('Suppression du fichier');
     // Révoquer l'URL de prévisualisation
     if (previewUrl.value) {
         URL.revokeObjectURL(previewUrl.value);

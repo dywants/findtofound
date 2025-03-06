@@ -196,6 +196,8 @@ const isPdfCompressionError = computed(() => {
         form.errors.document.includes('PDF standard');
 });
 
+// Modifiez cette portion de code dans votre composant parent
+
 const handleFileUpload = (file) => {
     // Le composant DocumentUploader nous envoie directement le fichier
     if (file) {
@@ -204,6 +206,25 @@ const handleFileUpload = (file) => {
 
         // Réinitialiser les erreurs précédentes lors d'un nouvel upload
         form.clearErrors();
+
+        // Ajouter un message visuel de confirmation
+        const confirmationMessage = document.createElement('div');
+        confirmationMessage.className = 'fixed bottom-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-lg flex items-center';
+        confirmationMessage.innerHTML = `
+            <svg class="h-6 w-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span>Fichier "${file.name}" chargé avec succès</span>
+        `;
+
+        document.body.appendChild(confirmationMessage);
+
+        // Supprimer le message après 3 secondes
+        setTimeout(() => {
+            document.body.removeChild(confirmationMessage);
+        }, 3000);
+
+        console.log('Fichier chargé:', file.name);
     }
 };
 
