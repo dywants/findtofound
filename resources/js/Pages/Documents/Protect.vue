@@ -45,6 +45,29 @@
                                 Nouveau document
                             </h2>
 
+                            <!-- Message d'erreur spécifique pour les PDFs avec compression avancée -->
+                            <div v-if="isPdfCompressionError" class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-r-md">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <h3 class="text-sm font-medium text-red-800">PDF non supporté</h3>
+                                        <div class="mt-2 text-sm text-red-700">
+                                            <p>Ce PDF utilise une technique de compression avancée qui n'est pas supportée par notre système.</p>
+                                            <p class="mt-1">Solutions possibles:</p>
+                                            <ul class="list-disc list-inside mt-1">
+                                                <li>Utilisez un PDF standard sans compression avancée</li>
+                                                <li>Réenregistrez votre PDF avec des paramètres standards</li>
+                                                <li>Convertissez votre document en image puis en PDF</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <form @submit.prevent="protect" class="space-y-6">
                                 <!-- Zone de téléversement de document -->
                                 <document-uploader
@@ -135,7 +158,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import { useForm, router } from '@inertiajs/vue3';
 import BreadcrumbNav from '@/Components/BreadcrumbNav.vue';
@@ -164,11 +187,23 @@ const form = useForm({
 
 const selectedFile = ref(null);
 
+// Computed property pour détecter si l'erreur est liée à la compression PDF
+const isPdfCompressionError = computed(() => {
+    if (!form.errors.document) return false;
+
+    return form.errors.document.includes('compression avancée') ||
+        form.errors.document.includes('compression technique') ||
+        form.errors.document.includes('PDF standard');
+});
+
 const handleFileUpload = (file) => {
     // Le composant DocumentUploader nous envoie directement le fichier
     if (file) {
         form.document = file;
         selectedFile.value = file;
+
+        // Réinitialiser les erreurs précédentes lors d'un nouvel upload
+        form.clearErrors();
     }
 };
 
@@ -186,8 +221,8 @@ const protect = () => {
         form.post(route('documents.protect'), {
             // Ne pas préserver le scroll pour forcer le rechargement complet de la page
             preserveScroll: false,
-            preserveState: false,
-            // Recharger complètement la page pour afficher la liste mise à jour
+            preserveState: true, // Garder l'état pour afficher les erreurs correctement
+            // Recharger complètement la page après succès
             onSuccess: () => {
                 form.reset();
                 selectedFile.value = null;
@@ -196,12 +231,21 @@ const protect = () => {
                     window.location.reload();
                 }, 500);
             },
-            onError: () => {
-                // Scroll vers les erreurs pour améliorer l'UX
+            onError: (errors) => {
+                // Scroll vers le message d'erreur pour améliorer l'UX
                 setTimeout(() => {
-                    const firstErrorEl = document.querySelector('.text-red-500');
-                    if (firstErrorEl) {
-                        firstErrorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    if (isPdfCompressionError.value) {
+                        // Scroller vers le message d'erreur spécifique de compression PDF
+                        const errorEl = document.querySelector('.bg-red-50');
+                        if (errorEl) {
+                            errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    } else {
+                        // Scroller vers la première erreur générique
+                        const firstErrorEl = document.querySelector('.text-red-500');
+                        if (firstErrorEl) {
+                            firstErrorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
                     }
                 }, 100);
             }

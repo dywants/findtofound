@@ -89,8 +89,14 @@ class DocumentProtectionController extends Controller
                 $options
             );
 
+            // Pour debug - vérifier l'extension du fichier généré
+            Log::info('Fichier protégé généré', [
+                'filename' => $filename,
+                'extension' => pathinfo($filename, PATHINFO_EXTENSION)
+            ]);
+
             // Créer l'enregistrement en base de données avec les options
-            $this->documentService->createDocumentRecord(
+            $document = $this->documentService->createDocumentRecord(
                 auth()->id(),
                 $filename,
                 $request->file('document')->getClientOriginalName(),
@@ -99,9 +105,24 @@ class DocumentProtectionController extends Controller
                 $options
             );
 
+            // Pour debug - vérifier les noms enregistrés en base
+            Log::info('Document enregistré en base de données', [
+                'id' => $document->id,
+                'filename' => $document->filename,
+                'original_name' => $document->original_name
+            ]);
+
             return redirect()->route('documents.protect')
                 ->with('success', 'Votre document a été protégé avec succès. Vous pouvez maintenant le télécharger depuis la liste ci-dessous.');
         } catch (\Exception $e) {
+            // Vérifier si c'est l'erreur de compression PDF non supportée (code 1001)
+            if ($e->getCode() === 1001) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors([
+                        'document' => 'Ce PDF utilise une technique de compression avancée qui n\'est pas supportée. Veuillez utiliser un PDF standard ou contacter le support pour plus d\'informations.'
+                    ]);
+            }
             // Journaliser l'erreur pour le debugging
             Log::error('Erreur lors de la protection du document', [
                 'error' => $e->getMessage(),
@@ -129,6 +150,12 @@ class DocumentProtectionController extends Controller
         // Vérifier que le fichier existe
         if (!Storage::disk('protected_docs')->exists($document->filename)) {
             abort(404, 'Le fichier demandé n\'existe plus sur le serveur.');
+        }
+
+        // S'assurer que le nom de téléchargement a l'extension PDF
+        $downloadName = $document->original_name;
+        if (!str_ends_with(strtolower($downloadName), '.pdf')) {
+            $downloadName = pathinfo($downloadName, PATHINFO_FILENAME) . '.pdf';
         }
 
         return Storage::disk('protected_docs')->download(
