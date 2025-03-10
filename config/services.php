@@ -39,4 +39,19 @@ return [
         'sandbox' => env('PAYPAL_MODE', 'sandbox') === 'sandbox',
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Services de taux de change
+    |--------------------------------------------------------------------------
+    |
+    | Configuration des services pour obtenir les taux de change entre devises.
+    |
+    */
+    'exchange_rate' => [
+        'key' => env('EXCHANGE_RATE_API_KEY'),
+        'provider' => env('EXCHANGE_RATE_PROVIDER', 'exchangerate-api'),
+        'base_currency' => env('EXCHANGE_RATE_BASE_CURRENCY', 'EUR'),
+        'update_frequency' => env('EXCHANGE_RATE_UPDATE_FREQUENCY', 'daily'), // daily, weekly, manual
+    ],
+
 ];

@@ -16,5 +16,10 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         \App\Models\Faq::factory(6)->create();
+        
+        // Seeder pour les plans d'abonnement
+        $this->call([
+            SubscriptionPlanSeeder::class,
+        ]);
     }
 }

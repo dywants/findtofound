@@ -7,6 +7,7 @@ use App\Http\Controllers\DocumentProtectionController;
 use App\Http\Controllers\FaqsIndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaypalController;
+use App\Http\Controllers\SubscriptionPlanController;
 use App\Http\Controllers\TheFindController;
 use App\Http\Controllers\TheFoundController;
 use App\Http\Controllers\UserController;
@@ -42,6 +43,40 @@ Route::get('/icon-test', function() {
     return \Inertia\Inertia::render('IconTest');
 })->name('icon.test');
 
+// Routes pour les plans d'abonnement
+Route::get('/abonnements', [SubscriptionPlanController::class, 'show'])->name('subscription.plans');
+Route::get('/api/subscription-plans', [SubscriptionPlanController::class, 'index'])->name('subscription-plans.index');
+Route::get('/api/subscription-plans/{id}', [SubscriptionPlanController::class, 'getById'])->name('subscription-plans.show');
+Route::post('/api/subscription-plans/price', [SubscriptionPlanController::class, 'getPriceInCurrency'])->name('subscription-plans.price');
+// Routes pour la souscription
+Route::get('/subscription/confirm/{planId}', [SubscriptionPlanController::class, 'confirmSubscription'])->name('subscription.confirm');
+Route::post('/subscription/process', [SubscriptionPlanController::class, 'processSubscription'])->name('subscription.process');
+
+// Routes pour les paiements PayPal
+Route::prefix('payment/paypal')->group(function () {
+    Route::get('/return', [\App\Http\Controllers\PaymentControllers\PaypalController::class, 'return'])->name('paypal.return');
+    Route::get('/cancel', [\App\Http\Controllers\PaymentControllers\PaypalController::class, 'cancel'])->name('paypal.cancel');
+    Route::post('/webhook', [\App\Http\Controllers\PaymentControllers\PaypalController::class, 'webhook'])->name('paypal.webhook');
+});
+
+// Routes pour les paiements Afrikpay
+Route::prefix('payment/afrikpay')->group(function () {
+    Route::get('/return', [\App\Http\Controllers\PaymentControllers\AfrikpayController::class, 'return'])->name('afrikpay.return');
+    Route::get('/cancel', [\App\Http\Controllers\PaymentControllers\AfrikpayController::class, 'cancel'])->name('afrikpay.cancel');
+    Route::post('/webhook', [\App\Http\Controllers\PaymentControllers\AfrikpayController::class, 'webhook'])->name('afrikpay.webhook');
+});
+
+// Routes pour les paiements Flutterwave
+Route::prefix('payment/flutterwave')->group(function () {
+    Route::get('/return', [\App\Http\Controllers\PaymentControllers\FlutterwaveController::class, 'return'])->name('flutterwave.return');
+    Route::post('/webhook', [\App\Http\Controllers\PaymentControllers\FlutterwaveController::class, 'webhook'])->name('flutterwave.webhook');
+});
+
+// Pages de résultat de paiement
+Route::get('/subscription/success', [SubscriptionPlanController::class, 'showSuccessPage'])->name('subscription.success');
+Route::get('/subscription/payment/error', [SubscriptionPlanController::class, 'showErrorPage'])->name('subscription.payment.error');
+Route::get('/subscription/payment/cancelled', [SubscriptionPlanController::class, 'showCancelledPage'])->name('subscription.payment.cancelled');
+
 Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('dashboard');
     Route::get('/liste-piece-trouvee', [UserController::class, 'listing'])->name('find.list');
@@ -66,6 +101,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function (){
     Route::delete('/find/{id}', [AdminController::class, 'destroy'])->name('admin.find.destroy');
     Route::resource('faq', \App\Http\Controllers\Admin\FaqsController::class);
     Route::resource('piece', \App\Http\Controllers\Admin\PieceController::class);
+    
+    // Routes pour la gestion des plans d'abonnement
+    Route::resource('subscription-plans', \App\Http\Controllers\Admin\SubscriptionPlanController::class);
+    
+    // Routes pour la gestion des devises
+    Route::resource('currencies', \App\Http\Controllers\Admin\CurrencyController::class);
+    Route::post('/currencies/sync-rates', [\App\Http\Controllers\Admin\CurrencyController::class, 'syncRates'])->name('currencies.sync-rates');
 });
 
 Route::middleware(['auth', 'verified'])->group(function (){

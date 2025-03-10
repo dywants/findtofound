@@ -20,19 +20,21 @@
             </div>
         </div>
         <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8">
-        <div class="block text-sm text-gray-500 sm:text-center">
-            <p>&copy; {{ new Date().getFullYear() }} DocuTrace . Tous droits réservés.</p>
+        <div class="sm:flex sm:items-center sm:justify-between text-sm text-gray-500">
+            <p class="mb-4 sm:mb-0">&copy; {{ new Date().getFullYear() }} DocuTrace . Tous droits réservés.</p>
+            
+            <!-- Sélecteur de devises -->
+            <div class="flex items-center justify-center sm:justify-end">
+                <span class="mr-2">Devise:</span>
+                <CurrencySelector />
+            </div>
         </div>
     </footer>
-
 </template>
 
-<script>
+<script setup>
 import TheLogo from "@/Components/TheLogo";
-export default {
-    name: "TheFooter",
-    components: { TheLogo }
-}
+import CurrencySelector from "@/Components/CurrencySelector";
 </script>
 
 <style scoped></style>

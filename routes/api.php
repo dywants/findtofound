@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CurrencyController;
 use App\Http\Controllers\Api\StatsController;
 use App\Http\Controllers\EnumController;
 use Illuminate\Http\Request;
@@ -22,3 +23,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/stats', [StatsController::class, 'index']);
 Route::get('/enums/piece-conditions', [EnumController::class, 'pieceConditions']);
+
+// Routes API pour les devises
+Route::prefix('currencies')->name('api.currencies.')->group(function () {
+    Route::get('/', [CurrencyController::class, 'index'])->name('index');
+    Route::get('/rates', [CurrencyController::class, 'getRates'])->name('rates');
+    Route::get('/{code}', [CurrencyController::class, 'show'])->name('show');
+    Route::post('/convert', [CurrencyController::class, 'convert'])->name('convert');
+});

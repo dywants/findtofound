@@ -26,7 +26,14 @@ class DocumentProtectionController extends Controller
      */
     public function home()
     {
-        return Inertia::render('Documents/Home');
+        // Récupérer les plans de souscription actifs, triés par ordre
+        $subscriptionPlans = \App\Models\SubscriptionPlan::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+            
+        return Inertia::render('Documents/Home', [
+            'subscriptionPlans' => $subscriptionPlans
+        ]);
     }
 
     /**

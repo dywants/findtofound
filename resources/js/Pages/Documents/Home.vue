@@ -334,6 +334,156 @@
                 </div>
             </div>
 
+            <!-- Plans de souscription -->
+            <div ref="pricingSection" class="py-16 bg-blue-50 opacity-0">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-6">
+                        <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Nos Plans de Souscription</h2>
+                        <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+                            Choisissez le plan qui correspond le mieux à vos besoins
+                        </p>
+                    </div>
+
+                    <!-- Sélecteur de période de facturation -->
+                    <div class="flex justify-center mb-8">
+                        <div class="inline-flex items-center rounded-md shadow-sm bg-white p-1">
+                            <button @click="selectedBillingPeriod = 'monthly'" :class="{
+                                'bg-blue-500 text-white': selectedBillingPeriod === 'monthly',
+                                'bg-white text-gray-700 hover:bg-gray-50': selectedBillingPeriod !== 'monthly'
+                            }" class="px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200">
+                                Mensuel
+                            </button>
+                            <button @click="selectedBillingPeriod = 'annual'" :class="{
+                                'bg-blue-500 text-white': selectedBillingPeriod === 'annual',
+                                'bg-white text-gray-700 hover:bg-gray-50': selectedBillingPeriod !== 'annual'
+                            }" class="px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200">
+                                Annuel <span v-if="selectedBillingPeriod === 'annual'"
+                                    class="ml-1 px-1.5 py-0.5 bg-green-100 text-green-800 text-xs font-medium rounded-full">-20%</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tableau comparatif interactif -->
+                    <div class="overflow-x-auto">
+                        <div class="min-w-full bg-white rounded-lg shadow-lg overflow-hidden">
+                            <!-- En-têtes des plans -->
+                            <div class="grid grid-cols-4 gap-px bg-gray-200">
+                                <div class="bg-gray-100 p-6 text-left font-medium text-gray-500">
+                                    <span class="text-lg">Fonctionnalités</span>
+                                </div>
+                                <div v-for="(plan, index) in plansWithSavings" :key="plan.id"
+                                    class="bg-white p-6 text-center transition-all duration-300 hover:bg-blue-50 border-b-4"
+                                    :class="{ 'border-blue-300': index === 0, 'border-blue-500': index === 1, 'border-blue-700': index === plansWithSavings.length - 1 }">
+                                    <h3 class="text-xl font-bold text-gray-900">{{ plan.name }}</h3>
+                                    <div class="mt-2 flex items-baseline justify-center">
+                                        <span class="text-2xl font-extrabold text-gray-900">{{ getPlanPrice(plan)
+                                        }}</span>
+                                        <span class="ml-1 text-gray-500">{{ getFrequency() }}</span>
+                                    </div>
+                                    <div v-if="selectedBillingPeriod === 'annual' && plan.savingsPercent > 0"
+                                        class="mt-1 text-green-600 text-sm font-medium">
+                                        Économisez {{ plan.savingsPercent }}%
+                                    </div>
+                                    <div class="mt-4">
+                                        <button
+                                            @click="selectPlan(plan.id)"
+                                            class="px-4 py-2 rounded-md text-sm font-medium shadow-sm transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-full"
+                                            :class="{
+                                                'bg-blue-100 text-blue-700 hover:bg-blue-200': plan.id === 'basic',
+                                                'bg-blue-500 text-white hover:bg-blue-600': plan.id === 'standard',
+                                                'bg-blue-700 text-white hover:bg-blue-800': plan.id === 'premium'
+                                            }">
+                                            {{ plan.cta }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Caractéristiques -->
+                            <div v-for="(feature, featureIndex) in features" :key="featureIndex"
+                                class="grid grid-cols-4 gap-px border-b border-gray-200 last:border-b-0">
+                                <div class="p-4 sm:p-6 bg-gray-50 flex items-center">
+                                    <div class="flex items-center">
+                                        <Icon :name="feature.icon" class="h-5 w-5 text-blue-500 mr-2" />
+                                        <span class="font-medium text-gray-900">{{ feature.name }}</span>
+                                    </div>
+                                    <div v-if="feature.tooltip" class="relative ml-2 group">
+                                        <button class="text-gray-400 hover:text-gray-500 focus:outline-none">
+                                            <Icon name="question-mark-circle" class="h-4 w-4" />
+                                        </button>
+                                        <div class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-64 p-2 bg-gray-800 text-white text-xs rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none">
+                                            {{ feature.tooltip }}
+                                            <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-800 transform rotate-45"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-for="(plan, planIndex) in plansWithSavings"
+                                    :key="featureIndex + '-' + planIndex"
+                                    class="p-4 sm:p-6 text-center bg-white transition-all duration-300 hover:bg-blue-50">
+                                    <div v-if="feature.key && plan.features && typeof plan.features[feature.key] === 'boolean'">
+                                        <Icon v-if="plan.features[feature.key]" name="check"
+                                            class="h-5 w-5 mx-auto text-green-500" />
+                                        <Icon v-else name="x" class="h-5 w-5 mx-auto text-red-500" />
+                                    </div>
+                                    <div v-else-if="feature.key && plan.features && plan.features[feature.key] !== undefined" class="text-sm sm:text-base text-gray-900">
+                                        <template v-if="feature.key === 'document_types' && Array.isArray(plan.features[feature.key])">
+                                            <div class="flex flex-wrap justify-center gap-1">
+                                                <span v-for="(format, i) in plan.features[feature.key]" :key="i"
+                                                    class="px-1.5 py-0.5 bg-blue-100 text-blue-800 text-xs font-medium rounded">
+                                                    {{ format.toUpperCase() }}
+                                                </span>
+                                            </div>
+                                        </template>
+                                        <template v-else-if="feature.key === 'monthly_generations' && plan.features[feature.key] === -1">
+                                            <span class="font-medium text-green-600">Illimité</span>
+                                        </template>
+                                        <template v-else-if="feature.key === 'monthly_generations' && plan.features[feature.key] > 0">
+                                            {{ plan.features[feature.key] }} <span class="text-xs text-gray-500">/mois</span>
+                                        </template>
+                                        <template v-else-if="feature.key === 'storage_duration' && plan.features[feature.key] === -1">
+                                            <span class="font-medium">Permanent</span>
+                                        </template>
+                                        <template v-else-if="feature.key === 'storage_duration' && plan.features[feature.key] > 30">
+                                            {{ Math.floor(plan.features[feature.key] / 30) }} <span class="text-xs text-gray-500">mois</span>
+                                        </template>
+                                        <template v-else-if="feature.key === 'storage_duration'">
+                                            {{ plan.features[feature.key] }} <span class="text-xs text-gray-500">jours</span>
+                                        </template>
+                                        <template v-else-if="feature.key === 'max_document_size'">
+                                            {{ plan.features[feature.key] }} <span class="text-xs text-gray-500">MB</span>
+                                        </template>
+                                        <template v-else>
+                                            {{ plan.features[feature.key] }}
+                                        </template>
+                                    </div>
+                                    <div v-else class="text-sm sm:text-base text-gray-500">
+                                        -
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Badges des avantages sous le tableau -->
+                    <div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3">
+                        <div v-for="(benefit, index) in additionalBenefits" :key="index"
+                            class="bg-white overflow-hidden shadow rounded-lg hover-grow">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
+                                        <Icon :name="benefit.icon" class="h-6 w-6 text-white" />
+                                    </div>
+                                    <div class="ml-5">
+                                        <h3 class="text-lg font-medium text-gray-900">{{ benefit.title }}</h3>
+                                        <p class="mt-2 text-sm text-gray-500">{{ benefit.description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- FAQ -->
             <div ref="faqSection" class="py-12 bg-gray-50 opacity-0">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -417,17 +567,145 @@
 </template>
 
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import Icon from '@/Components/Icon.vue';
 import Layout from '@/Layouts/Layout.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
+
+// Récupération des plans de souscription depuis les props
+const props = defineProps({
+    subscriptionPlans: Array,
+    auth: Object
+});
 
 // Référence aux sections pour l'animation au défilement
 const howItWorksSection = ref(null);
 const benefitsSection = ref(null);
 const exampleSection = ref(null);
 const formatsSection = ref(null);
+const pricingSection = ref(null);
 const faqSection = ref(null);
+
+// Données pour les plans de souscription
+const selectedBillingPeriod = ref('monthly'); // 'monthly' ou 'annual'
+
+// Calcul du pourcentage d'économie pour les plans annuels
+const plansWithSavings = computed(() => {
+    return props.subscriptionPlans.map(plan => {
+        // Calculer le pourcentage d'économie entre mensuel et annuel
+        const monthlyCost = parseFloat(plan.price_monthly);
+        const yearlyCost = parseFloat(plan.price_yearly);
+        const annualAsMonthly = yearlyCost / 12;
+        
+        let savingsPercent = 0;
+        if (monthlyCost > 0) {
+            savingsPercent = Math.round(((monthlyCost - annualAsMonthly) / monthlyCost) * 100);
+        }
+        
+        // Déterminer le CTA en fonction du prix et du nombre de jours d'essai
+        const trialDays = plan.features?.trial_days || 14; // Utiliser la valeur des features ou 14 jours par défaut
+        const cta = plan.price_monthly == 0 ? 'Commencer' : `Essai ${trialDays} jours`;
+        
+        return {
+            ...plan,
+            savingsPercent,
+            cta
+        };
+    });
+});
+
+// Fonction pour obtenir le prix en fonction de la période de facturation
+const getPlanPrice = (plan) => {
+    const price = selectedBillingPeriod.value === 'monthly' ? plan.price_monthly : plan.price_yearly;
+    const currency = plan.currency ? plan.currency.symbol : '€';
+    return `${price}${currency}`;
+};
+
+// Fonction pour obtenir la fréquence d'affichage
+const getFrequency = () => {
+    return selectedBillingPeriod.value === 'monthly' ? '/mois' : '/an';
+};
+
+// Fonction pour sélectionner un plan et rediriger vers la page de confirmation
+const selectPlan = (planId) => {
+    // Vérifier si l'utilisateur est connecté
+    if (!props.auth || !props.auth.user) {
+        // Si non connecté, rediriger vers la page de connexion avec un paramètre de retour
+        router.visit(route('login', { redirect: 'subscription' }));
+        return;
+    }
+    
+    // Si connecté, rediriger vers la page de confirmation avec les paramètres du plan
+    router.visit(route('subscription.confirm', { 
+        planId: planId,
+        billingPeriod: selectedBillingPeriod.value 
+    }));
+};
+
+// Fonctionnalités comparées
+const features = [
+    {
+        name: 'Documents protégés',
+        icon: 'document',
+        key: 'monthly_generations',
+        tooltip: "Nombre de documents que vous pouvez protéger chaque mois."
+    },
+    {
+        name: 'Taille maximale des fichiers',
+        icon: 'document-download',
+        key: 'max_document_size',
+        tooltip: 'Taille maximale par document que vous pouvez protéger.'
+    },
+    {
+        name: 'Formats supportés',
+        icon: 'document-text',
+        key: 'document_types',
+        tooltip: 'Types de fichiers que vous pouvez protéger avec un filigrane.'
+    },
+    {
+        name: 'Stockage des documents',
+        icon: 'storage',
+        key: 'storage_duration',
+        tooltip: 'Durée pendant laquelle vos documents protégés restent disponibles.'
+    },
+    {
+        name: 'Options avancées de filigrane',
+        icon: 'pencil',
+        key: 'advanced_options',
+        tooltip: 'Personnalisation de l\'opacité, rotation, taille et positionnement du filigrane.'
+    },
+    {
+        name: 'Traitement par lots',
+        icon: 'collection',
+        key: 'batch_processing',
+        tooltip: 'Protégez plusieurs documents en une seule opération.'
+    },
+    {
+        name: 'Utilisateurs par compte',
+        icon: 'user',
+        key: 'users_per_account',
+        tooltip: 'Nombre d\'utilisateurs pouvant accéder à votre compte.'
+    }
+];
+
+// Avantages supplémentaires
+const additionalBenefits = [
+    {
+        icon: 'shield-check',
+        title: 'Sécurité renforcée',
+        description: 'Vos documents sont traités avec les plus hauts standards de sécurité.'
+    },
+    {
+        icon: 'credit-card',
+        title: 'Annulation facile',
+        description: 'Annulez votre abonnement à tout moment, sans frais supplémentaires.'
+    },
+    {
+        icon: 'support',
+        title: 'Support client',
+        description: 'Notre équipe d\'experts est disponible pour répondre à vos questions.'
+    }
+];
 
 // Fonction pour initialiser l'observation des sections
 onMounted(() => {
@@ -436,6 +714,7 @@ onMounted(() => {
         benefitsSection.value,
         exampleSection.value,
         formatsSection.value,
+        pricingSection.value,
         faqSection.value
     ];
 
@@ -509,6 +788,7 @@ onMounted(() => {
 [ref="howItWorksSection"],
 [ref="benefitsSection"],
 [ref="formatsSection"],
+[ref="pricingSection"],
 [ref="faqSection"] {
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
     will-change: opacity, transform;
