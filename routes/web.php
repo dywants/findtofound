@@ -87,7 +87,7 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
     Route::put('/changed-password/{user}', [UserController::class, 'updatePassword'])->name('user.update.password');
 });
 
-Route::middleware(['auth', 'verified'])->prefix('admin')->group(function (){
+Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->group(function (){
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
     Route::get('/new-user', [AdminController::class, 'create'])->name('admin.new.user');
