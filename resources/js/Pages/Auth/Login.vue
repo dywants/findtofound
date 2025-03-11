@@ -1,6 +1,6 @@
 <template>
 
-    <Head title="Connexion - FindToFound" />
+    <Head title="Connexion - DocuTrace" />
 
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
         <!-- Header avec logo -->
@@ -8,10 +8,9 @@
             <div class="max-w-7xl mx-auto flex justify-between items-center">
                 <Link :href="route('home')" class="flex items-center space-x-2">
                 <img src="/images/logo.svg" alt="FindToFound Logo" class="h-8 w-auto" />
-                <span class="text-xl font-bold text-gray-900">FindToFound</span>
                 </Link>
-                <Link :href="route('find.register')" class="text-sm font-medium text-gray-600 hover:text-gray-900">
-                Pas encore de compte ? <span class="text-blue-600 hover:text-blue-700">Déclarer une pièce trouvée</span>
+                <Link :href="route('register')" class="text-sm font-medium text-gray-600 hover:text-gray-900">
+                Pas encore de compte ? <span class="text-blue-600 hover:text-blue-700">Créer un compte</span>
                 </Link>
             </div>
         </header>
@@ -120,17 +119,17 @@
 
                     <!-- Boutons de connexion sociale -->
                     <div class="mt-6 grid grid-cols-2 gap-3">
-                        <a href="#"
-                            class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                        <Link :href="route('auth.google')"
+                            class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-all duration-200 hover:shadow">
                             <img class="h-5 w-5" src="/images/google.svg" alt="Google" />
                             <span class="ml-2">Google</span>
-                        </a>
+                        </Link>
 
-                        <a href="#"
-                            class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                        <Link :href="route('auth.facebook')"
+                            class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-all duration-200 hover:shadow">
                             <img class="h-5 w-5" src="/images/facebook.svg" alt="Facebook" />
                             <span class="ml-2">Facebook</span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

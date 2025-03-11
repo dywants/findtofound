@@ -263,6 +263,33 @@ const triggerShake = () => {
                         </div>
                     </div>
 
+                <!-- Séparateur et boutons de connexion sociale -->
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white text-gray-500">Ou inscrivez-vous avec</span>
+                        </div>
+                    </div>
+
+                    <!-- Boutons de connexion sociale -->
+                    <div class="mt-6 grid grid-cols-2 gap-3">
+                        <Link :href="route('auth.google')"
+                            class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-all duration-200 hover:shadow">
+                            <img class="h-5 w-5" src="/images/google.svg" alt="Google" />
+                            <span class="ml-2">Google</span>
+                        </Link>
+
+                        <Link :href="route('auth.facebook')"
+                            class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-all duration-200 hover:shadow">
+                            <img class="h-5 w-5" src="/images/facebook.svg" alt="Facebook" />
+                            <span class="ml-2">Facebook</span>
+                        </Link>
+                    </div>
+                </div>
+                
                 <!-- Boutons d'action -->
                 <div class="flex items-center justify-between pt-4 border-t border-gray-200">
                     <Link :href="route('login')"

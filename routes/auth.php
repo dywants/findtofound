@@ -11,6 +11,14 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
+    // Routes d'authentification sociale
+    Route::get('auth/google', [\App\Http\Controllers\Auth\SocialAuthController::class, 'redirectToGoogle'])
+                ->name('auth.google');
+    Route::get('auth/google/callback', [\App\Http\Controllers\Auth\SocialAuthController::class, 'handleGoogleCallback']);
+                
+    Route::get('auth/facebook', [\App\Http\Controllers\Auth\SocialAuthController::class, 'redirectToFacebook'])
+                ->name('auth.facebook');
+    Route::get('auth/facebook/callback', [\App\Http\Controllers\Auth\SocialAuthController::class, 'handleFacebookCallback']);
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
                 

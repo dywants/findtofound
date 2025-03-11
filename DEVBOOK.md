@@ -723,6 +723,139 @@ Ce document détaille les améliorations à apporter à la page de protection de
 | 03/03/2025 | Correction des bugs liés à la refactorisation                    | Terminé | Correction des vérifications de valeurs null dans les composants pour éviter les erreurs et amélioration de la robustesse du code                                                       |
 | 03/03/2025 | Amélioration du système de filigranage PDF                       | Terminé | Résolution des problèmes avec le filigranage PDF, optimisation de la visibilité et de la position du filigrane en arrière-plan, amélioration de la robustesse de la classe ExtendedFpdi |
 
+## Implémentation de l'authentification sociale (Gmail et Facebook)
+
+### Date: 12/03/2025
+
+### Problèmes identifiés avec le système d'authentification actuel
+
+1. Processus d'inscription trop long qui peut décourager certains utilisateurs
+2. Multiplication des mots de passe pour les utilisateurs qui créent un nouveau compte
+3. Friction lors de l'inscription qui peut conduire à l'abandon du processus
+4. Absence d'option de récupération rapide de compte via identité sociale
+5. Manque d'avatar utilisateur et d'informations de profil pré-remplies
+
+### Plan d'amélioration
+
+#### Étape 1: Configuration du backend avec Laravel Socialite
+
+-   [x] Installation et configuration du package Socialite
+    -   [x] Ajout de Laravel Socialite via Composer
+    -   [x] Configuration des variables d'environnement dans .env
+    -   [x] Configuration des services dans services.php
+
+-   [x] Mise à jour du modèle utilisateur
+    -   [x] Création d'une migration pour ajouter les champs sociaux
+    -   [x] Ajout des colonnes google_id, facebook_id et avatar
+    -   [x] Mise à jour des propriétés $fillable
+
+-   [x] Développement des routes et du contrôleur
+    -   [x] Création des routes de redirection pour Google
+    -   [x] Création des routes de redirection pour Facebook
+    -   [x] Création des routes de callback pour les deux fournisseurs
+
+#### Étape 2: Intégration dans l'interface utilisateur
+
+-   [ ] Mise à jour des composants d'authentification
+    -   [ ] Activation des boutons sociaux dans Login.vue
+    -   [ ] Ajout des boutons sociaux dans Register.vue
+    -   [ ] Implémentation des liens vers les routes appropriées
+
+-   [ ] Amélioration de l'expérience utilisateur
+    -   [ ] Ajout d'animations pour les transitions
+    -   [ ] Feedback visuel pendant le processus d'authentification
+    -   [ ] Gestion des états de chargement
+
+#### Étape 3: Configuration des plateformes externes
+
+-   [ ] Configuration du projet Google Cloud
+    -   [ ] Création du projet dans la console Google Cloud
+    -   [ ] Configuration de l'écran de consentement OAuth
+    -   [ ] Génération des identifiants client
+    -   [ ] Configuration des URI de redirection autorisés
+
+-   [ ] Configuration de l'application Facebook
+    -   [ ] Création de l'application dans Facebook for Developers
+    -   [ ] Configuration des paramètres de connexion Facebook
+    -   [ ] Définition des URL de redirection OAuth
+    -   [ ] Configuration des autorisations de l'application
+
+#### Étape 4: Tests et optimisations
+
+-   [ ] Tests du flux d'authentification complet
+    -   [ ] Test du processus de connexion via Google
+    -   [ ] Test du processus de connexion via Facebook
+    -   [ ] Vérification de la création/mise à jour des comptes
+
+-   [ ] Débogage et résolution des problèmes
+    -   [ ] Gestion des erreurs d'authentification
+    -   [ ] Résolution des problèmes de redirection
+    -   [ ] Gestion des cas particuliers (comptes existants, emails identiques)
+
+-   [ ] Optimisations UI/UX
+    -   [ ] Intégration des avatars dans l'interface utilisateur
+    -   [ ] Gestion automatisée des emails vérifiés via OAuth
+    -   [ ] Implémentation de la liaison de comptes multiples
+
+### Implémentation technique
+
+#### Contrôleur SocialAuthController
+
+Le contrôleur gère les redirections et callbacks pour les deux fournisseurs sociaux:
+
+```php
+// Méthodes pour Google
+public function redirectToGoogle()
+{
+    return Socialite::driver('google')->redirect();
+}
+
+public function handleGoogleCallback()
+{
+    try {
+        $user = Socialite::driver('google')->user();
+        // Logique de création/connexion utilisateur
+    } catch (Exception $e) {
+        // Gestion des erreurs
+    }
+}
+
+// Méthodes similaires pour Facebook
+```
+
+#### Migration pour les champs sociaux
+
+```php
+Schema::table('users', function (Blueprint $table) {
+    $table->string('google_id')->nullable()->after('email');
+    $table->string('facebook_id')->nullable()->after('google_id');
+    $table->string('avatar')->nullable()->after('facebook_id');
+});
+```
+
+#### Intégration frontend
+
+Les boutons sociaux dans Login.vue pointent vers les routes de redirection:
+
+```vue
+<Link :href="route('auth.google')" class="social-button">
+    <img src="/images/google.svg" alt="Google" />
+    <span>Google</span>
+</Link>
+```
+
+### Suivi de l'implémentation
+
+| Date        | Tâche                                   | Statut     | Description                                                                                           |
+|-------------|------------------------------------------|------------|-------------------------------------------------------------------------------------------------------|
+| 12/03/2025  | Installation de Laravel Socialite        | Terminé    | Installation du package et configuration initiale des services                                       |
+| 12/03/2025  | Migration de la base de données         | Terminé    | Ajout des colonnes google_id, facebook_id et avatar à la table users                              |
+| 12/03/2025  | Développement du contrôleur            | Terminé    | Création du SocialAuthController avec les méthodes pour Google et Facebook                        |
+| 13/03/2025  | Intégration frontend                   | En cours   | Activation des boutons sociaux dans les composants Login et Register                               |
+| 13/03/2025  | Configuration des projets externes       | En cours   | Création et configuration des projets sur Google Cloud et Facebook Developer                    |
+| 14/03/2025  | Tests et débogage                      | À faire    | Tests de bout en bout du flux d'authentification et résolution des problèmes                     |
+| 14/03/2025  | Optimisations de l'expérience utilisateur | À faire    | Améliorations de l'interface avec avatars et gestion avancée des comptes                       |
+
 ## Système d'abonnement pour la protection de documents
 
 ### Page de redirection après choix du plan de souscription
@@ -731,67 +864,67 @@ Cette section détaille les étapes nécessaires pour implémenter la redirectio
 
 #### Étape 1 : Modification des boutons CTA dans Home.vue
 
-- [x] Remplacer les boutons statiques par des liens de redirection
-  - [x] Ajouter des attributs `@click` sur les boutons de chaque plan
-  - [x] Créer une méthode `selectPlan(planId)` qui gère la redirection
-  - [x] Passer l'ID du plan sélectionné comme paramètre d'URL
+-   [x] Remplacer les boutons statiques par des liens de redirection
+    -   [x] Ajouter des attributs `@click` sur les boutons de chaque plan
+    -   [x] Créer une méthode `selectPlan(planId)` qui gère la redirection
+    -   [x] Passer l'ID du plan sélectionné comme paramètre d'URL
 
 #### Étape 2 : Création de la page de confirmation et personnalisation
 
-- [x] Créer un nouveau composant `SubscriptionConfirm.vue`
-  - [x] Implémenter un résumé du plan sélectionné (caractéristiques, prix)
-  - [x] Ajouter un formulaire pour les informations de facturation (si nécessaire)
-  - [x] Inclure les options de personnalisation spécifiques au plan choisi
-  - [x] Ajouter la sélection de la méthode de paiement
+-   [x] Créer un nouveau composant `SubscriptionConfirm.vue`
+    -   [x] Implémenter un résumé du plan sélectionné (caractéristiques, prix)
+    -   [x] Ajouter un formulaire pour les informations de facturation (si nécessaire)
+    -   [x] Inclure les options de personnalisation spécifiques au plan choisi
+    -   [x] Ajouter la sélection de la méthode de paiement
 
 #### Étape 3 : Configuration des routes associées
 
-- [x] Ajouter les routes nécessaires dans web.php
-  - [x] Route pour la page de confirmation de l'abonnement
-  - [x] Route pour le traitement du paiement
-- [x] Implémenter les méthodes correspondantes dans le contrôleur
-  - [x] Méthode `confirmSubscription` pour afficher la page de confirmation
-  - [x] Méthode `processSubscription` pour traiter le paiement
-  - [x] Méthodes auxiliaires pour les différentes passerelles de paiement
+-   [x] Ajouter les routes nécessaires dans web.php
+    -   [x] Route pour la page de confirmation de l'abonnement
+    -   [x] Route pour le traitement du paiement
+-   [x] Implémenter les méthodes correspondantes dans le contrôleur
+    -   [x] Méthode `confirmSubscription` pour afficher la page de confirmation
+    -   [x] Méthode `processSubscription` pour traiter le paiement
+    -   [x] Méthodes auxiliaires pour les différentes passerelles de paiement
 
 #### Étape 4 : Implémentation du processus de paiement
 
-- [x] Intégrer avec les passerelles de paiement existantes
-  - [x] Configurer PayPal pour les paiements d'abonnement
-  - [x] Configurer Afrikpay pour prendre en charge les plans d'abonnement
-- [x] Créer les services de paiement standardisés
-  - [x] Implémenter `PaymentServiceInterface` pour uniformiser les méthodes
-  - [x] Créer `PaypalService` pour gérer les paiements PayPal
-  - [x] Créer `AfrikpayService` pour gérer les paiements Afrikpay
-  - [x] Implémenter `PaymentFactory` pour la sélection dynamique des services
-- [x] Créer les endpoints API nécessaires pour traiter le paiement
-  - [x] Routes pour le processus de paiement
-  - [x] Routes pour les webhooks et retours de paiement
-  - [x] Contrôleurs spécifiques pour chaque passerelle de paiement
+-   [x] Intégrer avec les passerelles de paiement existantes
+    -   [x] Configurer PayPal pour les paiements d'abonnement
+    -   [x] Configurer Afrikpay pour prendre en charge les plans d'abonnement
+-   [x] Créer les services de paiement standardisés
+    -   [x] Implémenter `PaymentServiceInterface` pour uniformiser les méthodes
+    -   [x] Créer `PaypalService` pour gérer les paiements PayPal
+    -   [x] Créer `AfrikpayService` pour gérer les paiements Afrikpay
+    -   [x] Implémenter `PaymentFactory` pour la sélection dynamique des services
+-   [x] Créer les endpoints API nécessaires pour traiter le paiement
+    -   [x] Routes pour le processus de paiement
+    -   [x] Routes pour les webhooks et retours de paiement
+    -   [x] Contrôleurs spécifiques pour chaque passerelle de paiement
 
 #### Étape 5 : Gestion post-paiement
 
-- [x] Créer des pages de confirmation de paiement
-  - [x] Page de succès du paiement
-  - [x] Page d'erreur de paiement
-  - [x] Page d'annulation de paiement
-- [ ] Implémenter la logique d'attribution des avantages du plan
-  - [ ] Mettre à jour le niveau d'abonnement de l'utilisateur dans la base de données
-  - [ ] Générer et envoyer une facture par email
-  - [ ] Activer les fonctionnalités correspondant au plan choisi
-- [ ] Configurer les notifications par email
-  - [ ] Email de confirmation d'abonnement
-  - [ ] Détails de facturation et reçu
+-   [x] Créer des pages de confirmation de paiement
+    -   [x] Page de succès du paiement
+    -   [x] Page d'erreur de paiement
+    -   [x] Page d'annulation de paiement
+-   [ ] Implémenter la logique d'attribution des avantages du plan
+    -   [ ] Mettre à jour le niveau d'abonnement de l'utilisateur dans la base de données
+    -   [ ] Générer et envoyer une facture par email
+    -   [ ] Activer les fonctionnalités correspondant au plan choisi
+-   [ ] Configurer les notifications par email
+    -   [ ] Email de confirmation d'abonnement
+    -   [ ] Détails de facturation et reçu
 
 #### Étape 6 : Tests et déploiement
 
-- [ ] Effectuer des tests de bout en bout du parcours utilisateur
-  - [ ] Vérifier toutes les transitions entre les pages
-  - [ ] Tester avec différents plans et modes de paiement
-- [ ] Tester les cas d'erreur et les chemins alternatifs
-  - [ ] Gestion des échecs de paiement
-  - [ ] Annulation pendant le processus
-- [ ] Déployer en production avec surveillance des performances
+-   [ ] Effectuer des tests de bout en bout du parcours utilisateur
+    -   [ ] Vérifier toutes les transitions entre les pages
+    -   [ ] Tester avec différents plans et modes de paiement
+-   [ ] Tester les cas d'erreur et les chemins alternatifs
+    -   [ ] Gestion des échecs de paiement
+    -   [ ] Annulation pendant le processus
+-   [ ] Déployer en production avec surveillance des performances
 
 ### Objectifs
 
@@ -1007,7 +1140,7 @@ Pour offrir une expérience adaptée au marché africain et international, le sy
         - [ ] Créer un middleware `DetectUserCurrency` qui s'exécute sur chaque requête
     - [ ] Associer les pays aux devises appropriées
         - [ ] Créer une table `country_currency` avec la relation entre pays (code ISO) et devise
-        - [ ] Définir les associations : 
+        - [ ] Définir les associations :
             - Cameroun, Gabon, Congo, RCA, Tchad, Guinée Équatoriale → XAF
             - Sénégal, Mali, Côte d'Ivoire, Bénin, Burkina Faso, Togo, Niger, Guinée-Bissau → XOF
             - Zone Euro → EUR

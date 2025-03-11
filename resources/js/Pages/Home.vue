@@ -10,46 +10,74 @@
                 <div class="flex flex-col md:flex-row items-center gap-12">
                     <div class="w-full md:w-1/2 space-y-6">
                         <div class="animate-fade-in-up">
-                            <p class="text-blue-600 font-semibold text-lg">— Protection & Récupération</p>
+                            <p class="text-blue-600 font-semibold text-lg">— Protection Avancée & Récupération</p>
                             <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mt-4">
-                                Sécurisez et retrouvez vos documents importants
+                                Protégez vos documents avec des filigranes intelligents
                             </h1>
                         </div>
                         <div class="prose prose-lg text-gray-600 animate-fade-in-up delay-100">
                             <p class="text-lg">
                                 <span class="font-bold">Docu<span class="text-blue-600">Trace</span></span> est votre
-                                solution complète pour la gestion de documents. Protégez vos pièces avec des filigranes
-                                sécurisés et retrouvez facilement vos documents égarés.
+                                solution complète pour la sécurisation et la récupération de documents. Nos filigranes numériques
+                                rendent vos documents traçables tout en préservant leur apparence originale.
                             </p>
                             <p class="mt-4">
-                                Double protection : Sécurisez vos documents sensibles avec des filigranes professionnels
-                                et
-                                bénéficiez de notre système de recherche efficace en cas de perte.
+                                <span class="font-semibold text-blue-600">Protection innovante :</span> Chaque document reçoit un identifiant unique
+                                intégré dans un filigrane discret, permettant son identification rapide en cas de perte, sans altérer
+                                sa lisibilité ou son aspect professionnel.
                             </p>
                         </div>
-                        <div class="flex flex-col sm:flex-row gap-4 pt-6 animate-fade-in-up delay-200">
-                            <NavLink
-                                class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                :href="route('find.register')">
-                                <span>Signaler un document trouvé</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </NavLink>
-                            <NavLink
-                                class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-blue-600 bg-white border-2 border-blue-600 rounded-lg hover:bg-blue-50 transform hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                :href="route('found.search')">
-                                <span>Protéger mes documents</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </NavLink>
+                        <div class="flex flex-wrap gap-4 pt-6 animate-fade-in-up delay-200">
+                            <div class="w-full flex flex-col sm:flex-row gap-4">
+                                <NavLink
+                                    class="flex-1 inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                    :href="route('found.search')">
+                                    <span>Protéger mes documents</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </NavLink>
+                                <NavLink
+                                    class="flex-1 inline-flex items-center justify-center px-6 py-3 text-base font-medium text-amber-700 bg-amber-100 border-2 border-amber-500 rounded-lg hover:bg-amber-200 transform hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 shadow-md relative overflow-hidden"
+                                    :href="route('find.register')">
+                                    <div class="absolute -top-1 -right-1 bg-amber-500 text-white text-xs px-2 py-1 rotate-12 shadow-sm font-bold">Important</div>
+                                    <div class="flex items-center justify-center w-8 h-8 bg-amber-500 rounded-full mr-2 shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6z" />
+                                        </svg>
+                                    </div>
+                                    <span>Signaler un document trouvé</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </NavLink>
+                            </div>
+                            <div class="w-full flex items-center justify-center sm:justify-start space-x-4 mt-2">
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-sm text-gray-600">Filigrane invisible</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-sm text-gray-600">Code QR unique</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-sm text-gray-600">Protection immédiate</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="w-full md:w-1/2 animate-fade-in-up delay-300">
@@ -57,8 +85,13 @@
                             <div
                                 class="absolute inset-0 bg-blue-200 rounded-full filter blur-3xl opacity-20 transform rotate-12">
                             </div>
-                            <img class="relative rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-300"
-                                alt="hero" src="images/pieces.png">
+                            <div class="relative rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                                <img class="w-full h-auto" alt="Document protection illustration" src="images/pieces.png">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-600/80 to-transparent p-4 text-white">
+                                    <p class="text-sm font-semibold">Filigrane sécurisé DocuTrace</p>
+                                    <p class="text-xs">Protection invisible et efficace</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
