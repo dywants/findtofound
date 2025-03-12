@@ -94,6 +94,12 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->group(functio
     Route::get('/payment', [AdminController::class, 'listingPayment'])->name('admin.payment');
     Route::get('/payment-finder', [AdminController::class, 'allFind'])->name('admin.allFind');
     Route::get('/all-find', [AdminController::class, 'finderPayment'])->name('admin.payment.finder');
+    
+    // Routes pour la gestion des rôles utilisateurs
+    Route::get('/user-roles', [\App\Http\Controllers\Admin\UserRoleController::class, 'index'])->name('admin.user-roles');
+    Route::post('/users/{user}/roles', [\App\Http\Controllers\Admin\UserRoleController::class, 'updateRoles'])->name('admin.users.update-roles');
+    Route::post('/users/{user}/make-admin', [\App\Http\Controllers\Admin\UserRoleController::class, 'makeAdmin'])->name('admin.users.make-admin');
+    Route::post('/users/{user}/remove-admin', [\App\Http\Controllers\Admin\UserRoleController::class, 'removeAdmin'])->name('admin.users.remove-admin');
     // Nouvelles routes pour la gestion des pièces
     Route::get('/find/{id}', [AdminController::class, 'show'])->name('admin.find.show');
     Route::get('/find/{id}/edit', [AdminController::class, 'edit'])->name('admin.find.edit');

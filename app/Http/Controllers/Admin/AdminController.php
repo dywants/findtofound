@@ -47,9 +47,15 @@ class AdminController extends Controller
 
    public function users(): \Inertia\Response
    {
-       $users = User::latest()->with('role')->get();
+       // Récupérer les utilisateurs avec leurs rôles
+       $users = User::latest()->with('roles')->get();
+       
+       // Récupérer tous les rôles disponibles dans le système
+       $roles = \Spatie\Permission\Models\Role::all();
+       
        return Inertia::render('Admin/Users/Index', [
-           'users' => $users
+           'users' => $users,
+           'allRoles' => $roles
        ]);
    }
 
