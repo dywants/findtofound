@@ -88,7 +88,7 @@
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">Montant total</p>
-                        <p class="text-xl font-bold">{{ totalAmount }} EUR</p>
+                        <p class="text-xl font-bold">{{ totalAmount }} FCFA</p>
                     </div>
                 </div>
             </div>
@@ -341,6 +341,194 @@
         <!-- Overlay click to close -->
         <div class="absolute inset-0 z-[-1]" @click="showImageModal = false"></div>
     </div>
+
+    <!-- Details Modal -->
+    <div v-if="showDetailsModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 overflow-y-auto py-6">
+        <div class="relative max-w-5xl w-full mx-auto" @click.stop>
+            <div class="relative bg-white rounded-lg shadow-xl overflow-hidden">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
+                    <div class="flex items-center">
+                        <div class="mr-3">
+                            <span 
+                                :class="selectedFind?.approval_status ? 'bg-green-100 text-green-600 border-green-200' : 'bg-amber-100 text-amber-600 border-amber-200'"
+                                class="px-2 py-1 text-xs leading-5 font-medium rounded-md border inline-flex items-center">
+                                <span v-if="selectedFind?.approval_status" class="mr-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </span>
+                                <span v-else class="mr-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </span>
+                                {{ selectedFind?.approval_status ? 'Retrouvée' : 'En attente' }}
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-800">
+                            Détails de la pièce {{ selectedFind?.piece?.name }}
+                        </h3>
+                    </div>
+                    <button @click="showDetailsModal = false" class="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Modal body -->
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                        <!-- Galerie Photos -->
+                        <div class="md:col-span-5 bg-gray-50 p-4 rounded-lg">
+                            <h4 class="text-sm font-medium text-gray-500 mb-3">Photos</h4>
+                            <div class="mb-4 overflow-hidden rounded-lg bg-white p-2 border border-gray-200">
+                                <img :src="showImage(selectedFind?.photos)" class="w-full h-64 object-cover rounded-md" alt="">
+                            </div>
+                            <div class="mt-3 text-xs text-gray-500">
+                                <span class="block mb-1">Click sur l'image pour l'agrandir</span>
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    Ajoutée le {{ formatDateFR(selectedFind?.created_at) }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Informations -->
+                        <div class="md:col-span-7 space-y-5">
+                            <!-- Informations principales -->
+                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="bg-gray-50 px-4 py-2 border-b border-gray-200">
+                                    <h4 class="font-medium text-sm text-gray-700">Informations principales</h4>
+                                </div>
+                                <div class="p-4 space-y-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <!-- Utilisateur -->
+                                        <div class="space-y-1">
+                                            <h5 class="text-xs text-gray-500">Utilisateur</h5>
+                                            <div class="flex items-center space-x-2">
+                                                <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                    </svg>
+                                                </div>
+                                                <span class="text-sm font-medium">{{ selectedFind?.fullName }}</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Type de pièce -->
+                                        <div class="space-y-1">
+                                            <h5 class="text-xs text-gray-500">Type de pièce</h5>
+                                            <div class="flex items-center space-x-2">
+                                                <div class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-500">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                                                    </svg>
+                                                </div>
+                                                <span class="text-sm font-medium">{{ selectedFind?.piece?.name }}</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Contact -->
+                                        <div class="space-y-1">
+                                            <h5 class="text-xs text-gray-500">Contact</h5>
+                                            <div class="flex items-center space-x-2">
+                                                <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-green-500">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                                    </svg>
+                                                </div>
+                                                <span class="text-sm">{{ selectedFind?.email }}</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Récompense -->
+                                        <div v-if="selectedFind?.reward > 0" class="space-y-1">
+                                            <h5 class="text-xs text-gray-500">Récompense</h5>
+                                            <div class="flex items-center space-x-2">
+                                                <div class="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-500">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                </div>
+                                                <span class="text-sm font-medium">{{ selectedFind?.reward }} FCFA</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Localisation -->
+                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="bg-gray-50 px-4 py-2 border-b border-gray-200">
+                                    <h4 class="font-medium text-sm text-gray-700">Localisation</h4>
+                                </div>
+                                <div class="p-4 space-y-3">
+                                    <div class="flex items-center text-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                        <span>{{ selectedFind?.findCity }}, {{ selectedFind?.ward }}</span>
+                                    </div>
+                                    <div class="flex items-start text-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                                        </svg>
+                                        <span>{{ selectedFind?.address }}</span>
+                                    </div>
+                                    <!-- Placeholder pour carte - à implémenter ultérieurement -->
+                                    <div class="mt-3 h-48 bg-gray-100 rounded-md flex items-center justify-center">
+                                        <span class="text-gray-400 text-sm">Carte de localisation à implémenter</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Détails supplémentaires -->
+                            <div v-if="selectedFind?.description" class="border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="bg-gray-50 px-4 py-2 border-b border-gray-200">
+                                    <h4 class="font-medium text-sm text-gray-700">Détails supplémentaires</h4>
+                                </div>
+                                <div class="p-4">
+                                    <p class="text-sm text-gray-600">{{ selectedFind?.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Modal footer -->
+                <div class="px-6 py-4 border-t border-gray-200 flex justify-between bg-gray-50">
+                    <div>
+                        <button 
+                            v-if="!selectedFind?.approval_status" 
+                            class="bg-green-100 hover:bg-green-200 text-green-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Marquer comme retrouvée
+                        </button>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button @click="confirmDelete(selectedFind)" class="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Supprimer
+                        </button>
+                        <button @click="showDetailsModal = false" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            Fermer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Overlay click to close -->
+        <div class="absolute inset-0 z-[-1]" @click="showDetailsModal = false"></div>
+    </div>
 </template>
 <script setup>
 import { Head, Link } from '@inertiajs/inertia-vue3';
@@ -363,6 +551,8 @@ const currentPage = ref(1);
 const itemsPerPage = 10;
 const showImageModal = ref(false);
 const selectedImage = ref('');
+const showDetailsModal = ref(false);
+const selectedFind = ref(null);
 
 // Computed properties
 const cities = computed(() => {
@@ -518,8 +708,8 @@ const openImage = (photo) => {
 };
 
 const viewDetails = (find) => {
-    // Implémenter la logique pour voir les détails
-    console.log('Voir les détails de:', find);
+    selectedFind.value = find;
+    showDetailsModal.value = true;
 };
 
 const confirmDelete = (find) => {
