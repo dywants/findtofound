@@ -17,10 +17,24 @@
                                 <div class="ml-3 relative">
                                     <BreezeDropdown align="right" width="48">
                                         <template #trigger>
-                                            <span class="inline-flex rounded-md">
+                                             <span class="inline-flex rounded-md">
                                                 <button type="button"
                                                     class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                                    {{ $page.props.auth.user.name }}
+                                                    <!-- Photo de profil -->
+                                                    <div class="flex items-center">
+                                                        <div class="h-8 w-8 rounded-full overflow-hidden border-2 border-white mr-2 flex-shrink-0">
+                                                            <img v-if="$page.props.auth.user.profile && $page.props.auth.user.profile.full_photo_url" 
+                                                                :src="$page.props.auth.user.profile.full_photo_url" 
+                                                                class="h-full w-full object-cover" 
+                                                                alt="Photo de profil">
+                                                            <div v-else class="h-full w-full bg-gray-200 flex items-center justify-center text-gray-500">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                        {{ $page.props.auth.user.name }}
+                                                    </div>
 
                                                     <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                                         viewBox="0 0 20 20" fill="currentColor">

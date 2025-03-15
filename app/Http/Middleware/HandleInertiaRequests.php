@@ -19,9 +19,19 @@ class HandleInertiaRequests extends Middleware
 
     public function share(Request $request)
     {
+        // Charger la relation profile si l'utilisateur est connecté
+        if ($request->user()) {
+            $request->user()->load('profile');
+        }
+        
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user() ? [
+                    'id' => $request->user()->id,
+                    'name' => $request->user()->name,
+                    'email' => $request->user()->email,
+                    'profile' => $request->user()->profile,
+                ] : null,
             ],
             'appName' => config('app.name', 'Laravel'),
             'ziggy' => function () use ($request) {
