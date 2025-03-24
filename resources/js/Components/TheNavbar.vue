@@ -140,7 +140,7 @@
                                     DocuTrace</NavLink>
                             </li>
                             <li>
-                                <NavLink>Blog</NavLink>
+                                <NavLink href="/blog">Blog</NavLink>
                             </li>
                             <li v-if="!$page.props.auth.user">
                                 <NavLink

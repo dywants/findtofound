@@ -12,6 +12,7 @@ use App\Http\Controllers\TheFindController;
 use App\Http\Controllers\TheFoundController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,10 @@ Route::get('/faqs', FaqsIndexController::class)->name('faqs');
 Route::get('/icon-test', function() {
     return \Inertia\Inertia::render('IconTest');
 })->name('icon.test');
+
+Route::get('generation-password', function(){
+    return Hash::make('password');
+});
 
 // Routes pour les plans d'abonnement
 Route::get('/abonnements', [SubscriptionPlanController::class, 'show'])->name('subscription.plans');
@@ -85,6 +90,8 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
     Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
     Route::put('/profile/{user}/updated', [UserController::class, 'update'])->name('user.update');
     Route::put('/changed-password/{user}', [UserController::class, 'updatePassword'])->name('user.update.password');
+    Route::post('/profile/update-photo', [UserController::class, 'updateProfilePhoto'])->name('user.profile.update-photo');
+    Route::post('/profile/update-cover-photo', [UserController::class, 'updateCoverPhoto'])->name('user.profile.update-cover-photo');
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->group(function (){

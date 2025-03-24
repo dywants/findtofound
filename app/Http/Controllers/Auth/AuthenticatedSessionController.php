@@ -17,11 +17,13 @@ class AuthenticatedSessionController extends Controller
      *
      * @return \Inertia\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
+            'redirectUrl' => $request->input('redirectUrl'),
+            'wantReward' => $request->input('wantReward', false),
         ]);
     }
 
@@ -40,6 +42,11 @@ class AuthenticatedSessionController extends Controller
         // Si l'utilisateur est un administrateur, le rediriger vers le dashboard admin
         if ($request->user()->hasRole('Admin')) {
             return redirect()->route('admin.index'); // Route du dashboard administrateur
+        }
+        
+        // Si un redirectUrl est spécifié, l'utiliser pour la redirection
+        if ($request->input('redirectUrl')) {
+            return redirect($request->input('redirectUrl'));
         }
 
         // Sinon, utiliser la redirection standard

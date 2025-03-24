@@ -46,7 +46,18 @@ class TheFindController extends Controller
      */
     public function index(Request $request): \Inertia\Response
     {
-        $pieces = Piece::all();
+        // Récupérer toutes les pièces avec leurs montants de récompense
+        $pieces = Piece::all()->map(function ($piece) {
+            return [
+                'id' => $piece->id,
+                'name' => $piece->name,
+                'slug' => $piece->slug,
+                'amount' => $piece->amount,
+                // Formatter le montant pour l'affichage
+                'formatted_amount' => number_format($piece->amount, 0, ',', ' ') . ' FCFA'
+            ];
+        });
+        
         Meta::addMeta('title', 'Enregistrer une pièce retrouvée!');
         Meta::addMeta('description', "Cette page permet l'enregistrement des informations d'une pièce retrouvée ainsi que les informations de celui qui à retrouvée la pièce");
         Meta::addMeta('robots', 'Index, follow');

@@ -5,25 +5,25 @@
             <div 
                 class="w-10 h-10 rounded-full flex items-center justify-center transform transition-all duration-300 shadow-md"
                 :class="{
-                    'bg-blue-600 text-white scale-110': currentStep >= step.number,
-                    'bg-gray-200 text-gray-600': currentStep < step.number
+                    'bg-blue-600 text-white scale-110': currentStep >= step.id,
+                    'bg-gray-200 text-gray-600': currentStep < step.id
                 }"
             >
                 <!-- Icône ou numéro selon l'étape -->
-                <template v-if="currentStep > step.number">
+                <template v-if="currentStep > step.id">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                 </template>
-                <template v-else-if="currentStep === step.number">
+                <template v-else-if="currentStep === step.id">
                     <span class="flex items-center justify-center">
-                        <span>{{ step.number }}</span>
+                        <span>{{ step.id }}</span>
                         <!-- Animation pulse pour l'étape active -->
-                        <span v-if="currentStep === step.number" class="absolute w-10 h-10 rounded-full animate-ping bg-blue-400 opacity-50"></span>
+                        <span v-if="currentStep === step.id" class="absolute w-10 h-10 rounded-full animate-ping bg-blue-400 opacity-50"></span>
                     </span>
                 </template>
                 <template v-else>
-                    <span>{{ step.number }}</span>
+                    <span>{{ step.id }}</span>
                 </template>
             </div>
             
@@ -32,15 +32,15 @@
                 <p 
                     class="text-sm font-medium transition-all duration-300" 
                     :class="{
-                        'text-blue-600 font-semibold': currentStep === step.number,
-                        'text-gray-900': currentStep > step.number,
-                        'text-gray-500': currentStep < step.number
+                        'text-blue-600 font-semibold': currentStep === step.id,
+                        'text-gray-900': currentStep > step.id,
+                        'text-gray-500': currentStep < step.id
                     }"
                 >
                     {{ step.label }}
                     <!-- Indicateur sous le texte pour montrer l'étape active -->
                     <span 
-                        v-if="currentStep === step.number" 
+                        v-if="currentStep === step.id" 
                         class="block h-0.5 bg-blue-600 mt-0.5 transform transition-all duration-300"
                     ></span>
                 </p>
@@ -57,7 +57,7 @@
                 <div 
                     class="absolute inset-0 bg-blue-600 transition-all duration-500"
                     :style="{
-                        transform: currentStep > step.number ? 'scaleX(1)' : 'scaleX(0)',
+                        transform: currentStep > step.id ? 'scaleX(1)' : 'scaleX(0)',
                         transformOrigin: 'left'
                     }"
                 ></div>
@@ -73,7 +73,7 @@ const props = defineProps({
     steps: {
         type: Array,
         required: true,
-        // Format attendu: [{ number: 1, label: 'Étape 1' }, ...]
+        // Format attendu: [{ id: 1, label: 'Étape 1' }, ...]
     },
     currentStep: {
         type: Number,

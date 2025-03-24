@@ -135,6 +135,24 @@ const { isLoading: isLoadingRegisterPiece, validationErrors, submitForm } = useF
 // Variable pour stocker le montant de la récompense
 const amount = ref('');
 
+// Fonction pour obtenir le montant recommandé pour le type de pièce sélectionné
+const getRecommendedAmount = computed(() => {
+    if (!formData.value?.step1?.piece_id) return '1000';
+    
+    const selectedPiece = props.pieces.find(p => p.id === formData.value.step1.piece_id);
+    return selectedPiece ? selectedPiece.amount.toString() : '1000';
+});
+
+// Observer les changements de type de pièce pour mettre à jour le montant recommandé
+watch(
+    () => formData.value?.step1?.piece_id,
+    (newPieceId) => {
+        if (newPieceId) {
+            amount.value = getRecommendedAmount.value;
+        }
+    }
+);
+
 // Fonction de débogage simplifiée
 const debugForm = () => {
     // Forcer la soumission manuelle
@@ -206,7 +224,7 @@ const onSubmit = async (submitData) => {
                 additionalInfo: submitData.additionalInfo || submitData.special_instructions || 'Aucune information supplémentaire'
             },
             step3: wantReward ? {
-                amount_choice: submitData.amount_check || '1000'
+                amount_choice: submitData.amount_check || getRecommendedAmount.value
             } : {}
         };
 

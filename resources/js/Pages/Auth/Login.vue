@@ -155,17 +155,35 @@ const props = defineProps({
     canResetPassword: Boolean,
     status: String,
     errors: Object,
+    redirectUrl: {
+        type: String,
+        default: route('dashboard')
+    },
+    wantReward: {
+        type: Boolean,
+        default: false
+    }
 });
 
 const form = useForm({
     email: '',
     password: '',
-    remember: false
+    remember: false,
+    redirectUrl: props.redirectUrl,
+    wantReward: props.wantReward
 });
 
 const submit = () => {
     form.post(route('login'), {
-        onFinish: () => form.reset('password'),
+        onFinish: () => {
+            form.reset('password');
+        },
+        onSuccess: () => {
+            // Redirection vers l'URL d'origine après connexion réussie
+            if (props.redirectUrl) {
+                window.location.href = props.redirectUrl;
+            }
+        }
     });
 };
 </script>

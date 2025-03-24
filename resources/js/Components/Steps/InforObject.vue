@@ -18,7 +18,7 @@
                             class="block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-xl transition-shadow duration-200 bg-white shadow-sm hover:shadow-md">
                             <option value="">Sélectionnez le type de pièce</option>
                             <option v-for="piece in pieces" :key="piece.id" :value="piece.id">
-                                {{ piece.name }}
+                                {{ piece.name }} - Récompense: {{ piece.formatted_amount || (piece.amount + ' FCFA') }}
                             </option>
                         </Field>
                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">

@@ -23,56 +23,79 @@ class UserController extends Controller
     public function index(): \Inertia\Response
     {
         $user = auth()->user();
-        $amountByFinder = User::query()
-            ->where('id', $user->id)
-            ->withSum('finds','amount_check')
-            ->get();
-
-        $amountByFinderStatus =  User::query()
-            ->where('id', $user->id)
-            ->withSum([
-                'finds' => fn ($query) => $query->where('approval_status', 1)],
-                'amount_check')
-            ->get();
-
-        $amountByUser = Thefound::query()
-            ->where('user_id', $user->id)
-            ->get();
-
-        $payment = Payment::query()
-            ->where('user_payer_id', $user->id)
-            ->get();
-
-        if (!$payment->isEmpty()){
-            $paymentArray= arrat_to_object($payment);
-            $paymentStatus = $paymentArray->payment_status;
-        }else{
-            $paymentStatus = "";
+        
+        // Statistiques pour les Finders (Trouveurs)
+        if ($user->hasRole('finder')) {
+            // Nombre de pièces déclarées
+            $declarations = Thefind::where('user_id', $user->id)->count();
+            
+            // Nombre de pièces en attente
+            $pendingDeclarations = Thefind::where('user_id', $user->id)
+                ->where('approval_status', 0)
+                ->count();
+            
+            // Nombre de correspondances totales
+            $totalMatches = Thefind::where('user_id', $user->id)
+                ->whereHas('thefounds')
+                ->count();
+            
+            // Récompenses reçues
+            $rewardAmount = User::where('id', $user->id)
+                ->withSum([  
+                    'finds' => fn ($query) => $query->where('approval_status', 1)],
+                    'amount_check')
+                ->first();
+                
+            $rewardsPaid = money($rewardAmount ? $rewardAmount->finds_sum_amount_check : 0);
+            
+            // Stats à passer à la vue
+            $stats = [
+                'declarations' => $declarations,
+                'pendingDeclarations' => $pendingDeclarations,
+                'totalMatches' => $totalMatches,
+                'rewardsPaid' => $rewardsPaid
+            ];
+        } 
+        // Statistiques pour les Founders (Propriétaires)
+        else {
+            // Pièces retrouvées
+            $piecesFound = Thefound::where('user_id', $user->id)->count();
+            
+            // Pièces en attente de retour (n'utilisez pas status qui n'existe pas)
+            // Comme il n'y a pas de colonne spécifique pour l'état d'attente, 
+            // nous allons simplement compter les correspondances trouvées
+            $pendingReturns = Thefound::where('user_id', $user->id)
+                ->count();
+            
+            // Nombre total de recherches effectuées
+            $totalSearches = Thefound::where('user_id', $user->id)->count();
+            
+            // Récompenses versées
+            $payments = Payment::where('user_payer_id', $user->id)
+                ->where('payment_status', 'completed')
+                ->sum('amount');
+                
+            $rewardsReceived = money($payments);
+            
+            // Stats à passer à la vue
+            $stats = [
+                'piecesFound' => $piecesFound,
+                'pendingReturns' => $pendingReturns,
+                'totalSearches' => $totalSearches,
+                'rewardsReceived' => $rewardsReceived
+            ];
         }
-
-        $thefind = arrat_to_object($amountByFinder);
-        $amount_finder = arrat_to_object($amountByFinderStatus);
-        $thefound = arrat_to_object($amountByUser);
-
-        if ($user->hasRole('finder')){
-            $amount = '';
-        }else if($user->hasRole('user')){
-            $amount = money($thefound->amount);
-        }else{
-            $amount = '';
-        }
-
-        return Inertia::render('Users/Index', [
-            'total_presume_amount' => money($thefind->finds_sum_amount_check),
-            'total_amount' => money($amount_finder->finds_sum_amount_check),
-            'amount' => $amount,
-            'payment_status' => $paymentStatus,
+        
+        return Inertia::render('Dashboard', [
+            'stats' => $stats,
+            'userRole' => $user->hasRole('finder') ? 'finder' : 'founder'
         ]);
     }
 
     public function listing(): \Inertia\Response
     {
         $user = auth()->user();
+    
         $listing = Thefind::query()
             ->when((new \Illuminate\Http\Request)->input('search'), function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%");
@@ -82,6 +105,7 @@ class UserController extends Controller
             ->where('user_id', $user->id)
             ->get();
 
+    
         return Inertia::render('Users/TheListingFind', [
             'listing' => $listing,
             "filters" => (new \Illuminate\Http\Request)->only(['search'])
@@ -100,17 +124,36 @@ class UserController extends Controller
 
         $payment = Payment::query()
             ->where('user_payer_id', $user->id)
-            ->get();
+            ->latest()
+            ->first();
 
-        if (!$payment->isEmpty()){
-            $paymentArray= arrat_to_object($payment);
-            $paymentStatus = $paymentArray->payment_status;
-        }else{
+        if ($payment) {
+            $paymentStatus = $payment->payment_status ?? "";
+        } else {
             $paymentStatus = "";
         }
 
-        $thefind = arrat_to_object($piece);
-        $photos = arrat_to_object(json_decode($thefind->thefind->photos));
+        // Vérification si la collection de pièces est vide
+        if ($piece->isEmpty()) {
+            // Renvoyer une vue avec des données vides mais valides
+            return Inertia::render('Users/MyPiece', [
+                'piece' => null,
+                'photos' => null,
+                'status' => $paymentStatus
+            ]);
+        }
+
+        $thefind = \App\Helpers\ArrayHelper::toObject($piece);
+        
+        // Vérification si thefind et ses propriétés existent
+        $photos = null;
+        if (isset($thefind->thefind) && isset($thefind->thefind->photos)) {
+            // Récupérer le premier fichier photo de la liste et en faire une chaîne
+            $photosObj = json_decode($thefind->thefind->photos);
+            if (is_array($photosObj) && count($photosObj) > 0) {
+                $photos = $photosObj[0]->file_name ?? null;
+            }
+        }
 
         return Inertia::render('Users/MyPiece', [
             'piece' => $thefind,
@@ -148,7 +191,7 @@ class UserController extends Controller
      */
     public function show(User $user): \Inertia\Response
     {
-       return Inertia::render('Users/myPiece', [
+       return Inertia::render('Users/MyPiece', [
            'user' => $user,
            'profile' => $user->profile,
        ]);
@@ -158,7 +201,7 @@ class UserController extends Controller
     {
         $userObject = User::where('id', auth()->user()->id)->with('profile')->get();
 
-        $user = arrat_to_object($userObject);
+        $user = \App\Helpers\ArrayHelper::toObject($userObject);
 
         return Inertia::render('Users/Profile', [
             'user' => $user
@@ -210,11 +253,131 @@ class UserController extends Controller
         }
 
         $user->update([
-            'password' => Hash::make($request->new_pasword)
+            'password' => Hash::make($request->new_password)
         ]);
 
         $request->session()->flash('success', 'Mot de passe motifier avec success');
         return redirect()->back();
+    }
+
+    /**
+     * Update the user's profile photo.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return RedirectResponse
+     */
+    public function updateProfilePhoto(Request $request): RedirectResponse
+    {
+        try {
+            $request->validate([
+                'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+    
+            $user = auth()->user();
+            
+            // Vérifier si le fichier existe
+            if (!$request->hasFile('profile_photo')) {
+                return redirect()->back()->with('error', 'Aucun fichier n\'a été téléchargé');
+            }
+            
+            // Récupérer le fichier photo
+            $profilePhoto = $request->file('profile_photo');
+            
+            // Vérifier si le fichier est valide
+            if (!$profilePhoto->isValid()) {
+                return redirect()->back()->with('error', 'Le fichier uploadé n\'est pas valide');
+            }
+            
+            // Générer un nom de fichier unique
+            $filename = time() . '_' . $user->id . '.' . $profilePhoto->getClientOriginalExtension();
+            
+            // Déplacer le fichier dans le répertoire de stockage public
+            $path = $profilePhoto->storeAs('public/profile-photos', $filename);
+            
+            if (!$path) {
+                return redirect()->back()->with('error', 'Erreur lors du stockage du fichier');
+            }
+            
+            // S'assurer que le profil existe
+            $profile = $user->profile;
+            if (!$profile) {
+                return redirect()->back()->with('error', 'Profil utilisateur introuvable');
+            }
+            
+            // Mettre à jour le profil de l'utilisateur avec le chemin de la photo
+            $updated = $profile->update([
+                'photo_url' => '/storage/profile-photos/' . $filename
+            ]);
+            
+            if (!$updated) {
+                return redirect()->back()->with('error', 'Impossible de mettre à jour le profil');
+            }
+            
+            return redirect()->back()->with('success', 'Photo de profil mise à jour avec succès');
+        } catch (\Exception $e) {
+            // Capturer toute exception et renvoyer un message d'erreur
+            return redirect()->back()->with('error', 'Erreur: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Update the user's cover photo.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateCoverPhoto(Request $request): RedirectResponse
+    {
+        try {
+            $request->validate([
+                'cover_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+            ]);
+    
+            $user = auth()->user();
+            
+            // Vérifier si le fichier existe
+            if (!$request->hasFile('cover_photo')) {
+                return redirect()->back()->with('error', 'Aucun fichier n\'a été téléchargé');
+            }
+            
+            // Récupérer le fichier photo
+            $coverPhoto = $request->file('cover_photo');
+            
+            // Vérifier si le fichier est valide
+            if (!$coverPhoto->isValid()) {
+                return redirect()->back()->with('error', 'Le fichier uploadé n\'est pas valide');
+            }
+            
+            // Générer un nom de fichier unique
+            $filename = 'cover_' . time() . '_' . $user->id . '.' . $coverPhoto->getClientOriginalExtension();
+            
+            // Déplacer le fichier dans le répertoire de stockage public
+            $path = $coverPhoto->storeAs('public/cover-photos', $filename);
+            
+            if (!$path) {
+                return redirect()->back()->with('error', 'Erreur lors du stockage du fichier');
+            }
+            
+            // S'assurer que le profil existe
+            $profile = $user->profile;
+            if (!$profile) {
+                return redirect()->back()->with('error', 'Profil utilisateur introuvable');
+            }
+            
+            // Mettre à jour le profil de l'utilisateur avec le chemin de la photo de couverture
+            $updated = $profile->update([
+                'cover_photo_url' => '/storage/cover-photos/' . $filename
+            ]);
+            
+            if (!$updated) {
+                return redirect()->back()->with('error', 'Impossible de mettre à jour le profil');
+            }
+            
+            return redirect()->back()->with('success', 'Photo de couverture mise à jour avec succès');
+        } catch (\Exception $e) {
+            // Capturer toute exception et renvoyer un message d'erreur
+            return redirect()->back()->with('error', 'Erreur: ' . $e->getMessage());
+        }
     }
 
     /**
